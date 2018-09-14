@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>react</title>
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css">
+
+
+    <script src="//cdn.bootcss.com/lodash.js/4.17.10/lodash.js"></script>
+    <script src="//cdn.bootcss.com/react/16.4.0/umd/react.development.js"></script>
+    <script src="//cdn.bootcss.com/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="../dist/vremark.js"></script>
+    <script src="../dist/vmarkdown.js"></script>
+
+    <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .markdown-body{
+
+        }
+
+        .panel {
+            width: 32%;
+            flex: 1;
+            padding: 20px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .panel-wrap{
+            height: 100%;
+            overflow-y: auto;
+            border: 1px solid darkgray;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .panel-header{
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            /*border-bottom: 1px grey solid;*/
+            position: absolute;
+            top: 0;
+            width: 28%;
+        }
+
+        #editor{
+            width: 100%;
+            height: 100%;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div style="display: flex;height: 100%;box-sizing: border-box;">
+    <div class="panel">
+        <textarea id="editor" rows="40"></textarea>
+    </div>
+    <div class="panel">
+        <div class="panel-wrap">
+            <div class="panel-header">html render</div>
+            <div class="markdown-body">
+                <div id="html"></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-wrap">
+            <div class="panel-header">vdom render</div>
+            <div id="vdom"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.process = {
+        cwd: function () {}
+    };
+</script>
+
+<script>
+    const md = `
+$$
+L = \\frac{1}{2} \\rho v^2 S C_L
+$$
+`;
+</script>
+<script>
+
+    const options = {
+        math: {},
+        toc: {},
+        katex: {}
+    };
+
+    function Vdom() {
+
+    }
+
+    Vdom.prototype.render = function (value) {
+        const h = React.createElement;
+
+        const vdom = vmarkdown(value, Object.assign({
+            vdom: {
+                h: h
+            }
+        },options));
+
+        console.log(vdom);
+
+        ReactDOM.render(
+            h('div',{
+                className: 'vdom markdown-body'
+            }, vdom),
+            document.getElementById('vdom')
+        );
+    };
+
+    function Html() {
+
+    }
+
+    Html.prototype.render = function (value) {
+        const html = vmarkdown(value, Object.assign({
+            html: {
+
+            }
+        },options));
+
+        // console.log(html);
+        document.getElementById('html').innerHTML = html;
+    };
+
+    function Editor(callback) {
+        this.editorContainer = document.getElementById('editor');
+        this.editorContainer.value = md;
+        this.editorContainer.addEventListener('keyup', _.throttle(callback, 500, {
+            // maxWait: 200
+        }));
+        const self = this;
+        setTimeout(function () {
+            callback.apply(self);
+        },0);
+    }
+    
+    Editor.prototype.getValue = function () {
+        return this.editorContainer.value;
+    };
+
+    const vdom = new Vdom();
+    const html = new Html();
+
+    const editor = new Editor(function () {
+        const value = editor.getValue();
+        vdom.render(value);
+        html.render(value);
+    });
+
+</script>
+
+</body>
+</html>
