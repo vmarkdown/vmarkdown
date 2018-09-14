@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vmarked</title>
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css">
+    <script src="//cdn.bootcss.com/preact/8.2.9/preact.js"></script>
+    <script src="../dist/vmarkdown.js"></script>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+    window.process = {
+        cwd: function () {}
+    };
+</script>
+<script>
+    const { Component, h, render } = preact;
+
+    class Markdown extends Component {
+        constructor() {
+            super();
+            this.state = {
+                vdom: null
+            };
+        }
+
+        componentDidMount() {
+            const self = this;
+            const md = 'Some _emphasis_, **importance**, and `code`.';
+            vmarkdown(md, {
+                h: h
+            }, function (vdom) {
+                console.log(vdom);
+                self.setState({ vdom: vdom });
+            });
+        }
+
+        render() {
+            // return this.state.vdom;
+            return h('div', {
+                className: 'markdown'
+            }, this.state.vdom);
+        }
+    }
+
+    render(
+        h(Markdown, {}, null),
+        document.getElementById('app')
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "webpack -w"
+  },
+  "devDependencies": {
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "remark": "^9.0.0",
+    "remark-parse": "^5.0.0",
+    "remark-vdom": "^6.0.0"
+  }
+}
