@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "remark": "^9.0.0",
+    "remark-html": "^8.0.0",
     "remark-parse": "^5.0.0",
+    "remark-toc": "^5.0.0",
     "remark-vdom": "^6.0.0"
   }
 }
