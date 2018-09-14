@@ -270,7 +270,7 @@ Bob-->Alice: I am good thanks!
 
     const h = React.createElement;
 
-    function createElement(node, options) {
+    function createElement(node, options, index) {
 
         let vnode = null;
         let children = [];
@@ -291,6 +291,14 @@ Bob-->Alice: I am good thanks!
                 vnode = h('span', {
                     key: _.uniqueId('text_')
                 }, node.value);
+                break;
+            case 'checkbox':
+                vnode = h('input', {
+                    key: _.uniqueId('checkbox_'),
+                    type: 'checkbox',
+                    checked: node.checked,
+                    readOnly: true
+                });
                 break;
             case 'strong':
                 vnode = h('strong', {
@@ -375,8 +383,10 @@ Bob-->Alice: I am good thanks!
                 }, children);
                 break;
             case 'tableCell':
+                let align = (options.align && index>=0 && index<options.align.length)?options.align[index]:'';
                 vnode = h('td', {
-                    key: _.uniqueId('tableCell_')
+                    key: _.uniqueId('tableCell_'),
+                    align: align
                 }, children);
                 break;
             default:
@@ -385,15 +395,40 @@ Bob-->Alice: I am good thanks!
 
         if(vnode && node.children){
 
+            if(options && options.checked){
+                children.push(
+                    createElement({
+                        type: 'checkbox',
+                        checked: options.checked
+                    })
+                );
+                children.push(
+                    createElement({
+                        type: 'text',
+                        value: ' '
+                    })
+                );
+                delete options.checked;
+            }
+
+            let _options = options || {};
+            if(node.type === "table"){
+                _options.align = _options.hasOwnProperty('align')?_options.align:node.align;
+            }
+            else if(node.type === "tableRow"){
+                // _options.align = node.align;
+                _options.align = _options.hasOwnProperty('align')?_options.align:node.align;
+            }
+            else if(node.type === "listItem"){
+                // _options.checked = node.checked;
+                _options.checked = _options.hasOwnProperty('checked')?_options.checked:node.checked;
+            }
+
             for(let i=0;i<node.children.length;i++){
                 let n = node.children[i];
 
-                let _options = options || {};
-                if(node.type === "table"){
-                    _options.align = node.align;
-                }
                 children.push(
-                    createElement(n, _options)
+                    createElement(n, _options, i)
                 );
             }
 
