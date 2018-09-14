@@ -11,6 +11,9 @@ export default function vmarkdown(md, options) {
 
     var parser = vremark();
 
+    parser = parser.use(vremark.math);
+    parser = parser.use(vremark.katex);
+
     if(options.toc) {
         parser = parser.use(vremark.toc, options.toc);
     }
@@ -20,6 +23,8 @@ export default function vmarkdown(md, options) {
     if(options.html) {
         parser = parser.use(vremark.html, options.html);
     }
+
+
 
     var file = parser.processSync(md);
 
