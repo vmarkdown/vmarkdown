@@ -3,11 +3,12 @@ import remark from 'remark';
 import toc from 'remark-toc';
 // import html from 'remark-html';
 import math from 'remark-math';
-import katex from 'remark-html-katex';
+// import katex from 'remark-html-katex';
 import checkbox from './plugins/remark-checkbox';
 import html from './plugins/remark-html';
 import vdom from './plugins/vdom/remark-vdom';
 import table from './plugins/remark-table';
+import katex from './plugins/remark-html-katex/index';
 
 function vremark(options) {
 

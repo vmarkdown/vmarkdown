@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ast</title>
+
+    <script src="../dist/vremark.js"></script>
+
+<body>
+
+<div id="vdom"></div>
+
+<script>
+    (function () {
+        const md = `$$ E=mc^2 $$`;
+
+
+        const processor = vremark({
+            math: {},
+            katex: {}
+        });
+
+        // const ast = parser.parse(md);
+        // console.log( ast );
+
+        const result = processor.processSync(md).toString();
+        console.log( result );
+
+
+
+
+    })();
+</script>
+
+</body>
+</html>

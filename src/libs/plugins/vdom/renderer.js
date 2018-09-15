@@ -28,6 +28,28 @@ Renderer.prototype.inlineCode = function(node) {
     }, node.value);
 };
 
+
+
+Renderer.prototype.math = function(node) {
+    debugger
+    const h = this.options.h;
+    return h('div', {
+        key: uniqueId('inlineMath_')
+    }, node.value);
+};
+
+Renderer.prototype.inlineMath = function(node) {
+    const h = this.options.h;
+    return h('span', {
+        key: uniqueId('html_'),
+        dangerouslySetInnerHTML: {
+            __html: node.renderedValue
+        }
+    });
+};
+
+
+
 Renderer.prototype.code = function(node, children) {
     const h = this.options.h;
     return h('pre', {

@@ -1,22 +1,29 @@
 const remark = require('remark')
-// const math = require('remark-math')
-// const katex = require('remark-html-katex') // Use remark-html-katex
-// const html = require('remark-html')
-var remark2rehype = require('remark-rehype');
-var html = require('rehype-stringify')
+const math = require('remark-math')
+const katex = require('remark-html-katex') // Use remark-html-katex
+const html = require('remark-html')
+// var remark2rehype = require('remark-rehype');
+// var html = require('rehype-stringify')
 
 // Raw String => MDAST => transformed MDAST => HTML
-const processor = remark().use(remark2rehype).use(html)
-    // .use(math)
-    // .use(katex)
-    // .use(html)
+// const processor = remark().use(remark2rehype).use(html)
+//     // .use(math)
+//     // .use(katex)
+//     // .use(html)
 
+const processor = remark()
+    .use(math)
+    .use(katex)
+    .use(html)
 
-// const rawString = `
-// $$
-// L = \\frac{1}{2} \\rho v^2 S C_L
-// $$
-// `
+const rawString = `
+$$
+L = \\frac{1}{2} \\rho v^2 S C_L
+$$
+`
+const result = processor.processSync(rawString).toString();
+
+console.log(result);
 
 // const md = `# Hello world
 //
@@ -24,12 +31,12 @@ const processor = remark().use(remark2rehype).use(html)
 //
 // Some _emphasis_, **importance**, and \`code\`.`;
 
-const md = `---------`;
-
-
-const result = processor.processSync(md).toString();
-
-console.log(result);
+// const md = `---------`;
+//
+//
+// const result = processor.processSync(md).toString();
+//
+// console.log(result);
 
 /* result
 <p>

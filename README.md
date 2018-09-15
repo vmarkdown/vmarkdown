@@ -27,3 +27,13 @@ markdown => MDAST => vdom
 ### rehype
 
 html => HAST
+
+
+
+LaTeX
+https://katex.org/
+
+
+### TODO
+
+示例脚注
