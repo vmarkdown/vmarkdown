@@ -8,10 +8,12 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "rehype-stringify": "^4.0.0",
     "remark": "^9.0.0",
     "remark-html": "^8.0.0",
     "remark-html-katex": "^1.1.1",
     "remark-math": "^1.0.4",
+    "remark-rehype": "^3.0.1",
     "remark-toc": "^5.0.0",
     "remark-vdom": "^6.0.0"
   }
