@@ -5,7 +5,7 @@ import toc from 'remark-toc';
 import math from 'remark-math';
 import katex from 'remark-html-katex';
 import checkbox from './plugins/remark-checkbox';
-// import html from './plugins/remark-html';
+import html from './plugins/remark-html';
 import vdom from './plugins/vdom/remark-vdom';
 import table from './plugins/remark-table';
 
@@ -15,6 +15,7 @@ function vremark(options) {
 
     processor = processor.use(checkbox, {});
     processor = processor.use(table, {});
+    processor = processor.use(html, {});
 
     if(options.math) {
         processor = processor.use(math, options.math);

@@ -10,7 +10,7 @@ module.exports = function checkbox(options = {}) {
 
             visit(node, 'listItem', function (item) {
 
-                if(item.hasOwnProperty('checked')){
+                if( item.hasOwnProperty('checked') && (item.checked !== null) ){
 
 
                     if(item.children.length>0 && item.children[0].type === "paragraph"){

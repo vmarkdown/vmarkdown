@@ -41,6 +41,7 @@ Renderer.prototype.code = function(node, children) {
 };
 
 Renderer.prototype.blockquote = function(node, children) {
+    const h = this.options.h;
     return h('blockquote', {
         key: uniqueId('blockquote_')
     }, children);
@@ -48,9 +49,25 @@ Renderer.prototype.blockquote = function(node, children) {
 
 Renderer.prototype.html = function(node, children) {
     const h = this.options.h;
-    return h('code', {
-        key: uniqueId('html_')
-    }, node.value);
+
+    return h('div', {
+        key: uniqueId('html_'),
+        dangerouslySetInnerHTML: {
+            __html: node.value
+        }
+    });
+
+    // return h('div', {
+    //     key: uniqueId('html_'),
+    //     'data-render': 'html'
+    // }, node.value);
+
+    // debugger
+    // const h = this.options.h;
+    // return h('div', {
+    //     key: uniqueId('html_'),
+    //     'data-render': 'html'
+    // }, node.value);
 };
 
 Renderer.prototype.heading = function(node, children) {
@@ -160,6 +177,27 @@ Renderer.prototype.link = function(node, children) {
         title: node.title
     }, children);
 };
+
+Renderer.prototype.linkReference = function(node, children) {
+    // debugger
+    // const h = this.options.h;
+    // return h('a', {
+    //     key: uniqueId('link_'),
+    //     href: node.url,
+    //     title: node.title
+    // }, children);
+};
+
+Renderer.prototype.definition = function(node, children) {
+    // debugger
+    // const h = this.options.h;
+    // return h('a', {
+    //     key: uniqueId('link_'),
+    //     href: node.url,
+    //     title: node.title
+    // }, children);
+};
+
 
 Renderer.prototype.image = function(node) {
     const h = this.options.h;

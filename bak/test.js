@@ -18,11 +18,13 @@ const processor = remark().use(remark2rehype).use(html)
 // $$
 // `
 
-const md = `# Hello world
+// const md = `# Hello world
+//
+// > Block quote.
+//
+// Some _emphasis_, **importance**, and \`code\`.`;
 
-> Block quote.
-
-Some _emphasis_, **importance**, and \`code\`.`;
+const md = `---------`;
 
 
 const result = processor.processSync(md).toString();
