@@ -284,7 +284,9 @@ Bob-->Alice: I am good thanks!
                 break;
             case 'heading':
                 vnode = h('h'+node.depth, {
-                    key: _.uniqueId('heading_')
+                    key: _.uniqueId('heading_'),
+                    'data-line-start': node.position.start.line,
+                    'data-line-end': node.position.end.line,
                 }, children);
                 break;
             case 'text':
@@ -307,7 +309,9 @@ Bob-->Alice: I am good thanks!
                 break;
             case 'paragraph':
                 vnode = h('p', {
-                    key: _.uniqueId('paragraph_')
+                    key: _.uniqueId('paragraph_'),
+                    'data-line-start': node.position.start.line,
+                    'data-line-end': node.position.end.line,
                 }, children);
                 break;
             case 'blockquote':
