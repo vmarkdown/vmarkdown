@@ -13,7 +13,9 @@ const config = {
     module:{
     },
     externals: {
-    }
+    },
+    plugins: [
+    ]
 };
 
 module.exports = [

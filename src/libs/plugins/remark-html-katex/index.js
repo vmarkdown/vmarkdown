@@ -1,17 +1,17 @@
 const visit = require('unist-util-visit')
 const katex = require('katex')
-const unified = require('unified')
-const parse = require('rehype-parse')
+// const unified = require('unified')
+// const parse = require('rehype-parse')
 const position = require('unist-util-position')
 
-function parseMathHtml (html) {
-  return unified()
-    .use(parse, {
-      fragment: true,
-      position: false
-    })
-    .parse(html)
-}
+// function parseMathHtml (html) {
+//   return unified()
+//     .use(parse, {
+//       fragment: true,
+//       position: false
+//     })
+//     .parse(html)
+// }
 
 module.exports = function plugin (opts = {}) {
   if (opts.throwOnError == null) opts.throwOnError = false
@@ -44,9 +44,9 @@ module.exports = function plugin (opts = {}) {
         }
       }
 
-      const childAst = parseMathHtml(renderedValue).children[0]
+      // const childAst = parseMathHtml(renderedValue).children[0]
         element.renderedValue =renderedValue;
-      element.data.hChildren = [childAst]
+      // element.data.hChildren = [childAst]
     }
 
     visit(node, 'inlineMath', renderContent)
