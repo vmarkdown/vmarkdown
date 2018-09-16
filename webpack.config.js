@@ -19,17 +19,18 @@ const config = {
 };
 
 module.exports = [
+    // merge({
+    //     entry:{
+    //         vremark: './src/libs/vremark.js'
+    //     }
+    // }, config),
     merge({
         entry:{
-            vremark: './src/libs/vremark.js'
-        }
-    }, config),
-    merge({
-        entry:{
-            vmarkdown: './src/index.js'
+            VMarkdown: './src/index.js'
         },
         externals: {
-            vremark: 'vremark'
+            'vremark': 'vremark',
+            'vremark-plugin-katex': 'vremarkPluginKatex'
         }
     }, config)
 ];
