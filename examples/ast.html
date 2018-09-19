@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ast</title>
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.css">
+
+    <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .markdown-body{
+
+        }
+
+        .panel {
+            width: 32%;
+            flex: 1;
+            padding: 20px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .panel-wrap{
+            height: 100%;
+            overflow-y: auto;
+            border: 1px solid darkgray;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .panel-header{
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            /*border-bottom: 1px grey solid;*/
+            position: absolute;
+            top: 0;
+            width: 28%;
+        }
+
+        #editor{
+            width: 100%;
+            height: 100%;
+            font-size: 16px;
+        }
+
+        #vdom{
+            padding: 40px;
+        }
+    </style>
+
+    <script src="../dist/vremark.js"></script>
+
+    <script src="//cdn.bootcss.com/lodash.js/4.17.10/lodash.js"></script>
+    <script src="//cdn.bootcss.com/react/16.4.0/umd/react.development.js"></script>
+    <script src="//cdn.bootcss.com/react-dom/16.4.0/umd/react-dom.development.js"></script>
+
+</head>
+<body>
+
+<div id="vdom"></div>
+
+<script>
+    (function () {
+        const md = "$$c = \\pm\\sqrt{a^2 + b^2}$$";
+
+
+        const h = React.createElement;
+        const processor = vremark({
+            vdom: {
+                h: h
+            },
+            toc: {
+
+            },
+            math: {
+
+            },
+            katex: {
+
+            }
+        });
+
+        const ast = processor.parse(md);
+        console.log(ast);
+        const vdom = processor.runSync(ast);
+        console.log(vdom);
+
+        ReactDOM.render(
+            vdom,
+            document.getElementById('vdom')
+        );
+
+        // vremark.renderHTML();
+        // var content = '<strong style="color: red;">content</strong>';
+        // ReactDOM.render(
+        //     h('div',{
+        //         dangerouslySetInnerHTML: {
+        //             __html:content
+        //         }
+        //     }),
+        //     document.getElementById('vdom')
+        // );
+
+    })();
+</script>
+
+
+<script>
+
+    // const h = React.createElement;
+    //
+    // const processor = vremark({
+    //     vdom: {
+    //         h: h
+    //     }
+    // });
+    //
+    // const ast = processor.parse(md);
+    // // console.log(ast);
+    // const vdom = processor.runSync(ast);
+    //
+    // console.log(vdom);
+    //
+    // ReactDOM.render(
+    //     vdom,
+    //     document.getElementById('vdom')
+    // );
+
+    // const vdom = processor.processSync(md).contents;
+    //
+    // console.log(vdom);
+    //
+    // ReactDOM.render(
+    //     vdom,
+    //     document.getElementById('vdom')
+    // );
+
+    // console.log( React.createElement('div', {}, '======') )
+</script>
+
+
+<script>
+
+
+    // const processor = vremark({
+    // });
+
+    // const ast = processor.parse(md);
+    // // console.log(ast);
+    // const full = processor.runSync(ast);
+    // console.log(full);
+
+    // const vdom = processor.processSync(md).contents;
+    //
+    // console.log(vdom);
+    //
+    // ReactDOM.render(
+    //     vdom,
+    //     document.getElementById('vdom')
+    // );
+
+    // console.log(html);
+    //
+
+
+    // console.log(processor.parse(md));
+
+
+
+    // const html = processor.processSync(md).contents;
+    // console.log(html);
+
+    // const ast = processor.parse(md)
+    // const full = processor.runSync(ast);
+    //
+    // console.log(full);
+    //
+    // document.getElementById('vdom').innerText = JSON.stringify(full, null, 2);
+
+    // console.log(processor);
+
+    // console.log(parser(md));
+
+
+    /*
+    const ast = vremark.parse(md);
+    console.log(ast);
+
+
+
+    const h = React.createElement;
+
+    function createElement(node, options, index) {
+
+        let vnode = null;
+        let children = [];
+
+        switch (node.type) {
+            case 'root':
+                vnode = h('div', {
+                    key: _.uniqueId('div_'),
+                    className: 'markdown-body'
+                }, children);
+                break;
+            case 'heading':
+                vnode = h('h'+node.depth, {
+                    key: _.uniqueId('heading_'),
+                    'data-line-start': node.position.start.line,
+                    'data-line-end': node.position.end.line,
+                }, children);
+                break;
+            case 'text':
+                vnode = h('span', {
+                    key: _.uniqueId('text_')
+                }, node.value);
+                break;
+            case 'checkbox':
+                vnode = h('input', {
+                    key: _.uniqueId('checkbox_'),
+                    type: 'checkbox',
+                    checked: node.checked,
+                    readOnly: true
+                });
+                break;
+            case 'strong':
+                vnode = h('strong', {
+                    key: _.uniqueId('strong_')
+                }, children);
+                break;
+            case 'paragraph':
+                vnode = h('p', {
+                    key: _.uniqueId('paragraph_'),
+                    'data-line-start': node.position.start.line,
+                    'data-line-end': node.position.end.line,
+                }, children);
+                break;
+            case 'blockquote':
+                vnode = h('blockquote', {
+                    key: _.uniqueId('blockquote_')
+                }, children);
+                break;
+            case 'thematicBreak':
+                vnode = h('hr', {
+                    key: _.uniqueId('hr_')
+                });
+                break;
+            case 'html':
+                vnode = h('code', {
+                    key: _.uniqueId('html_')
+                }, node.value);
+                break;
+            case 'image':
+                vnode = h('img', {
+                    key: _.uniqueId('image_'),
+                    src: node.url,
+                    alt: node.alt,
+                    title: node.title
+                });
+                break;
+            case 'list':
+                vnode = h(node.ordered?'ol':'ul', {
+                    key: _.uniqueId('list_'),
+                    // loose: node.loose,
+                    // ordered: node.ordered,
+                    // start: node.start
+                }, children);
+                break;
+            case 'listItem':
+                vnode = h('li', {
+                    key: _.uniqueId('listItem_'),
+                    // loose: node.loose,
+                    // checked: node.checked
+                }, children);
+                break;
+            case 'inlineCode':
+                vnode = h('code', {
+                    key: _.uniqueId('inlineCode_'),
+                }, node.value);
+                break;
+            case 'code':
+                vnode = h('pre', {
+                    key: _.uniqueId('pre_'),
+                    'data-line-start': node.position.start.line,
+                    'data-line-end': node.position.end.line,
+                }, [
+                    h('code', {
+                        key: _.uniqueId('code_'),
+                        className: 'language-'+node.lang
+                    }, node.value)
+                ]);
+                break;
+            case 'link':
+                vnode = h('a', {
+                    key: _.uniqueId('link_'),
+                    href: node.url,
+                    title: node.title
+                }, children);
+                break;
+            case 'table':
+                vnode = h('table', {
+                    key: _.uniqueId('table_')
+                }, [
+                    h('tbody',{key: _.uniqueId('tbody_')},children)
+                ]);
+                break;
+            case 'tableRow':
+                vnode = h('tr', {
+                    key: _.uniqueId('tableRow_')
+                }, children);
+                break;
+            case 'tableCell':
+                let align = (options.align && index>=0 && index<options.align.length)?options.align[index]:'';
+                vnode = h('td', {
+                    key: _.uniqueId('tableCell_'),
+                    align: align
+                }, children);
+                break;
+            default:
+                vnode = null;
+        }
+
+        if(vnode && node.children){
+
+            if(options && options.checked){
+                children.push(
+                    createElement({
+                        type: 'checkbox',
+                        checked: options.checked
+                    })
+                );
+                children.push(
+                    createElement({
+                        type: 'text',
+                        value: ' '
+                    })
+                );
+                delete options.checked;
+            }
+
+            let _options = options || {};
+            if(node.type === "table"){
+                _options.align = _options.hasOwnProperty('align')?_options.align:node.align;
+            }
+            else if(node.type === "tableRow"){
+                // _options.align = node.align;
+                _options.align = _options.hasOwnProperty('align')?_options.align:node.align;
+            }
+            else if(node.type === "listItem"){
+                // _options.checked = node.checked;
+                _options.checked = _options.hasOwnProperty('checked')?_options.checked:node.checked;
+            }
+
+            for(let i=0;i<node.children.length;i++){
+                let n = node.children[i];
+
+                children.push(
+                    createElement(n, _options, i)
+                );
+            }
+
+        }
+        return vnode;
+    }
+
+
+    const root = createElement(ast);
+
+    ReactDOM.render(
+        root,
+        document.getElementById('vdom')
+    );
+    */
+
+
+    // console.log(create(ast));
+
+    // ReactDOM.render(
+    //     h('div',{
+    //         className: 'vdom markdown-body'
+    //     }, vdom),
+    //     document.getElementById('vdom')
+    // );
+
+
+    // const parser = vremark({
+    // });
+    //
+    // console.log(parser(md));
+
+</script>
+
+</body>
+</html>
