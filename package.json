@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "webpack -w"
+    "dev": "webpack -w --config ./examples/webpack.config.js --example react"
   },
   "devDependencies": {
     "webpack": "^4.17.2",
@@ -8,11 +8,5 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
-    "remark": "^9.0.0",
-    "remark-html": "^8.0.0",
-    "remark-html-katex": "^1.1.1",
-    "remark-math": "^1.0.4",
-    "remark-toc": "^5.0.0",
-    "remark-vdom": "^6.0.0"
   }
 }

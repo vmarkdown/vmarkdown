@@ -19,16 +19,23 @@ const config = {
 module.exports = [
     merge({
         entry:{
-            vremark: './src/libs/vremark.js'
+            vremark: './src/index.js'
         }
     }, config),
-    merge({
-        entry:{
-            vmarkdown: './src/index.js'
-        },
-        externals: {
-            vremark: 'vremark'
-        }
-    }, config)
+
+
+    // merge({
+    //     entry:{
+    //         vremark: './src/libs/vremark.js'
+    //     }
+    // }, config),
+    // merge({
+    //     entry:{
+    //         vmarkdown: './src/index.js'
+    //     },
+    //     externals: {
+    //         vremark: 'vremark'
+    //     }
+    // }, config)
 ];
 
