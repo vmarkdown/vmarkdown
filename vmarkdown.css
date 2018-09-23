@@ -1,0 +1,18 @@
+.vremark-flowchart, .vremark-sequence {
+    text-align: center;
+}
+
+.list-item-checkbox{
+    margin-right: 10px;
+}
+
+/*
+*
+* highlight
+*/
+.hljs-line .hljs-line-number{
+    margin-right: 20px;
+    text-align: right;
+    width: 28px;
+    display: inline-block;
+}

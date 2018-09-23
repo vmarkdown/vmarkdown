@@ -10,6 +10,11 @@ const config = {
         library: "[name]",
         libraryExport: 'default'
     },
+    resolve: {
+        alias: {
+            'vremark': path.resolve(__dirname, 'dist', 'vremark.common.js')
+        }
+    },
     module:{
     },
     externals: {
@@ -29,8 +34,8 @@ module.exports = [
             VMarkdown: './src/index.js'
         },
         externals: {
-            'vremark': 'vremark',
-            'vremark-plugin-katex': 'vremarkPluginKatex'
+            // 'vremark': 'vremark',
+            // 'vremark-plugin-katex': 'vremarkPluginKatex'
         }
     }, config)
 ];
