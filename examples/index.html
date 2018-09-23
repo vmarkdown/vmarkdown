@@ -14,23 +14,41 @@
 
     <link rel="stylesheet" href="../vmarkdown.css">
 
+    <style>
+
+        html,body{
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+            /*padding-top: 0;*/
+            padding-bottom: 600px;
+        }
+        /*.markdown-body > h1{*/
+            /*margin-top: 0;*/
+        /*}*/
+
+        .markdown-body .active,
+        .markdown-body .active pre code
+        {
+            background-color: rgba(255, 0, 0, 0.18);
+        }
+
+    </style>
+
+    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="//cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
+    <script src="//cdn.bootcss.com/preact/8.2.9/preact.dev.js"></script>
+
+    <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdn.bootcss.com/raphael/2.2.7/raphael.js"></script>
+    <script src="//cdn.bootcss.com/flowchart/1.11.0/flowchart.js"></script>
+    <script src="//cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.js"></script>
+    <script src="//cdn.bootcss.com/underscore.js/1.9.0/underscore.js"></script>
+
+    <script src="dist/example-vmarkdown-main.js"></script>
 </head>
 <body>
-
-<div id="app"></div>
-
-<script src="//cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-<script src="//cdn.bootcss.com/KaTeX/0.10.0-alpha/katex.min.js"></script>
-<script src="//cdn.bootcss.com/preact/8.2.9/preact.dev.js"></script>
-
-<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<script src="//cdn.bootcss.com/raphael/2.2.7/raphael.js"></script>
-<script src="//cdn.bootcss.com/flowchart/1.11.0/flowchart.js"></script>
-<script src="//cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.js"></script>
-<script src="//cdn.bootcss.com/underscore.js/1.9.0/underscore.js"></script>
-
-
-<script src="dist/example-vmarkdown-main.js"></script>
-
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "webpack -w --config ./examples/webpack.config.js",
-    "build": "webpack -w --config ./webpack.config.js",
+    "build": "webpack --config ./webpack.config.js",
     "dist": "NODE_ENV=production webpack -p --config ./webpack.config.js"
   },
   "devDependencies": {
@@ -11,6 +11,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "remark-breaks": "^1.0.1",
     "remark-math": "^1.0.4",
     "remark-preact-renderer": "^0.0.4"
   }
