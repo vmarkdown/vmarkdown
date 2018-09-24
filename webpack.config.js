@@ -38,10 +38,11 @@ module.exports = [
             library: "VMarkdown"
         },
         externals: {
-            'flowchart.js': 'flowchart.js',
+            'flowchart.js': 'flowchart',
             'Raphael': 'Raphael',
             'raphael': 'Raphael',
-            'highlight.js': 'highlight.js',
+            // 'highlight.js': 'highlight.js',
+            'highlight.js': 'hljs',
             'katex': 'katex',
             'mermaid': 'mermaid',
             'underscore': 'underscore'

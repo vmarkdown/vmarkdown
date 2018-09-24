@@ -15,15 +15,16 @@ export default class VMarkdown {
     constructor(options = {}) {
         const self = this;
         self.processor = vremark()
-            // .use(function () {
-            //
-            //     return function (root) {
-            //
-            //         debugger
-            //
-            //     }
-            //
-            // }, {})
+            .use(function plugin(options) {
+                return function transform(root) {
+                    root.children.forEach(function (node, i) {
+                        node.properties = node.properties?node.properties:{};
+                        node.properties['data-line'] = node.position.start.line;
+                    });
+                    return root;
+                }
+            })
+
             .use(toc, {})
             .use(breaks)
 
