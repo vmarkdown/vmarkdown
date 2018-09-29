@@ -13,6 +13,6 @@
   "dependencies": {
     "remark-breaks": "^1.0.1",
     "remark-math": "^1.0.4",
-    "remark-preact-renderer": "^0.0.4"
+    "remark-preact-renderer": "^0.0.6"
   }
 }
