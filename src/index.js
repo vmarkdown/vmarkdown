@@ -9,6 +9,11 @@ import toc from 'vremark-plugin-toc';
 import breaks from 'remark-breaks';
 import renderer from 'remark-vue-renderer';
 
+import incremental from 'mdast-util-incremental';
+
+// console.log(incremental);
+
+
 function getLines (text) {
     var BREAK_LINE_REGEXP = /\r\n|\r|\n/g;
     if (text.length === 0) return [];
@@ -63,15 +68,43 @@ export default class VMarkdown {
     parse(md) {
         const self = this;
         // return self.processor.runSync(md);
-
         let mdast = self.processor.parse(md);
         mdast = self.processor.runSync(mdast);
-        self.mdast = mdast;
+        // self.mdast = mdast;
         return mdast;
     }
 
-    patch(md, change, h) {
+    _render(h, mdast) {
+        const file = this.processor().data('h', h).processSync(md);
+        return file.contents;
+    }
+
+    patch(h, incremental) {
         const self = this;
+
+
+        const md = incremental.content[0];
+
+        if(incremental.action === 'reset') {
+            let mdast = self.parse(md);
+            self.mdast = mdast;
+            return self._render(h, mdast);
+        }
+
+        else if(incremental.action === 'insert') {
+
+        }
+
+
+        else if(incremental.action === 'replace') {
+
+        }
+
+
+        else if(incremental.action === 'remove') {
+
+        }
+
 
         // const file = this.processor().data({
         //     h: h,
@@ -79,35 +112,40 @@ export default class VMarkdown {
         // }).processSync(md);
         // return file.contents;
 
-        console.log(change);
-
-        let startLine = change.start.line - 1;
-        let endLine = change.end.line;
-
-
-        const lines = getLines(md);
-
-        console.log(lines);
-
-        const subLines = lines.slice(startLine, endLine);
-
-
-        if(subLines.length>0){
-
-            let line = subLines[0];
-            console.log(line);
-
-            let mdast = self.parse(line);
-
-            console.log(mdast);
-        }
+        // console.log(change);
+        //
+        // let startLine = change.start.line - 1;
+        // let endLine = change.end.line;
+        //
+        //
+        // const lines = getLines(md);
+        //
+        // console.log(lines);
+        //
+        // const subLines = lines.slice(startLine, endLine);
+        //
+        //
+        // if(subLines.length>0){
+        //
+        //     let line = subLines[0];
+        //     console.log(line);
+        //
+        //     let mdast = self.parse(line);
+        //
+        //     console.log(mdast);
+        // }
 
         return h('div',{},'====');
     }
 
-    render(md, h) {
+    render(h, mdast) {
         const file = this.processor().data('h', h).processSync(md);
         return file.contents;
     }
+
+    // render(md, h) {
+    //     const file = this.processor().data('h', h).processSync(md);
+    //     return file.contents;
+    // }
 
 }

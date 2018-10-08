@@ -20,10 +20,10 @@ function setValue() {
     preview.setValue(value);
 }
 
-editor.on("change",  function (change) {
-    const value = editor.getValue();
-    preview.changeValue(value, change);
-});
+// editor.on("change",  function (change) {
+//     const value = editor.getValue();
+//     preview.changeValue(value, change);
+// });
 
 function initValue() {
     const value = editor.getValue();

@@ -21,6 +21,7 @@ const config = {
             'vremark-plugin-sequence': path.resolve(__dirname, 'assets', 'vremark-plugin-sequence.common.js'),
             'vremark-plugin-katex': path.resolve(__dirname, 'assets', 'vremark-plugin-katex.common.js'),
             'vremark-plugin-toc': path.resolve(__dirname, 'assets', 'vremark-plugin-toc.common.js'),
+            'mdast-util-incremental': path.resolve(__dirname, 'assets', 'incremental.js')
 
         }
     },
