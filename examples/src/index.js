@@ -21,11 +21,9 @@ function setValue() {
 }
 
 editor.on("change",  function (change) {
-    // setValue();
-    preview.changeValue(change);
+    const value = editor.getValue();
+    preview.changeValue(value, change);
 });
-
-// setValue();
 
 function initValue() {
     const value = editor.getValue();

@@ -32,13 +32,13 @@ const preview = new Vue({
             this.type = 'render';
             this.md = vdom;
         },
-        changeValue(change) {
+        changeValue(md, change) {
             // console.log(change);
 
 
             // let startLine = change.start.line;
             // let endLine = change.end.line;
-
+            this.md = md;
             this.change = change;
             this.type = 'change';
 

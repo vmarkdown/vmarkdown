@@ -7,7 +7,7 @@ import mermaid from 'vremark-plugin-mermaid';
 // import sequence from 'vremark-plugin-sequence';
 import toc from 'vremark-plugin-toc';
 import breaks from 'remark-breaks';
-import renderer from 'remark-preact-renderer';
+import renderer from 'remark-vue-renderer';
 
 function getLines (text) {
     var BREAK_LINE_REGEXP = /\r\n|\r|\n/g;
@@ -49,7 +49,7 @@ export default class VMarkdown {
 
         self.processor = processor().use(function plugin(options) {
             return function transform(root) {
-                console.log(root);
+                // console.log(root);
                 return root;
             }
         }).freeze();
@@ -71,6 +71,8 @@ export default class VMarkdown {
     }
 
     patch(md, change, h) {
+        const self = this;
+
         // const file = this.processor().data({
         //     h: h,
         //     change: change
@@ -89,8 +91,16 @@ export default class VMarkdown {
 
         const subLines = lines.slice(startLine, endLine);
 
-        console.log(subLines);
 
+        if(subLines.length>0){
+
+            let line = subLines[0];
+            console.log(line);
+
+            let mdast = self.parse(line);
+
+            console.log(mdast);
+        }
 
         return h('div',{},'====');
     }
