@@ -1,18 +1,23 @@
 {
   "scripts": {
-    "dev": "webpack -w --config ./examples/webpack.config.js",
+    "dev1": "webpack -w --config ./examples/webpack.config.js",
+    "dev": "webpack-dev-server --config ./examples/webpack.config.js",
     "build": "webpack --config ./webpack.config.js",
     "dist": "NODE_ENV=production webpack -p --config ./webpack.config.js"
   },
   "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
     "text-loader": "^0.0.1",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
-    "webpack-merge": "^4.1.4"
+    "webpack-dev-server": "^3.1.9",
+    "webpack-merge": "^4.1.4",
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.23.0"
   },
   "dependencies": {
     "remark-breaks": "^1.0.1",
     "remark-math": "^1.0.4",
-    "remark-preact-renderer": "^0.0.6"
+    "remark-vue-renderer": "^0.0.2"
   }
 }

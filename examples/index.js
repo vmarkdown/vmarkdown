@@ -1,9 +1,29 @@
-const { h, render } = preact;
-import HomeComponent from './src/home.component';
-// // render(h(HomeComponent), document.getElementById('app'));
-$(function () {
-    render(h(HomeComponent), document.body);
+
+const app = new Vue({
+    el: '#app',
+    template: '<div>===</div>'
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const { h, render } = preact;
+// import HomeComponent from './src/home.component';
+// // // render(h(HomeComponent), document.getElementById('app'));
+// $(function () {
+//     render(h(HomeComponent), document.body);
+// });
 
 
 // const{ h, render, Component } = preact;
