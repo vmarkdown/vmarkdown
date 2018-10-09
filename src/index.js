@@ -10,6 +10,7 @@ import breaks from 'remark-breaks';
 import renderer from 'remark-vue-renderer';
 
 import incremental from 'mdast-util-incremental';
+import toVdom from 'mdast-util-to-vdom';
 
 // console.log(incremental);
 
@@ -79,33 +80,65 @@ export default class VMarkdown {
         return file.contents;
     }
 
-    patch(h, incremental) {
+    patch(h, change) {
+
         const self = this;
 
 
-        const md = incremental.content[0];
 
-        if(incremental.action === 'reset') {
-            let mdast = self.parse(md);
-            self.mdast = mdast;
-            return self._render(h, mdast);
+        function transform(mdast) {
+            const vdom = self.processor().use(toVdom, {
+                h: h,
+                renderer: renderer
+            }).data('h', h).runSync(mdast);
+            return vdom;
         }
 
-        else if(incremental.action === 'insert') {
+        if(change.action){
+            const md = change.content[0];
+
+            if(change.action === 'reset') {
+                let mdast = self.parse(md);
+                self.mdast = mdast;
+                // return self._render(h, mdast);
+                return transform(mdast);
+            }
+
+            else if(change.action === 'insert') {
+
+            }
+
+
+            else if(change.action === 'replace') {
+                console.time('mdast0 parse');
+                let mdast0 = self.parse(md);
+                console.timeEnd('mdast0 parse');
+
+                console.time('mdast replace');
+                let mdast = incremental.replace(self.mdast, mdast0, change.start.line);
+                console.timeEnd('mdast replace');
+
+                self.mdast = mdast;
+
+                console.time('vdom');
+                let vdom =  transform(mdast);
+                console.timeEnd('vdom');
+                return vdom;
+            }
+
+
+            else if(change.action === 'remove') {
+
+            }
+
 
         }
 
 
-        else if(incremental.action === 'replace') {
-
-        }
 
 
-        else if(incremental.action === 'remove') {
 
-        }
-
-
+        // return
         // const file = this.processor().data({
         //     h: h,
         //     change: change

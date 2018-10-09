@@ -6,16 +6,17 @@
     "dist": "NODE_ENV=production webpack -p --config ./webpack.config.js"
   },
   "devDependencies": {
+    "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.0",
     "text-loader": "^0.0.1",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.9",
-    "webpack-merge": "^4.1.4",
-    "css-loader": "^1.0.0",
-    "style-loader": "^0.23.0"
+    "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "mdast-util-to-vdom": "^0.0.1",
     "remark-breaks": "^1.0.1",
     "remark-math": "^1.0.4",
     "remark-vue-renderer": "^0.0.2"

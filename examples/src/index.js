@@ -25,6 +25,11 @@ function setValue() {
 //     preview.changeValue(value, change);
 // });
 
+editor.on("incremental",  function (incremental) {
+    console.log(incremental);
+    preview.setValue(incremental);
+});
+
 function initValue() {
     const value = editor.getValue();
     preview.setValue(value);
@@ -33,6 +38,6 @@ function initValue() {
     // const vdom = vmarkdown.render(value);
     // preview.setValue(vdom);
 
-    preview.$mount('#preview');
+    // preview.$mount('#preview');
 }
-initValue();
+// initValue();

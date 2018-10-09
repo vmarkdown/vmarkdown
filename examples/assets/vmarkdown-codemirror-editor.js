@@ -487,9 +487,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.
@@ -948,7 +946,6 @@ class CodeMirrorEditor extends _editor__WEBPACK_IMPORTED_MODULE_0__["default"] {
             // console.log('parse all');
             incremental.action = 'reset';
             incremental.content.push( self.getValue() );
-
         }
         else if(action === "insert") {
 
@@ -965,6 +962,9 @@ class CodeMirrorEditor extends _editor__WEBPACK_IMPORTED_MODULE_0__["default"] {
                 }
 
                 incremental.content.push( self.getLine(start.line) );
+
+                incremental.start.line = start.line;
+                incremental.end.line = start.line;
 
             }
 

@@ -17,7 +17,7 @@ const vmarkdown = new VMarkdown({
 // vmarkdown.patch(change);
 
 const preview = new Vue({
-    // el: '#app',
+    el: '#app',
     data() {
         return {
             incremental: {},
@@ -57,12 +57,23 @@ const preview = new Vue({
         setValue(incremental) {
             this.incremental = incremental;
             // this.action = incremental.action;
-
-
+            // this.md = new Date().getTime();
+            // this.$forceUpdate();
         }
     },
     render(h) {
-        return vmarkdown.patch(h, this.incremental);
+
+        // var a = this.md;
+
+        console.time('parse');
+        const vdom = vmarkdown.patch(h, this.incremental);
+        console.timeEnd('parse');
+
+
+
+        return vdom;
+
+
         // if(this.action === 'replace'){
         //
         // }

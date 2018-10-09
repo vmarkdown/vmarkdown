@@ -63,8 +63,9 @@ function replace(target, source, from) {
         // }
         if( position.start.line === from && position.end.line === from ){
             var sourceItem = sourceChildren[sourceIndex++];
-            fixPosition(sourceItem, position);
+            // fixPosition(sourceItem, position);
             children[i] = sourceItem;
+            break;
         }
     }
     return target;
