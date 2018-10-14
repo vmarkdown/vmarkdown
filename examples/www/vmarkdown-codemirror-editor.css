@@ -1,0 +1,54 @@
+.CodeMirror.cm-s-vmarkdown {
+  height: 100%; }
+
+.CodeMirror .CodeMirror-vscrollbar {
+  outline: none; }
+
+.CodeMirror .CodeMirror-overlayscroll-horizontal div,
+.CodeMirror .CodeMirror-overlayscroll-vertical div {
+  background: #bcd; }
+
+.CodeMirror .CodeMirror-lines {
+  padding-top: 24px; }
+
+.CodeMirror.cm-s-vmarkdown {
+  font-family: "Menlo","Helvetica Neue",Arial,"Hiragino Sans GB","STHeiti","Microsoft YaHei","WenQuanYi Micro Hei",SimSun,Song,sans-serif;
+  font-size: 14px;
+  padding-left: 18px; }
+  .CodeMirror.cm-s-vmarkdown .cm-header.cm-header-1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #6c71c4; }
+  .CodeMirror.cm-s-vmarkdown .cm-header.cm-header-2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #6c71c4; }
+  .CodeMirror.cm-s-vmarkdown .cm-header.cm-header-3 {
+    font-size: 17px;
+    font-weight: bold;
+    color: #6c71c4; }
+  .CodeMirror.cm-s-vmarkdown .cm-header.cm-header-4 {
+    font-size: 15px;
+    font-weight: bold;
+    color: #268bd2; }
+  .CodeMirror.cm-s-vmarkdown .cm-header.cm-header-5 {
+    font-size: 13px;
+    font-weight: bold;
+    color: #268bd2; }
+  .CodeMirror.cm-s-vmarkdown .cm-header.cm-header-6 {
+    font-size: 11px;
+    font-weight: bold;
+    color: #268bd2; }
+  .CodeMirror.cm-s-vmarkdown .cm-em {
+    color: #cb4b16;
+    font-style: italic; }
+  .CodeMirror.cm-s-vmarkdown .cm-quote {
+    color: inherit; }
+  .CodeMirror.cm-s-vmarkdown .cm-comment {
+    color: #008c00; }
+  .CodeMirror.cm-s-vmarkdown .cm-strong {
+    color: #dc322f;
+    font-weight: bold; }
+  .CodeMirror.cm-s-vmarkdown .cm-link {
+    text-decoration: none; }
+

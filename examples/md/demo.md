@@ -10,6 +10,8 @@
 
 -------------------
 
+[TOC]
+
 ## Markdown简介
 
 > Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档，然后转换成格式丰富的HTML页面。    —— [维基百科](https://zh.wikipedia.org/wiki/Markdown)
@@ -26,47 +28,6 @@ def somefunc(param1='', param2=0):
     return (param2 - param1 + 1) or None
 class SomeClass:
     pass
-
-def somefunc(param1='', param2=0):
-    '''A docstring'''
-    if param1 > param2: # interesting
-        print 'Greater'
-    return (param2 - param1 + 1) or None
-class SomeClass:
-    pass
-
-def somefunc(param1='', param2=0):
-    '''A docstring'''
-    if param1 > param2: # interesting
-        print 'Greater'
-    return (param2 - param1 + 1) or None
-class SomeClass:
-    pass
-
-def somefunc(param1='', param2=0):
-    '''A docstring'''
-    if param1 > param2: # interesting
-        print 'Greater'
-    return (param2 - param1 + 1) or None
-class SomeClass:
-    pass
-
-def somefunc(param1='', param2=0):
-    '''A docstring'''
-    if param1 > param2: # interesting
-        print 'Greater'
-    return (param2 - param1 + 1) or None
-class SomeClass:
-    pass
-
-def somefunc(param1='', param2=0):
-    '''A docstring'''
-    if param1 > param2: # interesting
-        print 'Greater'
-    return (param2 - param1 + 1) or None
-class SomeClass:
-    pass
-
 >>> message = '''interpreter
 ... prompt'''
 ```
@@ -75,10 +36,6 @@ class SomeClass:
 可以创建行内公式，例如 $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$。或者块级公式：
 
 $$	x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
-
-$$
-x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}
-$$
 
 ### 表格
 | Item      |    Value | Qty  |
@@ -184,4 +141,3 @@ Bob-->Alice: I am good thanks!
   [3]: http://adrai.github.io/flowchart.js/
   [4]: http://bramp.github.io/js-sequence-diagrams/
   [5]: https://dev.yinxiang.com/doc/articles/enml.php
-

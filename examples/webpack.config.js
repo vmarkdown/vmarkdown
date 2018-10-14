@@ -13,16 +13,18 @@ const config = {
     },
     resolve: {
         alias: {
-            'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
-            'vremark': path.resolve(__dirname, 'assets', 'vremark.common.js'),
-            'vremark-plugin-flowchart': path.resolve(__dirname, 'assets', 'vremark-plugin-flowchart.common.js'),
-            'vremark-plugin-highlight': path.resolve(__dirname, 'assets', 'vremark-plugin-highlight.common.js'),
-            'vremark-plugin-mermaid': path.resolve(__dirname, 'assets', 'vremark-plugin-mermaid.common.js'),
-            'vremark-plugin-sequence': path.resolve(__dirname, 'assets', 'vremark-plugin-sequence.common.js'),
-            'vremark-plugin-katex': path.resolve(__dirname, 'assets', 'vremark-plugin-katex.common.js'),
-            'vremark-plugin-toc': path.resolve(__dirname, 'assets', 'vremark-plugin-toc.common.js'),
-            'mdast-util-incremental': path.resolve(__dirname, 'assets', 'incremental.js')
+            'vremark': path.resolve(__dirname, 'www', 'vremark.js'),
 
+
+            // 'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
+            // 'vremark': path.resolve(__dirname, 'assets', 'vremark.common.js'),
+            // 'vremark-plugin-flowchart': path.resolve(__dirname, 'assets', 'vremark-plugin-flowchart.common.js'),
+            // 'vremark-plugin-highlight': path.resolve(__dirname, 'assets', 'vremark-plugin-highlight.common.js'),
+            // 'vremark-plugin-mermaid': path.resolve(__dirname, 'assets', 'vremark-plugin-mermaid.common.js'),
+            // 'vremark-plugin-sequence': path.resolve(__dirname, 'assets', 'vremark-plugin-sequence.common.js'),
+            // 'vremark-plugin-katex': path.resolve(__dirname, 'assets', 'vremark-plugin-katex.common.js'),
+            // 'vremark-plugin-toc': path.resolve(__dirname, 'assets', 'vremark-plugin-toc.common.js'),
+            // 'mdast-util-incremental': path.resolve(__dirname, 'assets', 'incremental.js')
         }
     },
     module: {
@@ -41,20 +43,26 @@ const config = {
         ]
     },
     externals: {
-        'flowchart.js': 'flowchart',
-        'highlight.js': 'hljs',
         'katex': 'katex',
-        'mermaid': 'mermaid',
-        'underscore': '_'
+        'lowlight': 'lowlight',
+
+
+        // 'flowchart.js': 'flowchart',
+        // 'highlight.js': 'hljs',
+        // 'katex': 'katex',
+        // 'mermaid': 'mermaid',
+        // 'underscore': '_'
     },
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'examples/src/index.html'
+            template: 'examples/index.html'
         })
     ],
     devServer: {
         // hotOnly: true,
+        hot: false,
+        inline: false,
         contentBase: path.join(__dirname, "www")
     }
 };
