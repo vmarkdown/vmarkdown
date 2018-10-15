@@ -1,11 +1,8 @@
-const md = require('../md/demo.md');
 const vmarkdown = require('./vmarkdown');
 
 const editor = new CodeMirrorEditor(document.getElementById('editor'), {
-    value: md,
-    lineNumbers: true
+    // lineNumbers: true
 });
-
 
 editor.on('cursorChange', function (cursor) {
     // console.log('cursorChange');
@@ -31,10 +28,10 @@ function onChange() {
     vmarkdown.setValue(value)
 }
 
-setTimeout(function () {
-    vmarkdown.setValue(md);
-}, 100);
+
 
 editor.on('change', _.debounce(onChange, 500));
+
+// vmarkdown.emit('change');
 
 module.exports = editor;

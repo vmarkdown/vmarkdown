@@ -101,56 +101,26 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return VMarkDownPreview; });
-/* harmony import */ var _util_preview__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _base_preview__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 __webpack_require__(1);
-
-
-
-$.extend($.scrollTo.defaults, {
-    axis: 'y',
-    duration: 300
-});
-
-function scrollTo(target, options) {
-    $(window).stop();
-    $(window).scrollTo(target, options);
-}
 
 const ACTIVE_CLASS = 'vamrkdown-preview-active';
 
-class VMarkDownPreview extends _util_preview__WEBPACK_IMPORTED_MODULE_0__["default"] {
+class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
     constructor(options) {
         super();
         const self = this;
         self.$scrollContainer = $(options.scrollContainer || window);
-
-        self.vmarkdown = options.vmarkdown;
-        self.preview = new Vue({
-            el: options.container,
-            render(h) {
-                return self.vmarkdown.compile(h);
-            }
-        });
-
-        self.vmarkdown.on('change', function () {
-            self.preview.$forceUpdate();
-        });
-
-        self.vmarkdown.on('firstVisibleLineChange', function (firstVisibleLine) {
-            self.scrollToLine(firstVisibleLine);
-        });
-
-        self.vmarkdown.on('cursorChange', function (cursor) {
-            self.activeTo(cursor);
-        });
+        self.activeEl = null;
     }
 
-    on(type, handler) {
+    // on(type, handler) {
+    //
+    // }
 
-    }
 
-    scrollTo() {
+    setValue() {
 
     }
 
@@ -160,96 +130,42 @@ class VMarkDownPreview extends _util_preview__WEBPACK_IMPORTED_MODULE_0__["defau
         self.$scrollContainer.scrollTo(target, options);
     }
 
-    scrollToLine(line) {
-
-        const self = this;
-
-        const node = self.vmarkdown.findNodeFromLine(line);
-        // const self = this;
-        //
-        // const node = NodeUtil.findNodeFromLine(self.hast, line);
-        //
-        // console.log(node);
-        //
+    scrollTo(node) {
         if(!node) return;
 
+        const self = this;
         const id = node.properties.id;
-
-        const dom = document.getElementById(id);
-
-        console.log(dom);
-
-        if(!dom) return;
-
-        // dom.scrollIntoView();
-        self._scrollTo(dom);
+        // preview.scrollTo('#'+id);
+        const target = '#'+id;
+        self._scrollTo(target, {
+            axis: 'y',
+            duration: 300
+        });
     }
 
-    activeTo(position) {
-        const self = this;
-
-        const node = self.vmarkdown.findNode(position);
-
+    activeTo(node) {
         if(!node) return;
 
+        const self = this;
+
+        if(self.activeEl) {
+            self.activeEl.removeClass(ACTIVE_CLASS);
+        }
+
         const id = node.properties.id;
+        const target = '#'+id;
 
-        const dom = document.getElementById(id);
+        var $dom = $(target);
+        $dom.addClass(ACTIVE_CLASS);
+        self.activeEl = $dom;
 
-        console.log(dom);
+        if($dom.length === 0) {
+            return;
+        }
 
-        if(!dom) return;
-
-        $(self.preview.$el).find('.'+ACTIVE_CLASS).removeClass(ACTIVE_CLASS);
-        $(dom).addClass(ACTIVE_CLASS);
+        var dom = $dom[0];
 
         dom.scrollIntoViewIfNeeded();
-        // scrollTo(dom, {
-        //     over: 0.5,
-        //     offset: -1 * ($(window).height() / 2)
-        // });
-    }
-
-
-    activeToLine(line) {
-        const self = this;
-
-        const node = self.vmarkdown.findNodeByLine(line);
-
-        if(!node) return;
-
-        const id = node.properties.id;
-
-        const dom = document.getElementById(id);
-
-        console.log(dom);
-
-        if(!dom) return;
-
-        $(self.preview.$el).find('.active-line').removeClass(ACTIVE_CLASS);
-        $(dom).addClass(ACTIVE_CLASS);
-
-        scrollTo(dom, {
-            // over: 3,
-            offset: -1 * ($(window).height() / 2)
-        });
-
-
-        // scrollTo(dom);
-
-        // const hash = node.hash;
-        //
-        // const $target = $('[data-hash='+hash+']');
-        //
-        // $('.active').removeClass('active');
-        //
-        // $target.addClass('active');
-        //
-        //
-        // if($target.length>0) {
-        //     $target[0].scrollIntoViewIfNeeded();
-        //     // scrollTo($target[0]);
-        // }
     }
 
 }

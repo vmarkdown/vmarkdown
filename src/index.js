@@ -1,13 +1,43 @@
 const NodeUtil = require("./util/node");
 const vremark = require('vremark');
 const Event = require('./util/event');
-export default class VMarkDown {
+class VMarkDown {
 
     constructor(options) {
         const self = this;
         self.options = options;
         self.value = '';
         self.hast = {};
+        self._bindEvents(options);
+    }
+
+    _bindEvents(options) {
+        const self = this;
+
+        if(options.eventListener === 'storage') {
+
+            window.addEventListener("storage", function(event){
+                const key = event.key;
+                const value = event.newValue;
+                switch (key) {
+                    case 'change':{
+                        self.setValue(value);
+                        break;
+                    }
+                    case 'cursorChange':{
+                        let cursor = JSON.parse(value);
+                        self.emit('cursorChange', cursor);
+                        break;
+                    }
+                    case 'firstVisibleLineChange':{
+                        let firstVisibleLine = parseInt(value, 10);
+                        self.emit('firstVisibleLineChange', firstVisibleLine);
+                        break;
+                    }
+                }
+            });
+
+        }
     }
 
     setValue(value) {
@@ -58,3 +88,5 @@ export default class VMarkDown {
 }
 
 Event.mixin(VMarkDown);
+
+module.exports = VMarkDown;

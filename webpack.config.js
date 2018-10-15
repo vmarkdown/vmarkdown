@@ -8,7 +8,7 @@ const config = {
         filename: '[name].js',
         libraryTarget: "umd",
         library: "[name]",
-        libraryExport: 'default'
+        // libraryExport: 'default'
     },
     resolve: {
         alias: {
