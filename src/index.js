@@ -5,10 +5,10 @@ class VMarkDown {
 
     constructor(options) {
         const self = this;
-        self.options = options;
+        self.options = options || {};
         self.value = '';
         self.hast = {};
-        self._bindEvents(options);
+        // self._bindEvents(self.options);
     }
 
     _bindEvents(options) {
@@ -43,6 +43,10 @@ class VMarkDown {
     setValue(value) {
         this.value = value;
         this.emit('change', value);
+    }
+
+    getValue() {
+        return this.value;
     }
 
     compile(h) {
