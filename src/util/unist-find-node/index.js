@@ -85,6 +85,7 @@ const defaultReturnable = [
 
 module.exports = function(node, position, returnable = []) {
   if (
+      node.position &&
     compare(node.position.start, position) &&
     compare(position, node.position.end)
   ) {

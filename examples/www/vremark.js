@@ -138,7 +138,7 @@ const defaultOptions = {
     sequence: true,
     mermaid: true,
     plantuml: true,
-    raw: true,
+    raw: false,
     G2: false
 };
 
@@ -34843,7 +34843,7 @@ var parseOptions = {
   scriptingEnabled: false
 }
 
-function wrap(tree, file) {
+function wrap(tree, file) {debugger
   var parser = new Parser(parseOptions)
   var one = zwitch('type')
   var tokenizer
