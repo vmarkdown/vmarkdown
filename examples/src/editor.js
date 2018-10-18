@@ -1,7 +1,7 @@
 const vmarkdown = require('./vmarkdown');
 
 const editor = new CodeMirrorEditor(document.getElementById('editor'), {
-    // lineNumbers: true
+    lineNumbers: true
 });
 
 editor.on('cursorChange', function (cursor) {

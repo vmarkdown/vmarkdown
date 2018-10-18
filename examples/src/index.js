@@ -1,3 +1,5 @@
+require('../www/vremark.css');
+
 const md = require('../md/demo.md');
 
 const editor = require('./editor');

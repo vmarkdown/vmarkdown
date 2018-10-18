@@ -46,6 +46,11 @@ const config = {
         'katex': 'katex',
         'lowlight': 'lowlight',
 
+        'flowchart.js': 'flowchart',
+        'underscore': '_',
+        'mermaid': 'mermaid',
+        '@antv/g2': 'G2'
+
 
         // 'flowchart.js': 'flowchart',
         // 'highlight.js': 'hljs',
