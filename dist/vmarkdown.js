@@ -185,6 +185,7 @@ class VMarkDown {
     }
 
     findNode(position) {
+        console.log(position);
         const self = this;
         const node = NodeUtil.findNode(self.hast, position);
         return node;

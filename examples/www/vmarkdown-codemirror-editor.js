@@ -293,10 +293,15 @@ class CodeMirrorEditor extends Editor {
     $onCursorChange(handler) {
         const self = this;
         const cursor = self.editor.getCursor();
+
         const result = {
             line: cursor.line + 1,
             column: cursor.ch + 1
         };
+
+        const position = self.editor.cursorCoords(cursor.line);
+        Object.assign(result, position);
+
         handler && handler.call(self, result);
     }
 

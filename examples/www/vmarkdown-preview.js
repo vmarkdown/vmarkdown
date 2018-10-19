@@ -106,6 +106,19 @@ __webpack_require__(1);
 
 const ACTIVE_CLASS = 'vamrkdown-preview-active';
 
+function getDisplay(obj){
+    if (obj.currentStyle) {
+        return obj.currentStyle.display;
+    }
+    else {
+        return getComputedStyle(obj, false).display;
+    }
+}
+
+function isBlock(obj) {
+    return getDisplay(obj) === 'block';
+}
+
 class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
     constructor(options) {
@@ -113,6 +126,11 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
         const self = this;
         self.$scrollContainer = $(options.scrollContainer || window);
         self.activeEl = null;
+
+        $.scrollTo && $.extend($.scrollTo.defaults, {
+            axis: 'y',
+            duration: 300
+        });
     }
 
     // on(type, handler) {
@@ -137,20 +155,22 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
         const id = node.properties.id;
         // preview.scrollTo('#'+id);
         const target = '#'+id;
-        self._scrollTo(target, {
-            axis: 'y',
-            duration: 300
-        });
+        // self._scrollTo(target, {
+        //     axis: 'y',
+        //     duration: 300
+        // });
+        self._scrollTo(target);
     }
 
-    activeTo(node) {
-        if(!node) return;
-
+    // at grade
+    activeTo(node, cursor) {
         const self = this;
 
         if(self.activeEl) {
             self.activeEl.removeClass(ACTIVE_CLASS);
         }
+
+        if(!node) return;
 
         const id = node.properties.id;
         const target = '#'+id;
@@ -163,9 +183,32 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
             return;
         }
 
-        var dom = $dom[0];
+        // var dom = $dom[0];
+        //
+        // if(!isBlock(dom)) {
+        //     dom = dom.parentElement;
+        // }
+        // dom.scrollIntoViewIfNeeded(); //scrollIntoView
+        // dom.scrollIntoViewIfNeeded({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        // console.log(cursor);
 
-        dom.scrollIntoViewIfNeeded();
+        var options = {
+            offset: {
+                top: -1 * cursor.top
+            }
+        };
+
+        // self._scrollTo(target, {
+        //     axis: 'y',
+        //     duration: 300,
+        //     offset: {
+        //         top: -1 * cursor.top
+        //     }
+        // });
+
+        self._scrollTo(target, cursor?options:{});
+
+
     }
 
 }

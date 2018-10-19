@@ -67,8 +67,6 @@ class VMarkDown {
 
         console.timeEnd('all');
 
-        console.log(hast);
-
         return vdom;
     }
 

@@ -21,8 +21,10 @@ vmarkdown.on('firstVisibleLineChange', function (firstVisibleLine) {
 });
 
 vmarkdown.on('cursorChange', function (cursor) {
+    console.log('cursorChange');
     const node = vmarkdown.findNode(cursor);
-    preview.activeTo(node);
+    console.log(node)
+    preview.activeTo(node, cursor);
 });
 
 module.exports = preview;
