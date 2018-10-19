@@ -8,9 +8,6 @@
 - **得心应手** ：简洁高效的编辑器，提供[桌面客户端][1]以及[离线Chrome App][2]，支持移动端 Web；
 - **深度整合** ：支持选择笔记本和添加标签，支持从印象笔记跳转编辑，轻松管理。
 
-<div class="markdown" style="color:red;">
-=======
-<div>
 
 -------------------
 
@@ -35,6 +32,149 @@ class SomeClass:
 >>> message = '''interpreter
 ... prompt'''
 ```
+
+
+
+# [G2](https://antv.alipay.com)
+
+```G2.Chart
+{
+    forceFit: true,
+    height : 300,
+    source: {
+        data:[{
+  "month": "Jan",
+  "city": "Tokyo",
+  "temperature": 7
+}, {
+  "month": "Jan",
+  "city": "London",
+  "temperature": 3.9
+}, {
+  "month": "Feb",
+  "city": "Tokyo",
+  "temperature": 6.9
+}, {
+  "month": "Feb",
+  "city": "London",
+  "temperature": 4.2
+}, {
+  "month": "Mar",
+  "city": "Tokyo",
+  "temperature": 9.5
+}, {
+  "month": "Mar",
+  "city": "London",
+  "temperature": 5.7
+}, {
+  "month": "Apr",
+  "city": "Tokyo",
+  "temperature": 14.5
+}, {
+  "month": "Apr",
+  "city": "London",
+  "temperature": 8.5
+}, {
+  "month": "May",
+  "city": "Tokyo",
+  "temperature": 18.4
+}, {
+  "month": "May",
+  "city": "London",
+  "temperature": 11.9
+}, {
+  "month": "Jun",
+  "city": "Tokyo",
+  "temperature": 21.5
+}, {
+  "month": "Jun",
+  "city": "London",
+  "temperature": 15.2
+}, {
+  "month": "Jul",
+  "city": "Tokyo",
+  "temperature": 25.2
+}, {
+  "month": "Jul",
+  "city": "London",
+  "temperature": 17
+}, {
+  "month": "Aug",
+  "city": "Tokyo",
+  "temperature": 26.5
+}, {
+  "month": "Aug",
+  "city": "London",
+  "temperature": 196.6
+}, {
+  "month": "Sep",
+  "city": "Tokyo",
+  "temperature": 293.3
+}, {
+  "month": "Sep",
+  "city": "London",
+  "temperature": 14.2
+}, {
+  "month": "Oct",
+  "city": "Tokyo",
+  "temperature": 18.3
+}, {
+  "month": "Oct",
+  "city": "London",
+  "temperature": 10.3
+}, {
+  "month": "Nov",
+  "city": "Tokyo",
+  "temperature": 13.9
+}, {
+  "month": "Nov",
+  "city": "London",
+  "temperature": 6.6
+}, {
+  "month": "Dec",
+  "city": "Tokyo",
+  "temperature": 9.6
+}, {
+  "month": "Dec",
+  "city": "London",
+  "temperature": 4.8
+}],
+        scaleConfig: {
+            month: {
+              range: [0, 1]
+            }
+        }
+    },
+    axis:[
+        {
+            field: 'temperature',
+            axisConfig: {
+                label: {
+                formatter: function formatter(val) {
+                  return val + '°C';
+                }
+              }
+            }
+        }
+    ],
+    line: {
+        position: 'month*temperature',
+        color: 'city'
+    },
+    point: {
+        position: 'month*temperature',
+        color: 'city',
+        size: 4,
+        style: {
+        	stroke: '#fff',
+  			lineWidth: 1
+        }
+    }
+
+}
+```
+
+
 ### LaTeX 公式
 
 可以创建行内公式，例如 $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$。或者块级公式：

@@ -14,9 +14,8 @@ const config = {
     resolve: {
         alias: {
             'vremark': path.resolve(__dirname, 'www', 'vremark.js'),
+            'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
 
-
-            // 'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
             // 'vremark': path.resolve(__dirname, 'assets', 'vremark.common.js'),
             // 'vremark-plugin-flowchart': path.resolve(__dirname, 'assets', 'vremark-plugin-flowchart.common.js'),
             // 'vremark-plugin-highlight': path.resolve(__dirname, 'assets', 'vremark-plugin-highlight.common.js'),
