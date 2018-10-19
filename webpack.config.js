@@ -42,6 +42,11 @@ module.exports = [
         externals: {
             'katex': 'katex',
             'lowlight': 'lowlight',
+            'flowchart.js': 'flowchart.js',
+            'underscore': 'underscore',
+            'mermaid': 'mermaid',
+            '@antv/g2': '@antv/g2'
+
 
 
             // 'flowchart.js': 'flowchart',
