@@ -8481,6 +8481,11 @@ module.exports = function blockPlugin(opts) {
         }
 
         subvalue = subvalue[0];
+        
+        var checkLastDouble = subvalue.lastIndexOf('$$');
+        if(checkLastDouble>-1) {
+            subvalue = subvalue.substring(0, checkLastDouble + 2);
+        }
 
         var trimmedContent = trim(subvalue);
         if(trimmedContent) {
