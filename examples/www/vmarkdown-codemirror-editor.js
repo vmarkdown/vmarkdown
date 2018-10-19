@@ -96,17 +96,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _codemirror_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 __webpack_require__(1);
 __webpack_require__(2);
 
-
-/* harmony default export */ __webpack_exports__["default"] = (_codemirror_editor__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
+// import Editor from './codemirror-editor';
+// export default Editor;
+const Editor = __webpack_require__(3);
+module.exports = Editor;
 
 /***/ }),
 /* 1 */
@@ -122,25 +120,24 @@ __webpack_require__(2);
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+// import Editor from './base/editor';
+const Editor = __webpack_require__(4);
 
+// var deepClone = function (obj) {
+//     var _tmp,result;
+//     _tmp = JSON.stringify(obj);
+//     result = JSON.parse(_tmp);
+//     return result;
+// }
 
-var deepClone = function (obj) {
-    var _tmp,result;
-    _tmp = JSON.stringify(obj);
-    result = JSON.parse(_tmp);
-    return result;
-}
-
-class CodeMirrorEditor extends _editor__WEBPACK_IMPORTED_MODULE_0__["default"] {
+class CodeMirrorEditor extends Editor {
 
     constructor(el, options) {
         super();
         const self = this;
+        self.options = options || {};
         self.editor = CodeMirror(el,
             Object.assign({
                 theme:'default vmarkdown',
@@ -155,11 +152,11 @@ class CodeMirrorEditor extends _editor__WEBPACK_IMPORTED_MODULE_0__["default"] {
                 dragDrop: true,
                 selectionsMayTouch: false,
 
-                pollInterval: 5000,
+                // pollInterval: 5000,
                 extraKeys: {
                     "Enter": "newlineAndIndentContinueMarkdownList"
                 }
-            }, options)
+            }, self.options)
         );
     }
 
@@ -310,7 +307,8 @@ class CodeMirrorEditor extends _editor__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
     setValue(value) {
         const self = this;
-        self.editor.setValue(value);
+        const newValue = value + '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n';
+        self.editor.setValue(newValue);
     }
 
     scrollTo(scrollTop) {
@@ -356,17 +354,14 @@ class CodeMirrorEditor extends _editor__WEBPACK_IMPORTED_MODULE_0__["default"] {
     }
 }
 
-
-/* harmony default export */ __webpack_exports__["default"] = (CodeMirrorEditor);
+module.exports = CodeMirrorEditor;
+// export default CodeMirrorEditor;
 
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Editor; });
 // import Emitter from './emitter';
 
 class Editor {
@@ -399,6 +394,8 @@ class Editor {
     }
 }
 
+module.exports = Editor;
+
 /***/ })
-/******/ ])["default"];
+/******/ ]);
 });
