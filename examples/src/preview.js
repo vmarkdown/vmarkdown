@@ -1,44 +1,97 @@
-const vmarkdown = require('./vmarkdown');
+// const vmarkdown = require('./vmarkdown');
+const store = require('./store');
+
 
 const preview = new VMarkDownPreview({
     scrollContainer: '#preview'
 });
 
+
+
+
+// const md = require('../md/test.md');
+
+const VMarkDown = require('vmarkdown');
+
+const vmarkdown = new VMarkDown({
+});
+
+// vmarkdown.setValue(md);
+
+
 const app = new Vue({
     el: '#app',
+    data:{
+        vdom: null
+    },
     render(h) {
-        return vmarkdown.compile(h);
+        return this.vdom || h('div', {}, 'loading');
+    },
+    methods: {
+        async setValue(md) {
+            const self = this;
+            vmarkdown.setValue(md);
+            const h = self.$createElement;
+            const vdom = await vmarkdown.toVDom(h);
+            self.vdom = vdom;
+        }
+    },
+    async mounted(){
+        // this.setValue();
+        const self = this;
+        store.$on('change', function (value) {
+            self.setValue(value);
+        });
+
     }
 });
 
-vmarkdown.on('change', function (value) {
-    app.$forceUpdate();
-});
 
-vmarkdown.on('firstVisibleLineChange', function (firstVisibleLine) {
-    const node = vmarkdown.findNodeFromLine(firstVisibleLine);
-    preview.scrollTo(node);
-});
 
-vmarkdown.on('cursorChange', function (cursor) {
-    console.log('cursorChange');
-    const node = vmarkdown.findNode(cursor);
-    console.log(node)
-    preview.activeTo(node, cursor);
-});
 
-module.exports = preview;
+
+
+// const app = new Vue({
+//     el: '#app',
+//     render(h) {
+//         return h('div', {}, 'loading');
+//         // return vmarkdown.compile(h);
+//     }
+// });
+
+// vmarkdown.on('change', function (value) {
+//     app.$forceUpdate();
+// });
+//
+// vmarkdown.on('firstVisibleLineChange', function (firstVisibleLine) {
+//     // const node = vmarkdown.findNodeFromLine(firstVisibleLine);
+//     // preview.scrollTo(node);
+// });
+//
+// vmarkdown.on('cursorChange', function (cursor) {
+//     console.log('cursorChange');
+//     // const node = vmarkdown.findNode(cursor);
+//     // console.log(node)
+//     // preview.activeTo(node, cursor);
+// });
+
+
 
 
 
 // vmarkdown.setValue(md);
 
 // window.addEventListener("storage", function(event){
+//     debugger
+//
 //     const key = event.key;
 //     const value = event.newValue;
 //     switch (key) {
 //         case 'change':{
-//             vmarkdown.setValue(value);
+//             // vmarkdown.setValue(value);
+//             // app.$forceUpdate();
+//
+//             app.setValue(value);
 //             break;
 //         }
 //         case 'cursorChange':{
@@ -56,7 +109,7 @@ module.exports = preview;
 
 
 
-
+module.exports = preview;
 
 
 

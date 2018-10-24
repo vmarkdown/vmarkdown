@@ -13,7 +13,17 @@ const config = {
     },
     resolve: {
         alias: {
-            'vremark': path.resolve(__dirname, 'www', 'vremark.js'),
+            'vremark-parse': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-parse.common.js'),
+            'vremark-render': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-render.common.js'),
+
+            'vremark-math': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-math.common.js'),
+            'vremark-flowchart': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-flowchart.common.js'),
+            'vremark-sequence': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-sequence.common.js'),
+            'vremark-mermaid': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-mermaid.common.js'),
+            'vremark-highlight': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-highlight.common.js'),
+            'vremark-g2': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-g2.common.js'),
+            'vremark-chart': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-chart.common.js'),
+
             'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
 
             // 'vremark': path.resolve(__dirname, 'assets', 'vremark.common.js'),
@@ -38,17 +48,28 @@ const config = {
             {
                 test: /\.md$/,
                 use: 'text-loader'
+            },
+            {
+                test: /\.worker\.js$/,
+                use: {
+                    loader: 'worker-loader',
+                    options: { name: '[name].js' }
+                    // options: { name: 'name].[hash].js' }
+                }
             }
         ]
     },
     externals: {
-        'katex': 'katex',
-        'lowlight': 'lowlight',
 
-        'flowchart.js': 'flowchart',
-        'underscore': '_',
-        'mermaid': 'mermaid',
-        '@antv/g2': 'G2'
+        'vue': 'Vue',
+
+
+        // 'katex': 'katex',
+        // 'lowlight': 'lowlight',
+        // 'flowchart.js': 'flowchart',
+        // 'underscore': '_',
+        // 'mermaid': 'mermaid',
+        // '@antv/g2': 'G2'
 
 
         // 'flowchart.js': 'flowchart',
