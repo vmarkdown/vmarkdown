@@ -25,6 +25,10 @@ function findNodeFromLine(root, line, maxNum = 10) {
 
     let node = findNode(root, {line: line,column: 1});
 
+    if(!root.position || !root.position.end) {
+        return null;
+    }
+
     const lastLine = root.position.end.line;
 
     if(!node || node.type === 'root') {

@@ -137,6 +137,13 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
     //
     // }
 
+    _getId(node) {
+        if(node.data && node.data.attrs) {
+            if( node.data.attrs.id === 0 ) return '0';
+            return node.data.attrs.id;
+        }
+        return null;
+    }
 
     setValue() {
 
@@ -152,7 +159,10 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
         if(!node) return;
 
         const self = this;
-        const id = node.properties.id;
+        const id = self._getId(node);
+        if(!id) return;
+
+        // const id = node.properties.id;
         // preview.scrollTo('#'+id);
         const target = '#'+id;
         // self._scrollTo(target, {
@@ -172,7 +182,9 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
 
         if(!node) return;
 
-        const id = node.properties.id;
+        const id = self._getId(node);
+        if(!id) return;
+        // const id = node.properties.id;
         const target = '#'+id;
 
         var $dom = $(target);
@@ -192,11 +204,15 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
         // dom.scrollIntoViewIfNeeded({ behavior: 'smooth', block: 'nearest', inline: 'start' });
         // console.log(cursor);
 
-        var options = {
-            offset: {
-                top: -1 * cursor.top
-            }
-        };
+        var options = {};
+
+        if(cursor) {
+            Object.assign(options, {
+                offset: {
+                    top: -1 * cursor.top
+                }
+            })
+        }
 
         // self._scrollTo(target, {
         //     axis: 'y',
@@ -206,7 +222,7 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
         //     }
         // });
 
-        self._scrollTo(target, cursor?options:{});
+        self._scrollTo(target, options);
 
 
     }

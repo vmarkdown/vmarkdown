@@ -24,7 +24,18 @@ class VMarkDown {
         const self = this;
         self.options = options || {};
         self.value = '';
-        self.hast = {};
+        self.hast = {
+            position:{
+                start: {
+                    line: -1,
+                    column: 0
+                },
+                end: {
+                    line: -1,
+                    column: 0
+                }
+            }
+        };
         // self._bindEvents(self.options);
     }
 
@@ -103,6 +114,8 @@ class VMarkDown {
         console.log( mdast );
         console.log( hast );
         console.log( plugins );
+
+        self.hast = hast;
 
         await loadPlugins(plugins, function has(plugin) {
             return !!Vue.component(plugin.component);

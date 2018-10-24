@@ -1,15 +1,9 @@
-// const vmarkdown = require('./vmarkdown');
 const store = require('./store');
-
 
 const preview = new VMarkDownPreview({
     scrollContainer: '#preview'
 });
 
-
-
-
-// const md = require('../md/test.md');
 
 const VMarkDown = require('vmarkdown');
 
@@ -17,7 +11,6 @@ const vmarkdown = new VMarkDown({
 });
 
 // vmarkdown.setValue(md);
-
 
 const app = new Vue({
     el: '#app',
@@ -37,11 +30,27 @@ const app = new Vue({
         }
     },
     async mounted(){
-        // this.setValue();
+
         const self = this;
+
         store.$on('change', function (value) {
             self.setValue(value);
         });
+
+        store.$on('cursorChange', function (cursor) {
+            const node = vmarkdown.findNode(cursor);
+            console.log('cursorChange================', cursor);
+            console.log(node);
+            preview.activeTo(node, cursor);
+        });
+
+        store.$on('firstVisibleLineChange', function (firstVisibleLine) {
+            const node = vmarkdown.findNodeFromLine(firstVisibleLine);
+            console.log('firstVisibleLineChange================');
+            console.log(node);
+            preview.scrollTo(node);
+        });
+
 
     }
 });
