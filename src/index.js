@@ -117,6 +117,7 @@ class VMarkDown {
 
         self.hast = hast;
 
+        console.time('plugins');
         await loadPlugins(plugins, function has(plugin) {
             return !!Vue.component(plugin.component);
         }, function load(plugin) {
@@ -175,6 +176,7 @@ class VMarkDown {
         }, function register(component) {
             Vue.component(component.name, component);
         });
+        console.timeEnd('plugins');
 
         console.time('render');
         const vdom = render(hast, {
@@ -184,7 +186,7 @@ class VMarkDown {
         // self.vdom = vdom;
         // console.log( vdom );
 
-        return vdom || h('div', {}, '======');
+        return vdom;
     }
 
 
