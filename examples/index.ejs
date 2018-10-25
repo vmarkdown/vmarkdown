@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vmarkdown</title>
+
+    <style>
+        html, body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            overflow-y: hidden;
+        }
+
+        .panel{
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        #editor {
+            height: 100%;
+            float: left;
+        }
+
+        #preview {
+            /*background-color: #1d3e81;*/
+            min-height: 100px;
+            margin-left: 50%;
+
+            height: 100%;
+            overflow-y: auto;
+        }
+    </style>
+
+    <!-- common start -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
+    <!-- common end -->
+
+
+    <!-- editor start -->
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/mode/xml/xml.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/addon/selection/active-line.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/addon/edit/continuelist.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/mode/markdown/markdown.min.js"></script>
+
+    <link rel="stylesheet" href="vmarkdown-codemirror-editor.css">
+    <script src="vmarkdown-codemirror-editor.js"></script>
+
+    <!-- editor end -->
+
+
+    <!-- preview start -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+
+    <!-- vue -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+
+
+
+    <link rel="stylesheet" href="vmarkdown-preview.css">
+    <script src="vmarkdown-preview.js"></script>
+    <!-- preview end -->
+
+    <style>
+        #preview {
+            padding: 40px;
+            border-left: 1px solid black;
+        }
+    </style>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
+
+    <script>
+        (function () {
+            requirejs.config({
+                paths: <%= plugins %>
+            });
+        })();
+    </script>
+
+</head>
+<body>
+
+<div class="panel" id="editor"></div>
+<div class="panel" id="preview"><div id="app"></div></div>
+
+</body>
+</html>

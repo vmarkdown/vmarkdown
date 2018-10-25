@@ -1,13 +1,9 @@
 const NodeUtil = require("./util/node");
 const Event = require('./util/event');
-// const vremark = require('vremark');
-const loadPlugins = require('./load-plugins');
 const render = require('vremark-render');
-
 const PromiseWorker = require('promise-worker');
-// import Worker from './vmarkdown.worker.js';
-const Worker = require('./vmarkdown.worker.js');
 
+const Worker = require('./vmarkdown.worker.js');
 const worker = new Worker();
 const promiseWorker = new PromiseWorker(worker);
 
@@ -36,75 +32,27 @@ class VMarkDown {
                 }
             }
         };
-        // self._bindEvents(self.options);
-    }
 
-    _bindEvents(options) {
-        const self = this;
-
-        if(options.eventListener === 'storage') {
-
-            window.addEventListener("storage", function(event){
-                const key = event.key;
-                const value = event.newValue;
-                switch (key) {
-                    case 'change':{
-                        self.setValue(value);
-                        break;
-                    }
-                    case 'cursorChange':{
-                        let cursor = JSON.parse(value);
-                        self.emit('cursorChange', cursor);
-                        break;
-                    }
-                    case 'firstVisibleLineChange':{
-                        let firstVisibleLine = parseInt(value, 10);
-                        self.emit('firstVisibleLineChange', firstVisibleLine);
-                        break;
-                    }
-                }
-            });
-
-        }
-    }
-
-    setValue(value) {
-        this.value = value;
-        this.emit('change', value);
+        self.pluginManager = options.pluginManager;
     }
 
     getValue() {
         return this.value;
     }
 
-    compile(h) {
+    refresh(h) {
         const self = this;
-
-        console.time('all');
-
-        const hast = vremark.parse(self.value, self.options);
-
-        self.hast = hast;
-
-        const vdom = vremark.render(hast, Object.assign({}, self.options, {
-            h: h,
-            mode: 'vue',
-            rootTagName: 'main',
-            rootClassName: 'markdown-body'
-        }));
-
-        console.timeEnd('all');
-
+        const vdom = render(self.hast, {
+            h: h
+        });
         return vdom;
     }
 
-    async toVDom(h) {
+    async render(markdown = '', options) {
         const self = this;
-        // console.log(await parse(self.value));
 
-        // const self = this;
         console.time('worker');
-        const {mdast, hast, plugins} = await parse(self.value, {
+        const {mdast, hast, plugins} = await parse(markdown, {
             rootClassName: 'markdown-body',
             rootTagName: 'main',
             hashid: true
@@ -118,73 +66,14 @@ class VMarkDown {
         self.hast = hast;
 
         console.time('plugins');
-        await loadPlugins(plugins, function has(plugin) {
-            return !!Vue.component(plugin.component);
-        }, function load(plugin) {
-            return new Promise(async function (resolve, reject) {
-
-                let component = null;
-
-                switch (plugin.component) {
-                    case 'vremark-math' :
-                        component = await import(
-                            /* webpackChunkName: "vremark-component-math" */
-                            'vremark-math'
-                            );
-                        break;
-                    case 'vremark-chart' :
-                        component = await import(
-                            /* webpackChunkName: "vremark-component-chart" */
-                            'vremark-chart'
-                            );
-                        break;
-                    case 'vremark-flowchart' :
-                        component = await import(
-                            /* webpackChunkName: "vremark-component-flowchart" */
-                            'vremark-flowchart'
-                            );
-                        break;
-                    case 'vremark-g2' :
-                        component = await import(
-                            /* webpackChunkName: "vremark-component-g2" */
-                            'vremark-g2'
-                            );
-                        break;
-                    case 'vremark-highlight' :
-                        component = await import(
-                            /* webpackChunkName: "vremark-component-highlight" */
-                            'vremark-highlight'
-                            );
-                        break;
-                    case 'vremark-mermaid' :
-                        component = await import(
-                            /* webpackChunkName: "vremark-component-mermaid" */
-                            'vremark-mermaid'
-                            );
-                        break;
-                    case 'vremark-sequence' :
-                        component = await import(
-                            /* webpackChunkName: "vremark-component-sequence" */
-                            'vremark-sequence'
-                            );
-                        break;
-                }
-
-                resolve(component.default || component);
-
-            });
-        }, function register(component) {
-            Vue.component(component.name, component);
+        self.pluginManager.load(plugins, function () {
+            console.timeEnd('plugins');
+            self.emit('refresh', hast);
         });
-        console.timeEnd('plugins');
 
         console.time('render');
-        const vdom = render(hast, {
-            h: h
-        });
+        const vdom = render(hast, options);
         console.timeEnd('render');
-        // self.vdom = vdom;
-        // console.log( vdom );
 
         return vdom;
     }
@@ -208,6 +97,8 @@ class VMarkDown {
         return node;
     }
 }
+
+VMarkDown.PluginManager = render.PluginManager;
 
 Event.mixin(VMarkDown);
 

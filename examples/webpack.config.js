@@ -13,27 +13,9 @@ const config = {
     },
     resolve: {
         alias: {
-            'vremark-parse': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-parse.common.js'),
-            'vremark-render': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-render.common.js'),
-
-            'vremark-math': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-math.common.js'),
-            'vremark-flowchart': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-flowchart.common.js'),
-            'vremark-sequence': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-sequence.common.js'),
-            'vremark-mermaid': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-mermaid.common.js'),
-            'vremark-highlight': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-highlight.common.js'),
-            'vremark-g2': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-g2.common.js'),
-            'vremark-chart': path.resolve(__dirname, '../src/libs/vremark/', 'vremark-chart.common.js'),
-
+            'vremark-parse': path.resolve(__dirname, 'www/', 'vremark-parse.min.js'),
+            'vremark-render': path.resolve(__dirname, 'www/', 'vremark-render.min.js'),
             'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
-
-            // 'vremark': path.resolve(__dirname, 'assets', 'vremark.common.js'),
-            // 'vremark-plugin-flowchart': path.resolve(__dirname, 'assets', 'vremark-plugin-flowchart.common.js'),
-            // 'vremark-plugin-highlight': path.resolve(__dirname, 'assets', 'vremark-plugin-highlight.common.js'),
-            // 'vremark-plugin-mermaid': path.resolve(__dirname, 'assets', 'vremark-plugin-mermaid.common.js'),
-            // 'vremark-plugin-sequence': path.resolve(__dirname, 'assets', 'vremark-plugin-sequence.common.js'),
-            // 'vremark-plugin-katex': path.resolve(__dirname, 'assets', 'vremark-plugin-katex.common.js'),
-            // 'vremark-plugin-toc': path.resolve(__dirname, 'assets', 'vremark-plugin-toc.common.js'),
-            // 'mdast-util-incremental': path.resolve(__dirname, 'assets', 'incremental.js')
         }
     },
     module: {
@@ -60,28 +42,15 @@ const config = {
         ]
     },
     externals: {
-
-        'vue': 'Vue',
-
-
-        // 'katex': 'katex',
-        // 'lowlight': 'lowlight',
-        // 'flowchart.js': 'flowchart',
-        // 'underscore': '_',
-        // 'mermaid': 'mermaid',
-        // '@antv/g2': 'G2'
-
-
-        // 'flowchart.js': 'flowchart',
-        // 'highlight.js': 'hljs',
-        // 'katex': 'katex',
-        // 'mermaid': 'mermaid',
-        // 'underscore': '_'
+        'vue': 'Vue'
     },
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'examples/index.html'
+            template: 'examples/index.ejs',
+            templateParameters: {
+                plugins: JSON.stringify(require('./www/plugins.json'))
+            }
         })
     ],
     devServer: {
