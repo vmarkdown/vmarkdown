@@ -68,7 +68,7 @@ class VMarkDown {
         console.time('plugins');
         self.pluginManager.load(plugins, function () {
             console.timeEnd('plugins');
-            self.emit('refresh', hast);
+            self.$emit('refresh', hast);
         });
 
         console.time('render');

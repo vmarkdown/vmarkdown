@@ -69,22 +69,29 @@
     <script src="vmarkdown-preview.js"></script>
     <!-- preview end -->
 
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
+
+    <script>
+        (function () {
+            try {
+                requirejs.config({
+                    paths: <%= plugins %>
+                });
+            }
+            catch (e) {
+
+            }
+        })();
+    </script>
+
     <style>
         #preview {
             padding: 40px;
             border-left: 1px solid black;
         }
     </style>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
-
-    <script>
-        (function () {
-            requirejs.config({
-                paths: <%= plugins %>
-            });
-        })();
-    </script>
 
 </head>
 <body>

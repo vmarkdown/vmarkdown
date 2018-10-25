@@ -1,17 +1,17 @@
 var Event = function () {
 };
 Event.prototype = {
-    on: function (event, fct) {
+    $on: function (event, fct) {
         this._events = this._events || {};
         this._events[event] = this._events[event] || [];
         this._events[event].push(fct);
     },
-    off: function (event, fct) {
+    $off: function (event, fct) {
         this._events = this._events || {};
         if (event in this._events === false) return;
         this._events[event].splice(this._events[event].indexOf(fct), 1);
     },
-    emit: function (event /* , args... */) {
+    $emit: function (event /* , args... */) {
         this._events = this._events || {};
         if (event in this._events === false) return;
         for (var i = 0; i < this._events[event].length; i++) {
@@ -20,7 +20,7 @@ Event.prototype = {
     }
 };
 Event.mixin = function (destObject) {
-    var props = ['on', 'off', 'emit'];
+    var props = ['$on', '$off', '$emit'];
     for (var i = 0; i < props.length; i++) {
         if (typeof destObject === 'function') {
             destObject.prototype[props[i]] = Event.prototype[props[i]];

@@ -1,10 +1,11 @@
+require('./loading.css')
+
 const store = require('./store');
+const VMarkDown = require('vmarkdown');
 
 const preview = new VMarkDownPreview({
     scrollContainer: '#preview'
 });
-
-const VMarkDown = require('vmarkdown');
 
 const pluginManager = new VMarkDown.PluginManager({
     loader: function (plugin) {
@@ -40,11 +41,16 @@ const vmarkdown = new VMarkDown({
 
 const app = new Vue({
     el: '#app',
-    data:{
+    data: {
         vdom: null
     },
     render(h) {
-        return this.vdom || h('div', {}, 'loading');
+        return this.vdom || h('div', {
+            'class': ['loading-container'],
+            domProps: {
+                innerHTML: require('./loading.svg')
+            }
+        });
     },
     methods: {
         refresh() {
@@ -68,7 +74,7 @@ const app = new Vue({
 
         const self = this;
 
-        vmarkdown.on('refresh', function (hast) {
+        vmarkdown.$on('refresh', function (hast) {
             self.refresh(hast);
         });
 
@@ -85,7 +91,7 @@ const app = new Vue({
 
         store.$on('firstVisibleLineChange', function (firstVisibleLine) {
             const node = vmarkdown.findNodeFromLine(firstVisibleLine);
-            // console.log('firstVisibleLineChange================');
+            // console.log('firstVisibleLineChange================', firstVisibleLine);
             // console.log(node);
             preview.scrollTo(node);
         });

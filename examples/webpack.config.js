@@ -1,6 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const base = require('../config/webpack.config.base');
 
 const config = {
     mode: 'none',
@@ -13,32 +14,12 @@ const config = {
     },
     resolve: {
         alias: {
-            'vremark-parse': path.resolve(__dirname, 'www/', 'vremark-parse.min.js'),
-            'vremark-render': path.resolve(__dirname, 'www/', 'vremark-render.min.js'),
-            'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
+
         }
     },
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                use: [
-                    { loader: "style-loader" },
-                    { loader: "css-loader" }
-                ]
-            },
-            {
-                test: /\.md$/,
-                use: 'text-loader'
-            },
-            {
-                test: /\.worker\.js$/,
-                use: {
-                    loader: 'worker-loader',
-                    options: { name: '[name].js' }
-                    // options: { name: 'name].[hash].js' }
-                }
-            }
+
         ]
     },
     externals: {
@@ -62,7 +43,7 @@ const config = {
 };
 
 module.exports = [
-    merge(config, {
+    merge(base, config, {
         entry: {
             'example-vmarkdown-main': path.resolve(__dirname, 'src/index.js')
         },
