@@ -2,6 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const base = require('./config/webpack.config.base');
 const production = (process.env.NODE_ENV === 'production');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
     mode: 'none',
@@ -25,11 +26,36 @@ const config = {
         }
     },
     module:{
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            }
+        ]
     },
     externals: {
     },
     plugins: [
-    ]
+    ],
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                uglifyOptions: {
+                    compress: {
+                        drop_console: true
+                    }
+                }
+            })
+        ]
+    }
 };
 
 module.exports = [

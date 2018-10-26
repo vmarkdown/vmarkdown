@@ -93,7 +93,7 @@ const app = new Vue({
             const node = vmarkdown.findNodeFromLine(firstVisibleLine);
             // console.log('firstVisibleLineChange================', firstVisibleLine);
             // console.log(node);
-            preview.scrollTo(node);
+            preview.scrollTo(node, firstVisibleLine);
         });
 
 
