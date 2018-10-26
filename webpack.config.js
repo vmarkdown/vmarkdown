@@ -18,7 +18,7 @@ const config = {
     },
     module:{
         rules: [
-            {
+            production?{
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
@@ -27,7 +27,7 @@ const config = {
                         presets: ['@babel/preset-env']
                     }
                 }
-            }
+            }:{}
         ]
     },
     externals: {
