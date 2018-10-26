@@ -34,7 +34,6 @@ module.exports = {
                 use: {
                     loader: 'worker-loader',
                     options: { name: production?'[name].[hash].min.js':'[name].js' }
-                    // options: { name: 'name].[hash].js' }
                 }
             }
         ]

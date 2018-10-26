@@ -7,7 +7,7 @@ const Worker = require('./vmarkdown.worker.js');
 const worker = new Worker();
 const promiseWorker = new PromiseWorker(worker);
 
-function parse(markdown, options) {
+function workerParse(markdown, options) {
     return promiseWorker.postMessage({
         markdown: markdown,
         options: options
@@ -18,8 +18,21 @@ class VMarkDown {
 
     constructor(options) {
         const self = this;
-        self.options = options || {};
-        self.value = '';
+
+        self.options = Object.assign({
+            rootClassName: 'markdown-body',
+            rootTagName: 'main',
+            hashid: true
+        }, options?{
+            rootClassName: options.rootClassName,
+            rootTagName: options.rootTagName,
+            hashid: options.hashid
+        }:{});
+
+        self.pluginManager = options.pluginManager;
+        self.h = options.h || function (tagName, data, value) { return value };
+
+        self.mdast = {};
         self.hast = {
             position:{
                 start: {
@@ -32,23 +45,17 @@ class VMarkDown {
                 }
             }
         };
-
-        self.pluginManager = options.pluginManager;
     }
 
-    getValue() {
-        return this.value;
-    }
-
-    refresh(h) {
+    refresh() {
         const self = this;
         const vdom = render(self.hast, {
-            h: h
+            h: self.h
         });
         return vdom;
     }
 
-    async render(markdown = '', options) {
+    async render1(markdown = '', options) {
         const self = this;
 
         console.time('worker');
@@ -66,7 +73,7 @@ class VMarkDown {
         self.hast = hast;
 
         console.time('plugins');
-        self.pluginManager.load(plugins, function () {
+        self.pluginManager && self.pluginManager.load(plugins, function () {
             console.timeEnd('plugins');
             self.$emit('refresh', hast);
         });
@@ -78,6 +85,46 @@ class VMarkDown {
         return vdom;
     }
 
+    static async parse(markdown, options) {
+
+        console.time('worker');
+        const {mdast, hast, plugins} = await workerParse(markdown, options);
+        console.timeEnd('worker');
+
+        console.log( mdast );
+        console.log( hast );
+        console.log( plugins );
+
+        return {mdast, hast, plugins};
+    }
+
+    static render(hast, options) {
+        console.time('render');
+        const vdom = render(hast, options);
+        console.timeEnd('render');
+        return vdom;
+    }
+
+    async process(markdown = '') {
+        const self = this;
+
+        const {mdast, hast, plugins} = await VMarkDown.parse(markdown, self.options);
+
+        self.mdast = mdast;
+        self.hast = hast;
+
+        console.time('plugins');
+        self.pluginManager && self.pluginManager.load(plugins, function () {
+            console.timeEnd('plugins');
+            self.$emit('refresh', hast);
+        });
+
+        const vdom = VMarkDown.render(hast, {
+            h: self.h
+        });
+
+        return vdom;
+    }
 
     findNodeFromLine(line) {
         const self = this;

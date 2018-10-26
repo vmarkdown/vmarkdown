@@ -1,4 +1,4 @@
-require('./loading.css')
+require('./loading.css');
 
 const store = require('./store');
 const VMarkDown = require('vmarkdown');
@@ -35,10 +35,6 @@ const pluginManager = new VMarkDown.PluginManager({
     }
 });
 
-const vmarkdown = new VMarkDown({
-    pluginManager: pluginManager
-});
-
 const app = new Vue({
     el: '#app',
     data: {
@@ -55,24 +51,32 @@ const app = new Vue({
     methods: {
         refresh() {
             const self = this;
-            const h = self.$createElement;
             console.time('refresh');
-            const vdom = vmarkdown.refresh(h);
+            const vdom = self.vmarkdown.refresh();
             console.timeEnd('refresh');
             self.vdom = vdom;
         },
         async setValue(md) {
             const self = this;
-            const h = self.$createElement;
-            const vdom = await vmarkdown.render(md, {
-                h: h
-            });
+            const vdom = await self.vmarkdown.process(md);
             self.vdom = vdom;
         }
     },
     async mounted(){
 
         const self = this;
+
+        const h = self.$createElement;
+
+        const vmarkdown = new VMarkDown({
+            h: h,
+            pluginManager: pluginManager,
+            rootClassName: 'markdown-body',
+            rootTagName: 'main',
+            hashid: true
+        });
+
+        self.vmarkdown = vmarkdown;
 
         vmarkdown.$on('refresh', function (hast) {
             self.refresh(hast);
