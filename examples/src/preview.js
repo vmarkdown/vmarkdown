@@ -1,3 +1,4 @@
+require('github-markdown-css');
 require('./loading.css');
 
 const store = require('./store');
