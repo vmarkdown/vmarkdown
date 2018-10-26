@@ -7,7 +7,7 @@
     top: 50%;
 }
 
-svg {
+.loading-container svg {
     height: 120px;
     width: 120px;
     margin: 0 2em 2em;
