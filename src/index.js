@@ -47,12 +47,14 @@ class VMarkDown {
         };
     }
 
-    refresh() {
-        const self = this;
-        const vdom = render(self.hast, {
-            h: self.h
-        });
-        return vdom;
+    async refresh(value) {
+        // const self = this;
+        // const vdom = render(self.hast, {
+        //     h: self.h
+        // });
+        // return vdom;
+
+        return await process(value);
     }
 
     async render1(markdown = '', options) {
@@ -105,19 +107,31 @@ class VMarkDown {
         return vdom;
     }
 
-    async process(markdown = '') {
+    async process(markdown = '', noDetect) {
         const self = this;
 
-        const {mdast, hast, plugins} = await VMarkDown.parse(markdown, self.options);
+        const {mdast, hast, plugins} = await VMarkDown.parse(markdown,
+            Object.assign({}, self.options, self.pluginManager?{
+                plugins: self.pluginManager.getPlugins()
+            }:{})
+        );
 
         self.mdast = mdast;
         self.hast = hast;
 
-        console.time('plugins');
-        self.pluginManager && self.pluginManager.load(plugins, function () {
-            console.timeEnd('plugins');
-            self.$emit('refresh', hast);
-        });
+        // console.time('plugins');
+        // self.pluginManager && self.pluginManager.load(plugins, function () {
+        //     console.timeEnd('plugins');
+        //     self.$emit('refresh', hast);
+        // });
+        if( !noDetect && self.pluginManager && plugins.length > 0 ){
+            self.pluginManager.load(plugins).then(function (loaded) {
+                var isRefresh = loaded?loaded.length>0:false;
+                if(isRefresh) {
+                    self.$emit('refresh', markdown);
+                }
+            });
+        }
 
         const vdom = VMarkDown.render(hast, {
             h: self.h

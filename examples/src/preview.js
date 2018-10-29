@@ -8,31 +8,46 @@ const preview = new VMarkDownPreview({
     scrollContainer: '#preview'
 });
 
-const pluginManager = new VMarkDown.PluginManager({
-    loader: function (plugin) {
+const PluginManager = require('vremark-plugin-manager');
 
-        return new Promise(function (success, fail) {
+// const pluginManager = new PluginManager({
+//     loader: function (plugin) {
+//
+//         return new Promise(function (success, fail) {
+//
+//             Vue.component(plugin, function (resolve, reject) {
+//                 requirejs([plugin], function(component){
+//                     resolve(component);
+//                     success();
+//                 }, function (e) {
+//                     // reject();
+//                     resolve({
+//                         render(h) {
+//                             return h('pre', {}, [
+//                                 h('code', {}, e.message)
+//                             ])
+//                         }
+//                     });
+//                     console.error(e);
+//                     fail();
+//                 });
+//             });
+//
+//         });
+//
+//     }
+// });
+const pluginManager = new PluginManager({
+    plugins: [
 
-            Vue.component(plugin, function (resolve, reject) {
-                requirejs([plugin], function(component){
-                    resolve(component);
-                    success();
-                }, function (e) {
-                    // reject();
-                    resolve({
-                        render(h) {
-                            return h('pre', {}, [
-                                h('code', {}, e.message)
-                            ])
-                        }
-                    });
-                    console.error(e);
-                    fail();
-                });
-            });
-
-        });
-
+    ],
+    config: {
+        paths: Object.assign({
+        }, window.__plugins__)
+    },
+    onOneLoaded: function (plugin) {
+        const component = plugin.component || plugin;
+        Vue.component(component.name, component);
     }
 });
 
@@ -50,10 +65,10 @@ const app = new Vue({
         });
     },
     methods: {
-        refresh() {
+        async refresh(value) {
             const self = this;
             console.time('refresh');
-            const vdom = self.vmarkdown.refresh();
+            const vdom = await self.vmarkdown.process(value, true);
             console.timeEnd('refresh');
             self.vdom = vdom;
         },
@@ -79,8 +94,8 @@ const app = new Vue({
 
         self.vmarkdown = vmarkdown;
 
-        vmarkdown.$on('refresh', function (hast) {
-            self.refresh(hast);
+        vmarkdown.$on('refresh', function (value) {
+            self.refresh(value);
         });
 
         store.$on('change', function (value) {

@@ -92,6 +92,10 @@ module.exports =
 const createProcessor = __webpack_require__(1);
 const data = __webpack_require__(150);
 
+function detect() {
+
+}
+
 async function parse(markdown, option) {
 
     const processor = createProcessor(option);
@@ -102,7 +106,7 @@ async function parse(markdown, option) {
 
     data(hast, option);
 
-    const plugins = mdast.plugins || {};
+    const plugins = mdast.plugins || hast.plugins || {};
 
     return {mdast, hast, plugins};
 }
@@ -140,9 +144,14 @@ const stringify = __webpack_require__(143);
 
 const defaultOptions = __webpack_require__(149);
 
+function hasPlugin(plugin, plugins) {
+    return !!plugins.hasOwnProperty(plugin.PLUGIN_NAME);
+}
+
 function createProcessor(_options) {
     const options = Object.assign({}, defaultOptions, _options);
 
+    // const hasPlugins = options.plugins;
     const plugins = [];
 
     if(options.breaks) {
@@ -160,14 +169,15 @@ function createProcessor(_options) {
 
         plugins.push([
             mathComponent, {
+                enable: hasPlugin(mathComponent, options.plugins),
             }
         ]);
     }
 
-
     if(options.flowchart) {
         plugins.push([
             flowchart, {
+                enable: hasPlugin(flowchart, options.plugins),
             }
         ]);
     }
@@ -175,6 +185,7 @@ function createProcessor(_options) {
     if(options.sequence) {
         plugins.push([
             sequence, {
+                enable: hasPlugin(sequence, options.plugins),
             }
         ]);
     }
@@ -182,6 +193,7 @@ function createProcessor(_options) {
     if(options.mermaid) {
         plugins.push([
             mermaid, {
+                enable: hasPlugin(mermaid, options.plugins),
             }
         ]);
     }
@@ -189,6 +201,7 @@ function createProcessor(_options) {
     if(options.chart) {
         plugins.push([
             chart, {
+                enable: hasPlugin(chart, options.plugins),
             }
         ]);
     }
@@ -196,6 +209,7 @@ function createProcessor(_options) {
     if(options.g2) {
         plugins.push([
             g2, {
+                enable: hasPlugin(g2, options.plugins),
             }
         ]);
     }
@@ -203,6 +217,8 @@ function createProcessor(_options) {
     if(options.highlight) {
         plugins.push([
             highlight, {
+                enable: hasPlugin(highlight, options.plugins),
+                lineNumbers: options.lineNumbers
             }
         ]);
     }
@@ -8641,13 +8657,20 @@ function isPlugin(node) {
 
 function plugin(options = {}) {
 
+    var enable = options.enable;
+
     return async function transformer(root) {
 
-        root.plugins = root.plugins || {};
+        root.plugins = root.plugins || [];
 
         visit(root, function (node) {
             return isPlugin(node);
         }, function (node) {
+
+            if(!enable) {
+                root.plugins.push(PLUGIN_NAME);
+                return false;
+            }
 
             node.data = node.data || {};
 
@@ -8660,13 +8683,15 @@ function plugin(options = {}) {
             node.type = 'code';
             node.tagName = PLUGIN_NAME;
 
-            root.plugins[PLUGIN_NAME] = true;
+            // root.plugins[PLUGIN_NAME] = true;
 
         });
 
     };
 
 }
+
+plugin.PLUGIN_NAME = PLUGIN_NAME;
 
 module.exports = plugin;
 
@@ -8682,14 +8707,21 @@ function isPlugin(node) {
 
 function plugin(options = {}) {
 
+    var enable = options.enable;
+
     return async function transformer(root) {
 
-        root.plugins = root.plugins || {};
+        root.plugins = root.plugins || [];
 
         var children = root.children;
         for(var i=0;i<children.length;i++) {
             var node = children[i];
             if( node.type === 'code' && isPlugin(node) ){
+
+                if(!enable){
+                    root.plugins.push(PLUGIN_NAME);
+                    break;
+                }
 
                 node.data = node.data || {};
                 node.data.props = node.data.props || {};
@@ -8699,7 +8731,7 @@ function plugin(options = {}) {
                 });
 
                 node.tagName = PLUGIN_NAME;
-                root.plugins[PLUGIN_NAME] = true;
+                // root.plugins[PLUGIN_NAME] = true;
 
             }
         }
@@ -8707,6 +8739,8 @@ function plugin(options = {}) {
     };
 
 }
+
+plugin.PLUGIN_NAME = PLUGIN_NAME;
 
 module.exports = plugin;
 
@@ -8722,14 +8756,21 @@ function isPlugin(node) {
 
 function plugin(options = {}) {
 
+    var enable = options.enable;
+
     return async function transformer(root) {
 
-        root.plugins = root.plugins || {};
+        root.plugins = root.plugins || [];
 
         var children = root.children;
         for(var i=0;i<children.length;i++) {
             var node = children[i];
             if( node.type === 'code' && isPlugin(node) ){
+
+                if(!enable) {
+                    root.plugins.push(PLUGIN_NAME);
+                    break;
+                }
 
                 node.data = node.data || {};
                 node.data.props = node.data.props || {};
@@ -8739,13 +8780,15 @@ function plugin(options = {}) {
                 });
 
                 node.tagName = PLUGIN_NAME;
-                root.plugins[PLUGIN_NAME] = true;
+                // root.plugins[PLUGIN_NAME] = true;
             }
         }
 
     };
 
 }
+
+plugin.PLUGIN_NAME = PLUGIN_NAME;
 
 module.exports = plugin;
 
@@ -8762,14 +8805,21 @@ function isPlugin(node) {
 
 function plugin(options = {}) {
 
+    var enable = options.enable;
+
     return async function transformer(root) {
 
-        root.plugins = root.plugins || {};
+        root.plugins = root.plugins || [];
 
         var children = root.children;
         for(var i=0;i<children.length;i++) {
             var node = children[i];
             if( node.type === 'code' && isPlugin(node) ){
+
+                if(!enable){
+                    root.plugins.push(PLUGIN_NAME);
+                    break;
+                }
 
                 node.data = node.data || {};
                 node.data.props = node.data.props || {};
@@ -8779,13 +8829,15 @@ function plugin(options = {}) {
                 });
 
                 node.tagName = PLUGIN_NAME;
-                root.plugins[PLUGIN_NAME] = true;
+                // root.plugins[PLUGIN_NAME] = true;
             }
         }
 
     };
 
 }
+
+plugin.PLUGIN_NAME = PLUGIN_NAME;
 
 module.exports = plugin;
 
@@ -8801,14 +8853,21 @@ function isPlugin(node) {
 
 function plugin(options = {}) {
 
+    var enable = options.enable;
+
     return async function transformer(root) {
 
-        root.plugins = root.plugins || {};
+        root.plugins = root.plugins || [];
 
         var children = root.children;
         for(var i=0;i<children.length;i++) {
             var node = children[i];
             if( node.type === 'code' && isPlugin(node) ){
+
+                if(!enable){
+                    root.plugins.push(PLUGIN_NAME);
+                    break;
+                }
 
                 node.data = node.data || {};
                 node.data.props = node.data.props || {};
@@ -8818,7 +8877,7 @@ function plugin(options = {}) {
                 });
 
                 node.tagName = PLUGIN_NAME;
-                root.plugins[PLUGIN_NAME] = true;
+                // root.plugins[PLUGIN_NAME] = true;
 
             }
         }
@@ -8826,6 +8885,8 @@ function plugin(options = {}) {
     };
 
 }
+
+plugin.PLUGIN_NAME = PLUGIN_NAME;
 
 module.exports = plugin;
 
@@ -8841,15 +8902,22 @@ function isPlugin(node) {
 
 function plugin(options = {}) {
 
+    var enable = options.enable;
+
     return async function transformer(root) {
 
-        root.plugins = root.plugins || {};
+        root.plugins = root.plugins || [];
 
         var children = root.children;
 
         for(var i=0;i<children.length;i++) {
             var node = children[i];
             if( node.type === 'code' && isPlugin(node) ){
+
+                if(!enable){
+                    root.plugins.push(PLUGIN_NAME);
+                    break;
+                }
 
                 node.data = node.data || {};
                 node.data.props = node.data.props || {};
@@ -8859,7 +8927,7 @@ function plugin(options = {}) {
                 });
 
                 node.tagName = PLUGIN_NAME;
-                root.plugins[PLUGIN_NAME] = true;
+                // root.plugins[PLUGIN_NAME] = true;
 
             }
         }
@@ -8868,6 +8936,8 @@ function plugin(options = {}) {
     };
 
 }
+
+plugin.PLUGIN_NAME = PLUGIN_NAME;
 
 module.exports = plugin;
 
@@ -8892,24 +8962,32 @@ function isPlugin(node) {
 
 function plugin(options = {}) {
 
+    var enable = options.enable;
+
     return async function transformer(root) {
 
-        root.plugins = root.plugins || {};
+        root.plugins = root.plugins || [];
 
         var children = root.children;
         for(var i=0;i<children.length;i++) {
             var node = children[i];
             if( node.type === 'code' && isPlugin(node) ){
 
+                if(!enable){
+                    root.plugins.push(PLUGIN_NAME);
+                    break;
+                }
+
                 node.data = node.data || {};
                 node.data.props = node.data.props || {};
                 Object.assign(node.data.props, {
                     lang: node.lang,
-                    code: node.value
+                    code: node.value,
+                    lineNumbers: options.lineNumbers
                 });
 
                 node.tagName = PLUGIN_NAME;
-                root.plugins[PLUGIN_NAME] = true;
+                // root.plugins[PLUGIN_NAME] = true;
             }
         }
 
@@ -8917,13 +8995,366 @@ function plugin(options = {}) {
 
 }
 
+plugin.PLUGIN_NAME = PLUGIN_NAME;
+
 module.exports = plugin;
 
 /***/ }),
 /* 102 */
 /***/ (function(module, exports) {
 
-module.exports = ["1c","abnf","accesslog","actionscript","ada","angelscript","apache","applescript","arcade","cpp","arduino","armasm","xml","asciidoc","aspectj","autohotkey","autoit","avrasm","awk","axapta","bash","basic","bnf","brainfuck","cal","capnproto","ceylon","clean","clojure","clojure-repl","cmake","coffeescript","coq","cos","crmsh","crystal","cs","csp","css","d","markdown","dart","delphi","diff","django","dns","dockerfile","dos","dsconfig","dts","dust","ebnf","elixir","elm","ruby","erb","erlang-repl","erlang","excel","fix","flix","fortran","fsharp","gams","gauss","gcode","gherkin","glsl","gml","go","golo","gradle","groovy","haml","handlebars","haskell","haxe","hsp","htmlbars","http","hy","inform7","ini","irpf90","isbl","java","javascript","jboss-cli","json","julia","julia-repl","kotlin","lasso","ldif","leaf","less","lisp","livecodeserver","livescript","llvm","lsl","lua","makefile","mathematica","matlab","maxima","mel","mercury","mipsasm","mizar","perl","mojolicious","monkey","moonscript","n1ql","nginx","nimrod","nix","nsis","objectivec","ocaml","openscad","oxygene","parser3","pf","pgsql","php","plaintext","pony","powershell","processing","profile","prolog","properties","protobuf","puppet","purebasic","python","q","qml","r","reasonml","rib","roboconf","routeros","rsl","ruleslanguage","rust","sas","scala","scheme","scilab","scss","shell","smali","smalltalk","sml","sqf","sql","stan","stata","step21","stylus","subunit","swift","taggerscript","yaml","tap","tcl","tex","thrift","tp","twig","typescript","vala","vbnet","vbscript","vbscript-html","verilog","vhdl","vim","x86asm","xl","xquery","zephir"];
+module.exports = [
+  "1c",
+  "abnf",
+  "accesslog",
+  "actionscript",
+  "as",
+  "ada",
+  "angelscript",
+  "asc",
+  "apache",
+  "apacheconf",
+  "applescript",
+  "osascript",
+  "arcade",
+  "arcade",
+  "cpp",
+  "c",
+  "cc",
+  "h",
+  "c++",
+  "h++",
+  "hpp",
+  "arduino",
+  "armasm",
+  "arm",
+  "xml",
+  "html",
+  "xhtml",
+  "rss",
+  "atom",
+  "xjb",
+  "xsd",
+  "xsl",
+  "plist",
+  "asciidoc",
+  "adoc",
+  "aspectj",
+  "autohotkey",
+  "ahk",
+  "autoit",
+  "avrasm",
+  "awk",
+  "axapta",
+  "bash",
+  "sh",
+  "zsh",
+  "basic",
+  "bnf",
+  "brainfuck",
+  "bf",
+  "cal",
+  "capnproto",
+  "capnp",
+  "ceylon",
+  "clean",
+  "clean",
+  "icl",
+  "dcl",
+  "clojure",
+  "clj",
+  "clojure-repl",
+  "cmake",
+  "cmake.in",
+  "coffeescript",
+  "coffee",
+  "cson",
+  "iced",
+  "coq",
+  "cos",
+  "cos",
+  "cls",
+  "crmsh",
+  "crm",
+  "pcmk",
+  "crystal",
+  "cr",
+  "cs",
+  "csharp",
+  "csp",
+  "css",
+  "d",
+  "markdown",
+  "md",
+  "mkdown",
+  "mkd",
+  "dart",
+  "delphi",
+  "dpr",
+  "dfm",
+  "pas",
+  "pascal",
+  "freepascal",
+  "lazarus",
+  "lpr",
+  "lfm",
+  "diff",
+  "patch",
+  "django",
+  "jinja",
+  "dns",
+  "bind",
+  "zone",
+  "dockerfile",
+  "docker",
+  "dos",
+  "bat",
+  "cmd",
+  "dsconfig",
+  "dts",
+  "dust",
+  "dst",
+  "ebnf",
+  "elixir",
+  "elm",
+  "ruby",
+  "rb",
+  "gemspec",
+  "podspec",
+  "thor",
+  "irb",
+  "erb",
+  "erlang-repl",
+  "erlang",
+  "erl",
+  "excel",
+  "xlsx",
+  "xls",
+  "fix",
+  "flix",
+  "fortran",
+  "f90",
+  "f95",
+  "fsharp",
+  "fs",
+  "gams",
+  "gms",
+  "gauss",
+  "gss",
+  "gcode",
+  "nc",
+  "gherkin",
+  "feature",
+  "glsl",
+  "gml",
+  "gml",
+  "GML",
+  "go",
+  "golang",
+  "golo",
+  "gradle",
+  "groovy",
+  "haml",
+  "handlebars",
+  "hbs",
+  "html.hbs",
+  "html.handlebars",
+  "haskell",
+  "hs",
+  "haxe",
+  "hx",
+  "hsp",
+  "htmlbars",
+  "http",
+  "https",
+  "hy",
+  "hylang",
+  "inform7",
+  "i7",
+  "ini",
+  "toml",
+  "irpf90",
+  "isbl",
+  "isbl",
+  "java",
+  "jsp",
+  "javascript",
+  "js",
+  "jsx",
+  "jboss-cli",
+  "wildfly-cli",
+  "json",
+  "julia",
+  "julia-repl",
+  "kotlin",
+  "kt",
+  "lasso",
+  "ls",
+  "lassoscript",
+  "ldif",
+  "leaf",
+  "less",
+  "lisp",
+  "livecodeserver",
+  "livescript",
+  "ls",
+  "llvm",
+  "lsl",
+  "lua",
+  "makefile",
+  "mk",
+  "mak",
+  "mathematica",
+  "mma",
+  "matlab",
+  "maxima",
+  "mel",
+  "mercury",
+  "m",
+  "moo",
+  "mipsasm",
+  "mips",
+  "mizar",
+  "perl",
+  "pl",
+  "pm",
+  "mojolicious",
+  "monkey",
+  "moonscript",
+  "moon",
+  "n1ql",
+  "nginx",
+  "nginxconf",
+  "nimrod",
+  "nim",
+  "nix",
+  "nixos",
+  "nsis",
+  "objectivec",
+  "mm",
+  "objc",
+  "obj-c",
+  "ocaml",
+  "ml",
+  "openscad",
+  "scad",
+  "oxygene",
+  "parser3",
+  "pf",
+  "pf.conf",
+  "pgsql",
+  "postgres",
+  "postgresql",
+  "php",
+  "php",
+  "php3",
+  "php4",
+  "php5",
+  "php6",
+  "php7",
+  "plaintext",
+  "pony",
+  "powershell",
+  "ps",
+  "processing",
+  "profile",
+  "prolog",
+  "properties",
+  "protobuf",
+  "puppet",
+  "pp",
+  "purebasic",
+  "pb",
+  "pbi",
+  "python",
+  "py",
+  "gyp",
+  "q",
+  "k",
+  "kdb",
+  "qml",
+  "qt",
+  "r",
+  "reasonml",
+  "re",
+  "rib",
+  "roboconf",
+  "graph",
+  "instances",
+  "routeros",
+  "routeros",
+  "mikrotik",
+  "rsl",
+  "ruleslanguage",
+  "rust",
+  "rs",
+  "sas",
+  "sas",
+  "SAS",
+  "scala",
+  "scheme",
+  "scilab",
+  "sci",
+  "scss",
+  "shell",
+  "console",
+  "smali",
+  "smali",
+  "smalltalk",
+  "st",
+  "sml",
+  "ml",
+  "sqf",
+  "sqf",
+  "sql",
+  "stan",
+  "stata",
+  "do",
+  "ado",
+  "step21",
+  "p21",
+  "step",
+  "stp",
+  "stylus",
+  "styl",
+  "subunit",
+  "swift",
+  "taggerscript",
+  "yaml",
+  "yml",
+  "YAML",
+  "yaml",
+  "tap",
+  "tcl",
+  "tk",
+  "tex",
+  "thrift",
+  "tp",
+  "twig",
+  "craftcms",
+  "typescript",
+  "ts",
+  "vala",
+  "vbnet",
+  "vb",
+  "vbscript",
+  "vbs",
+  "vbscript-html",
+  "verilog",
+  "v",
+  "sv",
+  "svh",
+  "vhdl",
+  "vim",
+  "x86asm",
+  "xl",
+  "tao",
+  "xquery",
+  "xpath",
+  "xq",
+  "zephir",
+  "zep"
+];
 
 /***/ }),
 /* 103 */
@@ -10721,6 +11152,7 @@ module.exports = {
     hash: true,
 
     //plugins
+    plugins: [],
     flowchart: true,
     mermaid: true,
     sequence: true,
@@ -10732,7 +11164,7 @@ module.exports = {
     // render
     mode: 'vue',
     h: function () {},
-    rootClassName: 'remark-body',
+    rootClassName: 'vremark-body',
     rootTagName: 'div',
     hashid: true
 };
@@ -10770,9 +11202,25 @@ module.exports = function data(root, options) {
 
         if(node.type !== 'root' && node.hasOwnProperty('hash')) {
 
-            options.hashid && Object.assign(data.attrs, {
-                id: node.hash
-            });
+            // if(options.hashid) {
+            //
+            //     if(data.attrs.hasOwnProperty('id')){
+            //         Object.assign(data.attrs, {
+            //             'data-id': node.hash
+            //         });
+            //     }else{
+            //         Object.assign(data.attrs, {
+            //             id: node.hash
+            //         });
+            //     }
+            // }
+            var id = data.attrs.id || node.hash;
+
+            if(options.hashid && id) {
+                options.hashid && Object.assign(data.attrs, {
+                    'id': id
+                });
+            }
 
             Object.assign(data, {
                 key: node.hash

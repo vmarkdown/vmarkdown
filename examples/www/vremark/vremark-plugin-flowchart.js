@@ -1,50 +1,6 @@
-define("vremark-plugin-flowchart", [], function() { return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
-/******/
+define("vremark-plugin-flowchart", ["vremark-plugin-flowchart-libs"], function(__WEBPACK_EXTERNAL_MODULE__1356__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		1: 0
-/******/ 	};
-/******/
-/******/
-/******/
-/******/ 	// script path function
-/******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"9":"vendors~vremark-plugin-flowchart-libs","10":"vendors~vremark-plugin-flowchart-libs~vremark-plugin-sequence-libs"}[chunkId]||chunkId) + ".js"
-/******/ 	}
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -70,65 +26,6 @@ define("vremark-plugin-flowchart", [], function() { return /******/ (function(mo
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var promises = [];
-/******/
-/******/
-/******/ 		// JSONP chunk loading for javascript
-/******/
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
-/******/
-/******/ 			// a Promise means "currently loading".
-/******/ 			if(installedChunkData) {
-/******/ 				promises.push(installedChunkData[2]);
-/******/ 			} else {
-/******/ 				// setup Promise in chunk cache
-/******/ 				var promise = new Promise(function(resolve, reject) {
-/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 				});
-/******/ 				promises.push(installedChunkData[2] = promise);
-/******/
-/******/ 				// start chunk loading
-/******/ 				var head = document.getElementsByTagName('head')[0];
-/******/ 				var script = document.createElement('script');
-/******/ 				var onScriptComplete;
-/******/
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.src = jsonpScriptSrc(chunkId);
-/******/
-/******/ 				onScriptComplete = function (event) {
-/******/ 					// avoid mem leaks in IE.
-/******/ 					script.onerror = script.onload = null;
-/******/ 					clearTimeout(timeout);
-/******/ 					var chunk = installedChunks[chunkId];
-/******/ 					if(chunk !== 0) {
-/******/ 						if(chunk) {
-/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							var error = new Error('Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')');
-/******/ 							error.type = errorType;
-/******/ 							error.request = realSrc;
-/******/ 							chunk[1](error);
-/******/ 						}
-/******/ 						installedChunks[chunkId] = undefined;
-/******/ 					}
-/******/ 				};
-/******/ 				var timeout = setTimeout(function(){
-/******/ 					onScriptComplete({ type: 'timeout', target: script });
-/******/ 				}, 120000);
-/******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				head.appendChild(script);
-/******/ 			}
-/******/ 		}
-/******/ 		return Promise.all(promises);
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -182,26 +79,127 @@ define("vremark-plugin-flowchart", [], function() { return /******/ (function(mo
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "vremark/";
 /******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
-/******/ 	var jsonpArray = window["webpackJsonp_name_"] = window["webpackJsonp_name_"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
-/******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1354);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */
+/******/ ({
+
+/***/ 1354:
+/***/ (function(module, exports, __webpack_require__) {
+
+const component = __webpack_require__(1355);
+
+const plugin = {
+    name: component.name,
+    component: component
+};
+
+module.exports = plugin;
+
+
+/***/ }),
+
+/***/ 1355:
+/***/ (function(module, exports, __webpack_require__) {
+
+const { flowchart } = __webpack_require__(1356);
+
+__webpack_require__(1357);
+
+module.exports = {
+    name: 'vremark-plugin-flowchart',
+    props: {
+        'code': {
+            type: String,
+            required: true
+        }
+    },
+    render(h) {
+        return h('div', {
+            'class': ['vremark-plugin-flowchart']
+        });
+    },
+    methods:{
+        compile() {
+            var self = this;
+            try {
+                var diagram = flowchart.parse(self.code);
+                diagram.drawSVG(self.$el);
+                self.diagram = diagram;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    },
+    mounted() {
+        var self = this;
+        self.compile();
+        // require.ensure([], function(){
+        //     var flowchart = require('flowchart.js');
+        //     self.compile(flowchart);
+        // }, 'vremark-plugin-flowchart-libs');
+    },
+    destroyed(){
+        var self = this;
+        self.diagram && self.diagram.clean();
+    }
+};
+
+
+
+/***/ }),
+
+/***/ 1356:
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__1356__;
+
+/***/ }),
+
+/***/ 1357:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(1358);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(65)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ 1358:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".vremark-plugin-flowchart {\n  text-align: center;\n  margin-bottom: 1.1em; }\n  .vremark-plugin-flowchart text {\n    font-family: \"Helvetica Neue\",Arial,\"Hiragino Sans GB\",\"STHeiti\",\"Microsoft YaHei\",\"WenQuanYi Micro Hei\",SimSun,Song,sans-serif; }\n  .vremark-plugin-flowchart [stroke=\"#000000\"] {\n    stroke: #2c3f51; }\n  .vremark-plugin-flowchart text[stroke=\"#000000\"] {\n    stroke: none; }\n  .vremark-plugin-flowchart [fill=\"#000\"],\n  .vremark-plugin-flowchart [fill=\"#000000\"],\n  .vremark-plugin-flowchart [fill=\"black\"] {\n    fill: #2c3f51; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 4:
 /***/ (function(module, exports) {
 
 /*
@@ -283,7 +281,8 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 4 */
+
+/***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -352,7 +351,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(5);
+var	fixUrls = __webpack_require__(66);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -687,7 +686,8 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 5 */
+
+/***/ 66:
 /***/ (function(module, exports) {
 
 
@@ -781,90 +781,6 @@ module.exports = function (css) {
 };
 
 
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(7);
-
-module.exports = {
-    name: 'vremark-plugin-flowchart',
-    props: {
-        'code': {
-            type: String,
-            required: true
-        }
-    },
-    render(h) {
-        return h('div', {
-            'class': ['vremark-plugin-flowchart']
-        });
-    },
-    methods:{
-        compile(flowchart) {
-            var self = this;
-            try {
-                var diagram = flowchart.parse(self.code);
-                diagram.drawSVG(self.$el);
-                self.diagram = diagram;
-            } catch (e) {
-                console.error(e);
-            }
-        }
-    },
-    mounted() {
-        var self = this;
-        Promise.all(/* require.ensure | vremark-plugin-flowchart-libs */[__webpack_require__.e(10), __webpack_require__.e(9)]).then((function(){
-            var flowchart = __webpack_require__(88);
-            self.compile(flowchart);
-        }).bind(null, __webpack_require__)).catch(__webpack_require__.oe);
-    },
-    destroyed(){
-        var self = this;
-        self.diagram && self.diagram.clean();
-    }
-};
-
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(8);
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(4)(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".vremark-plugin-flowchart {\n  text-align: center;\n  margin-bottom: 1.1em; }\n  .vremark-plugin-flowchart text {\n    font-family: \"Helvetica Neue\",Arial,\"Hiragino Sans GB\",\"STHeiti\",\"Microsoft YaHei\",\"WenQuanYi Micro Hei\",SimSun,Song,sans-serif; }\n  .vremark-plugin-flowchart [stroke=\"#000000\"] {\n    stroke: #2c3f51; }\n  .vremark-plugin-flowchart text[stroke=\"#000000\"] {\n    stroke: none; }\n  .vremark-plugin-flowchart [fill=\"#000\"],\n  .vremark-plugin-flowchart [fill=\"#000000\"],\n  .vremark-plugin-flowchart [fill=\"black\"] {\n    fill: #2c3f51; }\n", ""]);
-
-// exports
-
-
 /***/ })
-/******/ ])});;
+
+/******/ })});;
