@@ -26,7 +26,7 @@ class VMarkDown {
         }, options?{
             rootClassName: options.rootClassName,
             rootTagName: options.rootTagName,
-            hashid: options.hashid
+            hashid: options.hasOwnProperty('hashid') ? options.hashid: true
         }:{});
 
         self.pluginManager = options.pluginManager;
