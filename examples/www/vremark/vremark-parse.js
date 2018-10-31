@@ -6484,7 +6484,9 @@ function paragraph(eat, value, silent) {
             (
                 self.inList ||
                 commonmark ||
-                (gfm && !decimal(trim.left(subvalue).charAt(0)))
+                (gfm && !decimal(trim.left(subvalue).charAt(0))) ||
+                /^[\d]+\. /.test(trim.left(subvalue))
+
             )
         ) {
             break;

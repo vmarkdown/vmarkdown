@@ -1,25 +1,93 @@
-# 欢迎使用马克飞象
+# Markdown Syntax
 
-@(示例笔记本)[马克飞象|帮助|Markdown]
+## Character Formatting
 
-**马克飞象**是一款专为印象笔记（Evernote）打造的Markdown编辑器，通过精心的设计与技术实现，配合印象笔记强大的存储和同步功能，带来前所未有的书写体验。特点概述：
+You should read this, it's **very important**.
+You _might_ want to read this.
+~~Never mind~~ - it wasn't _that_ important.
 
-- **功能丰富** ：支持高亮代码块、*LaTeX* 公式、流程图，本地图片以及附件上传，甚至截图粘贴，工作学习好帮手；
-- **得心应手** ：简洁高效的编辑器，提供[桌面客户端][1]以及[离线Chrome App][2]，支持移动端 Web；
-- **深度整合** ：支持选择笔记本和添加标签，支持从印象笔记跳转编辑，轻松管理。
+Let's try a few `combinations`:
+**This text is strong, ~~this text is strong with strikethrough~~, and _this text is formatted with strong emphasis_**
+***This text is formatted with strong emphasis too.***
 
 
--------------------
+## Headings
 
-[TOC]
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
 
-## Markdown简介
+Heading 1 - Alternative Syntax
+========
 
-> Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档，然后转换成格式丰富的HTML页面。    —— [维基百科](https://zh.wikipedia.org/wiki/Markdown)
+Heading 2 - Alternative Syntax
+--------
 
-正如您在阅读的这份文档，它使用简单的符号标识不同的标题，将某些文字标记为**粗体**或者*斜体*，创建一个[链接](http://www.example.com)或一个脚注[^demo]。下面列举了几个高级功能，更多语法请按`Cmd + /`查看帮助。
 
-### 代码块
+## Paragraphs and Line Breaks
+
+Even though this text is written on two separate lines,
+it is parsed as a single paragraph.
+
+This paragraph is separated from the previous paragraph
+by a blank line.
+
+This text is parsed as a single paragraph.
+The two trailing spaces at the end of the previous line start a new line.\
+The backslash character also starts a new line.
+
+
+## Thematic Breaks
+
+The underscores on the next line create a thematic break below this paragraph.
+___
+The minus signs below must be separated from this paragraph by a blank line.
+If not, they are parsed as a level 2 heading.
+
+----
+Three or more asterisks also create a thematic break.
+****
+
+
+
+## Block Quotes
+
+> Use block quotes to emulate reply text.
+> This line is part of the same quote.
+
+This line is not formatted and does not belong to the quote block.
+
+> This block spans multiple paragraphs.
+>
+> The second paragraph is grouped with the previous paragraph in the same quote block.
+> Character formatting is _also_ supported inside the **quote block**.
+
+> Quote blocks can also be nested.
+>> When you start a new line with additional > characters,
+>>> it simulates a threaded conversation.
+
+
+## Indented Code Blocks
+
+Start an indented code block following a paragraph with a blank line and at least four spaces of indentation:
+
+    This is a code block.
+
+    Blank lines between indented lines do not end the code block.
+
+    Here is some HTML:
+        <div class="footer">
+            © 2009—2017 JetBrains · All rights reserved
+        </div>
+This line of text is not indented. It ends the code block and starts a new paragraph.
+
+
+## Fenced Code Blocks
+
+The following code block uses syntax highlighting for Python:
 ``` python
 @requires_authorization
 def somefunc(param1='', param2=0):
@@ -33,9 +101,131 @@ class SomeClass:
 ... prompt'''
 ```
 
+## Lists
+
+The following list **must** begin with the number 1:
+1. Only lists that start with 1 are allowed to interrupt paragraphs.
+1. Subsequent numbering is irrelevant.
+0. You can start a new line with any number as long as you use the same delimiter character.
+2) This item uses a different delimiter and starts a new ordered list, starting with the number 2.
+
+This list can start with any number:
+
+4) The empty line means that the list does not interrupt a paragraph.
+1) The ordered list continues to increment the numbering from the previous list item.
+5) Use any number fewer than ten characters. This number is parsed as the third item in the ordered list.
+
+* Start unordered lists with -, *, or +.
++ You don't even have to use the same character for each list item.
+- Pro tip: * and + require the Shift key. - doesn't. Format faster with the minus sign.
+  * Nest unordered list items with two spaces.
+    * Unordered lists support multiple levels of nesting.
 
 
-# [G2](https://antv.alipay.com)
+
+## Checklists
+
+TODO:
+* [x] This item is marked as complete. The checkbox is checked.
+- [ ] This item is incomplete. The checkbox is unchecked.
++ [ ] As with unordered lists, you can start the line with an asterisk, minus sign, or plus sign.
+    - [ ] Nest checklist items with two spaces.
+        -  [ ] Checklists support multiple levels of nesting.
+
+
+
+
+## Tables
+
+
+Kitchen Cleanup Rotation
+
+| Month    | Assignee | Backup |
+| -------- | -------- | ------ |
+| January  | Dave     | Steve  |
+| February | Gregg    | Karen  |
+| March    | Diane    | Jorge  |
+
+Here's the same text with additional formatting and alternative syntax.
++ The text in the first column is flush right.
++ The text in the second column is centered.
++ The Markdown is stripped down to the minimum syntax that is required to render the table.
+
+Month | Assignee | Backup
+---:|:---:| ---
+**January** | Dave | _Steve_
+**February** | Gregg | _Karen_
+**March** | Diane | _Jorge_
+
+
+
+## Links
+
+[inline link](https://www.google.com)
+[inline link with tooltip](https://www.google.com "google")
+[reference link][1]
+
+[1]: https://www.google.com
+
+
+## Images
+
+Here's an image link to the logo:
+
+![logo](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "logo")
+
+
+## LaTeX
+
+The editor converts LaTeX equations in double-dollars `$$`: $$ax^2+bx+c=0$$. All equations are rendered as block equations. If you need inline ones, you can add the prefix `\inline`: $$\inline p={1\over q}$$. But it is a good practice to place big equations on separate lines:
+
+$$
+x_{1,2} = {-b\pm\sqrt{b^2 - 4ac} \over 2a}.
+$$
+
+In this case the LaTeX syntax will be highlighted in the source code. You can even add equation numbers (unfortunately there is no automatic numbering and refs support):
+
+$$
+|\vec{A}|=\sqrt{A_x^2 + A_y^2 + A_z^2}.
+$$(1)
+
+
+## flowchart
+
+```flow
+st=>start: Start
+e=>end
+op=>operation: My Operation
+cond=>condition: Yes or No?
+
+st->op->cond
+cond(yes)->e
+cond(no)->op
+```
+
+## sequence
+
+[Documentation for sequence](https://bramp.github.io/js-sequence-diagrams/)
+
+
+```sequence
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+```
+
+```seq
+Title: Here is a title
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+```
+
+
+## G2
+
+[Documentation for G2](http://g2.alipay.com/)
 
 ```g2
 const data = [
@@ -59,114 +249,228 @@ return chart;
 ```
 
 
+## Charts
 
-### LaTeX 公式
+[Documentation for charts](http://www.chartjs.org/docs/)
 
-可以创建行内公式，例如 $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$。或者块级公式：
+### Line Chart
 
-$$	x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
-
-### 表格
-| Item      |    Value | Qty  |
-| :-------- | --------:| :--: |
-| Computer  | 1600 USD |  5   |
-| Phone     |   12 USD |  12  |
-| Pipe      |    1 USD | 234  |
-
-### 流程图
-```flow
-st=>start: Start
-e=>end
-op=>operation: My Operation
-cond=>condition: Yes or No?
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
+```chart
+{
+  "type": "line",
+  "data": {
+    "labels": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July"
+    ],
+    "datasets": [
+      {
+        "label": "# of bugs",
+        "fill": false,
+        "lineTension": 0.1,
+        "backgroundColor": "rgba(75,192,192,0.4)",
+        "borderColor": "rgba(75,192,192,1)",
+        "borderCapStyle": "butt",
+        "borderDash": [],
+        "borderDashOffset": 0,
+        "borderJoinStyle": "miter",
+        "pointBorderColor": "rgba(75,192,192,1)",
+        "pointBackgroundColor": "#fff",
+        "pointBorderWidth": 1,
+        "pointHoverRadius": 5,
+        "pointHoverBackgroundColor": "rgba(75,192,192,1)",
+        "pointHoverBorderColor": "rgba(220,220,220,1)",
+        "pointHoverBorderWidth": 2,
+        "pointRadius": 1,
+        "pointHitRadius": 10,
+        "data": [
+          65,
+          59,
+          80,
+          81,
+          56,
+          55,
+          40
+        ],
+        "spanGaps": false
+      }
+    ]
+  },
+  "options": {}
+}
 ```
 
-以及时序图:
 
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
+[Documentation for Line Chart](http://www.chartjs.org/docs/#line-chart)
+
+### Bar Chart
+
+```chart
+{
+  "type": "bar",
+  "data": {
+  "labels": [
+    "Red",
+    "Blue",
+    "Yellow",
+    "Green",
+    "Purple",
+    "Orange"
+  ],
+  "datasets": [
+    {
+    "label": "# of Votes",
+    "data": [
+      12,
+      19,
+      3,
+      5,
+      2,
+      3
+    ],
+    "backgroundColor": [
+      "rgba(255, 99, 132, 0.2)",
+      "rgba(54, 162, 235, 0.2)",
+      "rgba(255, 206, 86, 0.2)",
+      "rgba(75, 192, 192, 0.2)",
+      "rgba(153, 102, 255, 0.2)",
+      "rgba(255, 159, 64, 0.2)"
+    ],
+    "borderColor": [
+      "rgba(255,99,132,1)",
+      "rgba(54, 162, 235, 1)",
+      "rgba(255, 206, 86, 1)",
+      "rgba(75, 192, 192, 1)",
+      "rgba(153, 102, 255, 1)",
+      "rgba(255, 159, 64, 1)"
+    ],
+    "borderWidth": 1
+    }
+  ]
+  },
+  "options": {}
+}
 ```
 
-> **提示：**想了解更多，请查看**流程图**[语法][3]以及**时序图**[语法][4]。
-
-### 复选框
-
-使用 `- [ ]` 和 `- [x]` 语法可以创建复选框，实现 todo-list 等功能。例如：
-
-- [x] 已完成事项
-- [ ] 待办事项1
-- [ ] 待办事项2
-
-> **注意：**目前支持尚不完全，在印象笔记中勾选复选框是无效、不能同步的，所以必须在**马克飞象**中修改 Markdown 原文才可生效。下个版本将会全面支持。
-
-
-## 印象笔记相关
-
-### 笔记本和标签
-**马克飞象**增加了`@(笔记本)[标签A|标签B]`语法, 以选择笔记本和添加标签。 **绑定账号后**， 输入`(`自动会出现笔记本列表，请从中选择。
-
-### 笔记标题
-**马克飞象**会自动使用文档内出现的第一个标题作为笔记标题。例如本文，就是第一行的 `欢迎使用马克飞象`。
-
-### 快捷编辑
-保存在印象笔记中的笔记，右上角会有一个红色的编辑按钮，点击后会回到**马克飞象**中打开并编辑该笔记。
->**注意：**目前用户在印象笔记中单方面做的任何修改，马克飞象是无法自动感知和更新的。所以请务必回到马克飞象编辑。
-
-### 数据同步
-**马克飞象**通过**将Markdown原文以隐藏内容保存在笔记中**的精妙设计，实现了对Markdown的存储和再次编辑。既解决了其他产品只是单向导出HTML的单薄，又规避了服务端存储Markdown带来的隐私安全问题。这样，服务端仅作为对印象笔记 API调用和数据转换之用。
-
- >**隐私声明：用户所有的笔记数据，均保存在印象笔记中。马克飞象不存储用户的任何笔记数据。**
-
-### 离线存储
-**马克飞象**使用浏览器离线存储将内容实时保存在本地，不必担心网络断掉或浏览器崩溃。为了节省空间和避免冲突，已同步至印象笔记并且不再修改的笔记将删除部分本地缓存，不过依然可以随时通过`文档管理`打开。
-
-> **注意：**虽然浏览器存储大部分时候都比较可靠，但印象笔记作为专业云存储，更值得信赖。以防万一，**请务必经常及时同步到印象笔记**。
-
-## 编辑器相关
-### 设置
-右侧系统菜单（快捷键`Cmd + M`）的`设置`中，提供了界面字体、字号、自定义CSS、vim/emacs 键盘模式等高级选项。
-
-### 快捷键
-
-帮助    `Cmd + /`
-同步文档    `Cmd + S`
-创建文档    `Cmd + Opt + N`
-最大化编辑器    `Cmd + Enter`
-预览文档 `Cmd + Opt + Enter`
-文档管理    `Cmd + O`
-系统菜单    `Cmd + M`
-
-加粗    `Cmd + B`
-插入图片    `Cmd + G`
-插入链接    `Cmd + L`
-提升标题    `Cmd + H`
-
-## 关于收费
-
-**马克飞象**为新用户提供 10 天的试用期，试用期过后需要[续费](maxiang.info/vip.html)才能继续使用。未购买或者未及时续费，将不能同步新的笔记。之前保存过的笔记依然可以编辑。
-
-
-## 反馈与建议
-- 微博：[@马克飞象](http://weibo.com/u/2788354117)，[@GGock](http://weibo.com/ggock "开发者个人账号")
-- 邮箱：<hustgock@gmail.com>
-
----------
-感谢阅读这份帮助文档。请点击右上角，绑定印象笔记账号，开启全新的记录与分享体验吧。
 
 
 
 
-[^demo]: 这是一个示例脚注。请查阅 [MultiMarkdown 文档](https://github.com/fletcher/MultiMarkdown/wiki/MultiMarkdown-Syntax-Guide#footnotes) 关于脚注的说明。 **限制：** 印象笔记的笔记内容使用 [ENML][5] 格式，基于 HTML，但是不支持某些标签和属性，例如id，这就导致`脚注`和`TOC`无法正常点击。
+## mermaid
+
+[Documentation for mermaid](https://mermaidjs.github.io/)
+
+```mermaid
+
+graph TD
+    Start --> Stop
+
+```
+
+-----
 
 
-  [1]: http://maxiang.info/client_zh
-  [2]: https://chrome.google.com/webstore/detail/kidnkfckhbdkfgbicccmdggmpgogehop
-  [3]: http://adrai.github.io/flowchart.js/
-  [4]: http://bramp.github.io/js-sequence-diagrams/
-  [5]: https://dev.yinxiang.com/doc/articles/enml.php
+```mermaid
+
+graph LR
+    id1[This is the text in the box]
+
+
+```
+
+-----
+
+```mermaid
+
+graph LR
+    id1((This is the text in the circle))
+
+
+```
+
+
+-----
+
+```mermaid
+
+graph TB
+    c1-->a2
+    subgraph one
+    a1-->a2
+    end
+    subgraph two
+    b1-->b2
+    end
+    subgraph three
+    c1-->c2
+    end
+
+```
+
+
+
+
+-----
+
+```mermaid
+
+gantt
+    title A Gantt Diagram
+    dateFormat  YYYY-MM-DD
+    section Section
+    A task           :a1, 2014-01-01, 30d
+    Another task     :after a1  , 20d
+    section Another
+    Task in sec      :2014-01-12  , 12d
+    another task      : 24d
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

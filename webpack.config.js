@@ -8,7 +8,7 @@ const config = {
     mode: 'none',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: production?'[name].[hash].min.js':'[name].js',
+        filename: production?'[name].[contenthash].min.js':'[name].js',
         libraryTarget: "umd",
         library: "[name]",
         // libraryExport: 'default'
@@ -18,35 +18,35 @@ const config = {
     },
     module:{
         rules: [
-            production?{
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            }:{}
+            // production?{
+            //     test: /\.js$/,
+            //     exclude: /(node_modules|bower_components)/,
+            //     use: {
+            //         loader: 'babel-loader',
+            //         options: {
+            //             presets: ['@babel/preset-env']
+            //         }
+            //     }
+            // }:{}
         ]
     },
     externals: {
     },
     plugins: [
     ],
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                uglifyOptions: {
-                    compress: {
-                        drop_console: true
-                    }
-                }
-            })
-        ]
-    }
+    // optimization: {
+    //     minimizer: [
+    //         new UglifyJsPlugin({
+    //             cache: true,
+    //             parallel: true,
+    //             uglifyOptions: {
+    //                 compress: {
+    //                     drop_console: true
+    //                 }
+    //             }
+    //         })
+    //     ]
+    // }
 };
 
 module.exports = [
