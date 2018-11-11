@@ -114,11 +114,14 @@ module.exports = {
         'code': {
             type: String,
             required: true
-        }
+        },
+        dialect: {
+            type: String
+        },
     },
     data() {
         return {
-            result: ''
+            result: this.code || ''
         }
     },
     render(h) {
@@ -127,9 +130,12 @@ module.exports = {
         );
     },
     methods:{
+        getOptions() {
+
+
+        },
         compile() {
             var self = this;
-            if(!self.code) {self.result = '';return;}
             try {
                 var options = JSON.parse(self.code);
                 self.chart = new Chart(self.$el, options);
@@ -538,9 +544,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.

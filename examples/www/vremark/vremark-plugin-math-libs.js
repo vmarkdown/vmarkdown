@@ -243,361 +243,361 @@ function toComment(sourceMap) {
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_AMS-Regular.cd28a1d7203aef546e0f7733d98e8ea9.woff2";
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_AMS-Regular.b2d929640f68a1bd67eff3ebd331159a.woff";
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_AMS-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_AMS-Regular.dffd527d95ed83d58fc7a8f88e10b2fe.ttf";
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Caligraphic-Bold.42a984df9caeef0f96fa6234a41ff1a3.woff2";
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Caligraphic-Bold.fe8c221065dcbfe529cd2d201bf6baa6.woff";
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Caligraphic-Bold.c7e386dd35c841d1a8f9e11fd1a11010.ttf";
 
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Caligraphic-Regular.7f4bec7c908e337d660adcdf9a6abbe7.woff2";
 
 /***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Caligraphic-Regular.93a79e01c9abee39413ba14acb3e5d33.woff";
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Caligraphic-Regular.d04d48408d923e5bb6883a514481b7d8.ttf";
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Fraktur-Bold.b1a879453aae1660b06d5941c50457c5.woff2";
 
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Fraktur-Bold.8c43064fdc3bf45ee62e8a22e856a793.woff";
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Fraktur-Bold.9b1486220b5ca974aaceebbf70e1f087.ttf";
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Fraktur-Regular.e21a6db7f372856ebfd6a278b56b8c7d.woff2";
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Fraktur-Regular.801690bb2f2a87a0e536da498ea4709c.woff";
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Fraktur-Regular.576266ad7ee52fe0285e1f8a76163d65.ttf";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Bold.2057e5cbb505134b0a620e681abc5070.woff2";
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Bold.0dee09596a43df990fdefbe5ed207b2b.woff";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Bold.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Bold.e493181d2a1b6a1f47d1a8d5c28bca9f.ttf";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-BoldItalic.2484936f0b130a0d2bb745766058b46d.woff2";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-BoldItalic.a4ed2b019d879955fa4c53795b385a8f.woff";
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-BoldItalic.a879e3a8b3c0431c9861995e7dfe937f.ttf";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Italic.c9d5a32d1fc4b3fa10f87a8e2859a1f3.woff2";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Italic.6d2cd8f026ffffcf0a708842a7435a2a.woff";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Italic.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Italic.162d57530c14801de233decbf44a77e6.ttf";
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Regular.a547140c5430ed97183f87d9fa247890.woff2";
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Regular.54e5ba96f2f716715619f7b8433f1d36.woff";
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Main-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Main-Regular.424335d97ef5548890673af99f4136b4.ttf";
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Math-BoldItalic.96b229786edd80e54fa2b68c5f032960.woff2";
 
 /***/ }),
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Math-BoldItalic.6091397cdc326cf8c8f7b648e2341483.woff";
 
 /***/ }),
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Math-BoldItalic.d081a42411cc6f54d404ee2de6e63a41.ttf";
 
 /***/ }),
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Math-Italic.4b3b168e2b5e74b24c10acd7316488d1.woff2";
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Math-Italic.dc91856176c1350f1ee303851a422277.woff";
 
 /***/ }),
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Math-Italic.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Math-Italic.5d2baf751ed4a4df0ca2dbba04058de8.ttf";
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Bold.91efef29a1be79a5318d77bfb6256213.woff2";
 
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Bold.e08eb4331e7db133b6d2e355cd74724a.woff";
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Bold.4c2a414abb99038cdc7d84d9711d06b2.ttf";
 
 /***/ }),
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Italic.ff63137930f4ab783837f2eba5cc5f16.woff2";
 
 /***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Italic.ada012c291bf50cf9a349ceb98df6659.woff";
 
 /***/ }),
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Italic.66bab6babbbcb45ee13301e20516eb6a.ttf";
 
 /***/ }),
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Regular.fd6852d4ac7b37575a7fea0708355ce3.woff2";
 
 /***/ }),
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Regular.c789d74a74097a2e9a1bb50f8714b531.woff";
 
 /***/ }),
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_SansSerif-Regular.066914d0bdc0607d66621bfefcac72bc.ttf";
 
 /***/ }),
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Script-Regular.ec3e4a5540df883fa3147f8a5e83287b.woff2";
 
 /***/ }),
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Script-Regular.ae1b970213f3e1098abfb03679e22111.woff";
 
 /***/ }),
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Script-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Script-Regular.85007a59906b95d94b5b06619fde46aa.ttf";
 
 /***/ }),
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size1-Regular.2870a8f86e7ba49b457e662b17c4bc20.woff2";
 
 /***/ }),
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size1-Regular.df2ac4dc4060253c264b85384ec0e2f3.woff";
 
 /***/ }),
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size1-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size1-Regular.923e515d161a541174ba0f71e1adb54e.ttf";
 
 /***/ }),
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size2-Regular.6dbdad7ae27338101bfd05c181891588.woff2";
 
 /***/ }),
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size2-Regular.aec9a6799841d00923821060d396dad1.woff";
 
 /***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size2-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size2-Regular.e3717988fb1ebd63efd10fd2e05568bc.ttf";
 
 /***/ }),
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size3-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size3-Regular.dc7be1610075c0ca8581477f050444df.woff2";
 
 /***/ }),
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size3-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size3-Regular.f1a090a4c1a36d1d3b1fdc6736db8748.woff";
 
 /***/ }),
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size3-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size3-Regular.ae9ca32213bdef3d2b7006c743ffdb8a.ttf";
 
 /***/ }),
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size4-Regular.ecd52e1e2f0cc1b6d4d8d29db4c792c9.woff2";
 
 /***/ }),
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size4-Regular.1571003843c39b73f69bb9ffafc6b51c.woff";
 
 /***/ }),
 /* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Size4-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Size4-Regular.b790cf180d62ae91960d6b46cbb3905e.ttf";
 
 /***/ }),
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff2";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Typewriter-Regular.efae4055ace527ee04a22212edd721e5.woff2";
 
 /***/ }),
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Typewriter-Regular.6a862f8ff236e321e04c326a32eb8a49.woff";
 
 /***/ }),
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "_/node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.ttf";
+module.exports = __webpack_require__.p + "fonts/KaTeX_Typewriter-Regular.dbf31d0ed38be8d16e4386e27b18de9d.ttf";
 
 /***/ }),
 /* 65 */
@@ -857,9 +857,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.

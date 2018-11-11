@@ -449,9 +449,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.
@@ -759,14 +757,14 @@ exports.push([module.i, "/** js sequence diagrams\n *  https://bramp.github.io/j
 /***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "lib/js-sequence-diagrams/danielbd.woff2";
+module.exports = __webpack_require__.p + "fonts/danielbd.a0b95276d085f896028de31223739b2e.woff2";
 
 /***/ }),
 
 /***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "lib/js-sequence-diagrams/danielbd.woff";
+module.exports = __webpack_require__.p + "fonts/danielbd.e77b34d4fff49fdb4f7ac7a844e4cd88.woff";
 
 /***/ }),
 

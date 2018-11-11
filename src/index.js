@@ -1,18 +1,19 @@
 const NodeUtil = require("./util/node");
 const Event = require('./util/event');
 const render = require('vremark-render');
-const PromiseWorker = require('promise-worker');
+// const PromiseWorker = require('promise-worker');
+// const Worker = require('./vmarkdown.worker.js');
+// const worker = new Worker();
+// const promiseWorker = new PromiseWorker(worker);
+//
+// function workerParse(markdown, options) {
+//     return promiseWorker.postMessage({
+//         markdown: markdown,
+//         options: options
+//     });
+// }
 
-const Worker = require('./vmarkdown.worker.js');
-const worker = new Worker();
-const promiseWorker = new PromiseWorker(worker);
-
-function workerParse(markdown, options) {
-    return promiseWorker.postMessage({
-        markdown: markdown,
-        options: options
-    });
-}
+const workerParse = require('vremark-parse');
 
 class VMarkDown {
 
@@ -29,7 +30,8 @@ class VMarkDown {
             hashid: options.hasOwnProperty('hashid') ? options.hashid: true
         }:{});
 
-        self.pluginManager = options.pluginManager;
+        // self.pluginManager = options.pluginManager;
+        self.plugins = options.plugins || {};
         self.h = options.h || function (tagName, data, value) { return value };
 
         self.mdast = {};
@@ -45,6 +47,25 @@ class VMarkDown {
                 }
             }
         };
+    }
+
+
+    async process(markdown = '') {
+
+        const self = this;
+
+        const {mdast, hast} = await VMarkDown.parse(markdown, {
+            plugins: self.plugins
+        });
+        self.mdast = mdast;
+        self.hast = hast;
+
+        const vdom = VMarkDown.render(hast, {
+            h: self.h,
+            plugins: self.plugins
+        });
+
+        return vdom;
     }
 
     async refresh(value) {
@@ -90,14 +111,14 @@ class VMarkDown {
     static async parse(markdown, options) {
 
         console.time('worker');
-        const {mdast, hast, plugins} = await workerParse(markdown, options);
+        const {mdast, hast} = await workerParse(markdown, options);
         console.timeEnd('worker');
 
         console.log( mdast );
         console.log( hast );
-        console.log( plugins );
+        // console.log( plugins );
 
-        return {mdast, hast, plugins};
+        return {mdast, hast};
     }
 
     static render(hast, options) {
@@ -107,7 +128,7 @@ class VMarkDown {
         return vdom;
     }
 
-    async process(markdown = '', noDetect) {
+    async process1(markdown = '', noDetect) {
         const self = this;
 
         const {mdast, hast, plugins} = await VMarkDown.parse(markdown,
@@ -159,7 +180,7 @@ class VMarkDown {
     }
 }
 
-VMarkDown.PluginManager = render.PluginManager;
+// VMarkDown.PluginManager = render.PluginManager;
 
 Event.mixin(VMarkDown);
 

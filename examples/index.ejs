@@ -86,6 +86,7 @@
         }
     </style>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
 
 </head>
 <body>
@@ -98,6 +99,11 @@
         catch (e) {
             console.error(e);
         }
+
+        requirejs.config({
+            paths: window.__plugins__ || {}
+        });
+
     })();
 </script>
 

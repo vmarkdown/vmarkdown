@@ -138,12 +138,17 @@ module.exports = {
             var self = this;
             try {
                 var renderedValue = katex.renderToString(self.code, {
+                    throwOnError: false,
                     displayMode: !this.inline,
                     macros: {}
                 });
                 self.result = renderedValue;
+                // katex.render(self.code, self.$el);
+                // katex.render("c = \\pm\\sqrt{a^2 + b^2}", element, {
+                //     throwOnError: true
+                // });
             } catch (e) {
-
+                console.log(e);
             }
         }
     },
@@ -543,9 +548,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.

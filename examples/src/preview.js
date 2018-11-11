@@ -8,54 +8,11 @@ const preview = new VMarkDownPreview({
     scrollContainer: '#preview'
 });
 
-const PluginManager = require('vremark-plugin-manager');
-
-// const pluginManager = new PluginManager({
-//     loader: function (plugin) {
-//
-//         return new Promise(function (success, fail) {
-//
-//             Vue.component(plugin, function (resolve, reject) {
-//                 requirejs([plugin], function(component){
-//                     resolve(component);
-//                     success();
-//                 }, function (e) {
-//                     // reject();
-//                     resolve({
-//                         render(h) {
-//                             return h('pre', {}, [
-//                                 h('code', {}, e.message)
-//                             ])
-//                         }
-//                     });
-//                     console.error(e);
-//                     fail();
-//                 });
-//             });
-//
-//         });
-//
-//     }
-// });
-const pluginManager = new PluginManager({
-    plugins: [
-
-    ],
-    config: {
-        paths: Object.assign({
-        }, window.__plugins__)
-    },
-    onOneLoaded: function (plugin) {
-        const component = plugin.component || plugin;
-        Vue.component(component.name, component);
-    }
-});
-
 const app = new Vue({
     el: '#app',
-    data: {
-        vdom: null
-    },
+    // data: {
+    //     vdom: null
+    // },
     render(h) {
         return this.vdom || h('div', {
             'class': ['loading-container'],
@@ -76,6 +33,7 @@ const app = new Vue({
             const self = this;
             const vdom = await self.vmarkdown.process(md);
             self.vdom = vdom;
+            self.$forceUpdate();
         }
     },
     async mounted(){
@@ -86,7 +44,7 @@ const app = new Vue({
 
         const vmarkdown = new VMarkDown({
             h: h,
-            pluginManager: pluginManager,
+            // pluginManager: pluginManager,
             rootClassName: 'markdown-body',
             rootTagName: 'main',
             hashid: true
@@ -116,6 +74,32 @@ const app = new Vue({
             preview.scrollTo(node, firstVisibleLine);
         });
 
+
+
+
+        requirejs([
+            'vremark-plugin-math',
+            'vremark-plugin-flowchart',
+            'vremark-plugin-mermaid',
+            'vremark-plugin-sequence',
+            'vremark-plugin-g2',
+            'vremark-plugin-chart',
+            'vremark-plugin-highlight'
+
+        ], function () {
+            Array.prototype.slice.call(arguments).forEach(function (plugin) {
+                // vmarkdown.plugins[plugin.name] = plugin;
+
+                Vue.component(plugin.component.name, plugin.component);
+                vmarkdown.plugins[plugin.name] = {
+                    component: plugin.component.name
+                };
+            });
+
+            // setTimeout(function () {
+            //     app.update(md);
+            // }, 5000);
+        });
 
     }
 });

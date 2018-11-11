@@ -91,16 +91,9 @@ module.exports =
 
 const toVDom = __webpack_require__(1);
 
-// const PluginManager = require('./plugin-manager');
-
-function render(hast, options) {
+module.exports = function render(hast, options) {
     return toVDom(hast, options);
-}
-
-// render.PluginManager = PluginManager;
-
-module.exports = render;
-
+};
 
 
 /***/ }),
@@ -115,9 +108,7 @@ module.exports = __webpack_require__(2);
 /***/ (function(module, exports, __webpack_require__) {
 
 var Parser = __webpack_require__(3);
-// var data = require('./data');
 module.exports = function toDom(node, options) {
-    // data(node, options);
     var parser = new Parser(options);
     return parser.parse(node);
 };
@@ -126,16 +117,14 @@ module.exports = function toDom(node, options) {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mode = __webpack_require__(4);
-var renderer = __webpack_require__(5);
+var renderer = __webpack_require__(4);
+// var data = require('./data');
 
 function Parser(options) {
     this.options = options || {};
-    this.dataFuc = null;
     this.h = this.options.h || function (tagName, properties, value) {
         return value;
     };
-    // this.renderer = this.options.renderer || renderer;
     this.renderer = Object.assign(renderer, this.options.renderer || {});
 }
 
@@ -144,8 +133,8 @@ Parser.prototype.parseNodes = function(nodes, parent) {
     var vnodes = [];
     for(var i=0;i<nodes.length;i++){
         var node = nodes[i];
-        node.index = i;
-        node.parent = parent;
+        // node.index = i;
+        // node.parent = parent;
         var tempNode = this.parseNode(node);
         tempNode && vnodes.push(tempNode);
     }
@@ -161,24 +150,9 @@ Parser.prototype.parseNode = function(node, parent) {
         console.error('renderer:'+node.type+' not found!');
         return null;
     }
-    return this.renderer[node.type].apply(null, [h, node, node.data, children, this.options]);
-
-    /*
-    var properties = {};
-    if(!this.dataFuc){
-        var data = mode(node, h, this.options.mode);
-        if(data) {
-            this.dataFuc = data;
-        }
-    }
-    if(this.dataFuc){
-        properties = this.dataFuc(node, this.options);
-    }
-
-    if(!this.renderer[node.type]){
-        throw new Error('renderer:'+node.type+' not found!');
-    }
-    return this.renderer[node.type].apply(null, [h, node, properties, children, this.options]);*/
+    // const _data = data(node, this.options);
+    // return this.renderer[node.type].apply(null, [h, node, _data, children, this.options]);
+    return this.renderer[node.type].apply(null, [h, node, node.data || {}, children, this.options]);
 };
 
 Parser.prototype.parse = function(root) {
@@ -197,102 +171,27 @@ module.exports = Parser;
 /* 4 */
 /***/ (function(module, exports) {
 
-function isFunction(functionToCheck) {
-    var getType = {};
-    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-}
-
-function isString(str) {
-    return typeof str === 'string' || str instanceof String;
-}
-
-var defaultModes = {
-
-    'vue': {
-        test: function (h) {
-            return h && h.toString().indexOf('vm') > -1;
-        },
-        data: function (node, options) {
-
-            var props = node.data || {};
-
-            props.attrs = props.attrs || {};
-
-            Object.assign(props.attrs, node.properties);
-
-            if(node.hasOwnProperty('hash')) {
-                options.hashid && Object.assign(props.attrs, {
-                    id: node.hash
-                });
-
-                Object.assign(props, {
-                    key: node.hash
-                });
-            }
-
-            return props;
-
-        }
-    },
-
-    'preact': {
-        test: function () {
-            return false;
-        },
-        data: function (node) {
-            return node.properties;
-        }
-    }
-
-};
-
-module.exports = function (node, h, mode) {
-
-    if(mode) {
-        if( isString(mode) && defaultModes.hasOwnProperty(mode) ) {
-            return defaultModes[mode].data;
-        }
-
-        if( isFunction(mode) ) {
-            return mode;
-        }
-    }
-
-    var list = Object.keys(defaultModes);
-    for (var i=0;i<list.length;i++) {
-        var item = list[i];
-        var m = defaultModes[item];
-        if( m.test(h) ) {
-            return m.data;
-        }
-    }
-
-    return null;
-};
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
 module.exports = {
 
-    root: function(h, node, data, children, options) {
-        return h(node.tagName, data, children);
+    root: function(h, node, data, children) {
+        return h(node.tagName || 'div', data, children);
     },
-    element: function(h, node, data, children, options) {
+    element: function(h, node, data, children) {
         return h(node.tagName, data, children);
     },
     text: function(h, node) {
         return node.value;
     },
-    comment: function () {
-        
+    component: function(h, node, data) {
+        return h(node.component, data);
     },
-    // component: function (h, node, data) {
-    //     return h(node.component, data);
-    // },
-    raw: function (h, node) {
-        return node.value;
+    raw: function(h, node, data) {
+        data = {
+            domProps: {
+                innerHTML: node.value
+            }
+        };
+        return h('div', data);
     }
 
 };
