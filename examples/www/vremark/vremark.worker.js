@@ -23625,7 +23625,7 @@ function data(node, options) {
 
     if(properties.className) {
         node.data['class'] = [].concat(node.data['class']||'').concat(properties.className);
-        // delete properties.className;
+        delete properties.className;
     }
 
     if (node.type !== 'root' && node.hash){
@@ -23786,7 +23786,7 @@ function all(nodes, map) {
 
 function one(node, map) {
 
-    if(node.tagName === 'hr' && node.children.length === 0){
+    if( (node.tagName === 'hr'||node.tagName === 'br') && node.children.length === 0){
         return 0;
     }
 
@@ -23844,14 +23844,14 @@ function one(node, map) {
         hashs.push(hash1);
     }
 
-    if(hashs.length === 0 && node.position) {
-        var value2 =
-            node.position.start.line + ':' + node.position.start.column
-            + '-'
-            + node.position.end.line + ':' + node.position.end.column;
-        var hash2 = util.hash(value2);
-        hashs.push(hash2);
-    }
+    // if(ifhashs.length === 0 && node.position) {
+    //     var value2 =
+    //         node.position.start.line + ':' + node.position.start.column
+    //         + '-'
+    //         + node.position.end.line + ':' + node.position.end.column;
+    //     var hash2 = util.hash(value2);
+    //     hashs.push(hash2);
+    // }
 
     var hash = hashs.length>0 ? hashs.reduce(function (a, b) {
         return a+b;
