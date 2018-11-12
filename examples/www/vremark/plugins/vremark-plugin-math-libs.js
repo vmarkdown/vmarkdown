@@ -77,7 +77,7 @@ define("vremark-plugin-math-libs", [], function() { return /******/ (function(mo
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "vremark/";
+/******/ 	__webpack_require__.p = "vremark/plugins/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -857,9 +857,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.

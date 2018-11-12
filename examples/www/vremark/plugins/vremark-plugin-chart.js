@@ -1,4 +1,4 @@
-define("vremark-plugin-flowchart", ["vremark-plugin-flowchart-libs"], function(__WEBPACK_EXTERNAL_MODULE__1356__) { return /******/ (function(modules) { // webpackBootstrap
+define("vremark-plugin-chart", ["vremark-plugin-chart-libs"], function(__WEBPACK_EXTERNAL_MODULE__1376__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -77,19 +77,19 @@ define("vremark-plugin-flowchart", ["vremark-plugin-flowchart-libs"], function(_
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "vremark/";
+/******/ 	__webpack_require__.p = "vremark/plugins/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1354);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1374);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1354:
+/***/ 1374:
 /***/ (function(module, exports, __webpack_require__) {
 
-const component = __webpack_require__(1355);
+const component = __webpack_require__(1375);
 
 const plugin = {
     name: component.name,
@@ -101,33 +101,44 @@ module.exports = plugin;
 
 /***/ }),
 
-/***/ 1355:
+/***/ 1375:
 /***/ (function(module, exports, __webpack_require__) {
 
-const { flowchart } = __webpack_require__(1356);
+const { Chart } = __webpack_require__(1376);
 
-__webpack_require__(1357);
+__webpack_require__(1377);
 
 module.exports = {
-    name: 'vremark-plugin-flowchart',
+    name: 'vremark-plugin-chart',
     props: {
         'code': {
             type: String,
             required: true
+        },
+        dialect: {
+            type: String
+        },
+    },
+    data() {
+        return {
+            result: this.code || ''
         }
     },
     render(h) {
-        return h('div', {
-            'class': ['vremark-plugin-flowchart']
-        });
+        return h('canvas',
+            {'class': ['vremark-plugin-chart']}
+        );
     },
     methods:{
+        getOptions() {
+
+
+        },
         compile() {
             var self = this;
             try {
-                var diagram = flowchart.parse(self.code);
-                diagram.drawSVG(self.$el);
-                self.diagram = diagram;
+                var options = JSON.parse(self.code);
+                self.chart = new Chart(self.$el, options);
             } catch (e) {
                 console.error(e);
             }
@@ -136,33 +147,27 @@ module.exports = {
     mounted() {
         var self = this;
         self.compile();
-        // require.ensure([], function(){
-        //     var flowchart = require('flowchart.js');
-        //     self.compile(flowchart);
-        // }, 'vremark-plugin-flowchart-libs');
     },
     destroyed(){
         var self = this;
-        self.diagram && self.diagram.clean();
+        self.chart && self.chart.destroy();
     }
 };
 
-
-
 /***/ }),
 
-/***/ 1356:
+/***/ 1376:
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__1356__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__1376__;
 
 /***/ }),
 
-/***/ 1357:
+/***/ 1377:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1358);
+var content = __webpack_require__(1378);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -184,7 +189,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1358:
+/***/ 1378:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -192,7 +197,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, ".vremark-plugin-flowchart {\n  text-align: center;\n  margin-bottom: 1.1em; }\n  .vremark-plugin-flowchart text {\n    font-family: \"Helvetica Neue\",Arial,\"Hiragino Sans GB\",\"STHeiti\",\"Microsoft YaHei\",\"WenQuanYi Micro Hei\",SimSun,Song,sans-serif; }\n  .vremark-plugin-flowchart [stroke=\"#000000\"] {\n    stroke: #2c3f51; }\n  .vremark-plugin-flowchart text[stroke=\"#000000\"] {\n    stroke: none; }\n  .vremark-plugin-flowchart [fill=\"#000\"],\n  .vremark-plugin-flowchart [fill=\"#000000\"],\n  .vremark-plugin-flowchart [fill=\"black\"] {\n    fill: #2c3f51; }\n", ""]);
+exports.push([module.i, ".vremark-plugin-chart {\n  text-align: center;\n  margin-bottom: 1.1em; }\n", ""]);
 
 // exports
 
@@ -539,9 +544,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.

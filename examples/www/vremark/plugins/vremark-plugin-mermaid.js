@@ -1,4 +1,4 @@
-define("vremark-plugin-chart", ["vremark-plugin-chart-libs"], function(__WEBPACK_EXTERNAL_MODULE__1376__) { return /******/ (function(modules) { // webpackBootstrap
+define("vremark-plugin-mermaid", ["vremark-plugin-mermaid-libs"], function(__WEBPACK_EXTERNAL_MODULE__1366__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -77,19 +77,19 @@ define("vremark-plugin-chart", ["vremark-plugin-chart-libs"], function(__WEBPACK
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "vremark/";
+/******/ 	__webpack_require__.p = "vremark/plugins/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1374);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1364);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1374:
+/***/ 1364:
 /***/ (function(module, exports, __webpack_require__) {
 
-const component = __webpack_require__(1375);
+const component = __webpack_require__(1365);
 
 const plugin = {
     name: component.name,
@@ -101,23 +101,28 @@ module.exports = plugin;
 
 /***/ }),
 
-/***/ 1375:
+/***/ 1365:
 /***/ (function(module, exports, __webpack_require__) {
 
-const { Chart } = __webpack_require__(1376);
+const { mermaid } = __webpack_require__(1366);
 
-__webpack_require__(1377);
+__webpack_require__(1367);
+
+mermaid.initialize({
+    startOnLoad: false,
+    theme: 'default',
+    gantt: {}
+});
+
+var index = 0;
 
 module.exports = {
-    name: 'vremark-plugin-chart',
+    name: 'vremark-plugin-mermaid',
     props: {
         'code': {
             type: String,
             required: true
-        },
-        dialect: {
-            type: String
-        },
+        }
     },
     data() {
         return {
@@ -125,20 +130,26 @@ module.exports = {
         }
     },
     render(h) {
-        return h('canvas',
-            {'class': ['vremark-plugin-chart']}
+        return h('pre',
+            {'class': ['vremark-plugin-mermaid', 'mermaid']},
+            [
+                h('code', {
+                    'class': ['lang-mermaid'],
+                    domProps:{
+                        innerHTML: this.result
+                    }
+                })
+            ]
         );
     },
     methods:{
-        getOptions() {
-
-
-        },
         compile() {
             var self = this;
             try {
-                var options = JSON.parse(self.code);
-                self.chart = new Chart(self.$el, options);
+                var id = 'mermaid' + index++;
+                mermaid.render(id, self.code, function (svgGraph) {
+                    self.result = svgGraph;
+                });
             } catch (e) {
                 console.error(e);
             }
@@ -150,24 +161,23 @@ module.exports = {
     },
     destroyed(){
         var self = this;
-        self.chart && self.chart.destroy();
     }
 };
 
 /***/ }),
 
-/***/ 1376:
+/***/ 1366:
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__1376__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__1366__;
 
 /***/ }),
 
-/***/ 1377:
+/***/ 1367:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1378);
+var content = __webpack_require__(1368);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -189,7 +199,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1378:
+/***/ 1368:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -197,7 +207,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, ".vremark-plugin-chart {\n  text-align: center;\n  margin-bottom: 1.1em; }\n", ""]);
+exports.push([module.i, ".vremark-plugin-mermaid {\n  text-align: center;\n  margin-bottom: 1.1em; }\n", ""]);
 
 // exports
 
@@ -544,9 +554,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.

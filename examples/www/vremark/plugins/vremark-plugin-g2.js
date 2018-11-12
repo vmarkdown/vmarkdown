@@ -1,4 +1,4 @@
-define("vremark-plugin-math", ["vremark-plugin-math-libs"], function(__WEBPACK_EXTERNAL_MODULE__1351__) { return /******/ (function(modules) { // webpackBootstrap
+define("vremark-plugin-g2", ["vremark-plugin-g2-libs"], function(__WEBPACK_EXTERNAL_MODULE__1371__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -77,19 +77,19 @@ define("vremark-plugin-math", ["vremark-plugin-math-libs"], function(__WEBPACK_E
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "vremark/";
+/******/ 	__webpack_require__.p = "vremark/plugins/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1349);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1369);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1349:
+/***/ 1369:
 /***/ (function(module, exports, __webpack_require__) {
 
-const component = __webpack_require__(1350);
+const component = __webpack_require__(1370);
 
 const plugin = {
     name: component.name,
@@ -101,77 +101,83 @@ module.exports = plugin;
 
 /***/ }),
 
-/***/ 1350:
+/***/ 1370:
 /***/ (function(module, exports, __webpack_require__) {
 
-const { katex } = __webpack_require__(1351);
+const { G2 } = __webpack_require__(1371);
 
-__webpack_require__(1352);
+__webpack_require__(1372);
 
 module.exports = {
-    name: 'vremark-plugin-math',
+    name: 'vremark-plugin-g2',
     props: {
-        'inline': {
-            type: Boolean,
-            default: false
-        },
-        'code': {
+        code: {
             type: String,
-            required: true
-        }
-    },
-    data() {
-        return {
-            result: this.code || ''
+            require: true
         }
     },
     render(h) {
-        return h(this.inline?'span':'p', {
-            'class': ['vremark-plugin-math', this.inline?'vremark-katex-inlineMath':'vremark-katex-math'],
-            domProps:{
-                innerHTML: this.result
-            }
-        });
+        return h('div',{
+            class: 'vremark-plugin-g2'
+        })
     },
-    methods: {
+    methods:{
         compile() {
             var self = this;
+            var code = self.code;
+
             try {
-                var renderedValue = katex.renderToString(self.code, {
-                    throwOnError: false,
-                    displayMode: !this.inline,
-                    macros: {}
-                });
-                self.result = renderedValue;
-                // katex.render(self.code, self.$el);
-                // katex.render("c = \\pm\\sqrt{a^2 + b^2}", element, {
-                //     throwOnError: true
-                // });
-            } catch (e) {
-                console.log(e);
+                var container = self.$el;
+                var func = new Function(
+                    'alert','prompt',
+                    'window','parent','document',
+                    'G2',
+                    'container',
+                    code);
+
+                self.chart = func.apply({}, [
+                    function () {}, function () {},
+                    {}, {}, {},
+                    G2,
+                    container
+                ]);
+
+            }
+            catch (e) {
+                console.error(e);
             }
         }
     },
-    mounted() {
+    mounted () {
         var self = this;
         self.compile();
+        // require.ensure([], function(){
+        //     var G2 = require('@antv/g2');
+        //     G2.track(false);
+        //     self.compile(G2);
+        // }, 'vremark-plugin-g2-libs');
+    },
+    destroyed() {
+        var self = this;
+        self.chart && self.chart.destroy();
     }
 };
 
+
 /***/ }),
 
-/***/ 1351:
+/***/ 1371:
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__1351__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__1371__;
 
 /***/ }),
 
-/***/ 1352:
+/***/ 1372:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1353);
+var content = __webpack_require__(1373);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -193,7 +199,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1353:
+/***/ 1373:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -548,9 +554,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.

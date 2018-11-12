@@ -93,8 +93,9 @@
 
 <script>
     (function () {
+
         try {
-            window.__plugins__ =  <%= plugins %>;
+            window.__plugins__ =  JSON.parse(`<%= plugins %>`);
         }
         catch (e) {
             console.error(e);

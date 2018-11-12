@@ -1,4 +1,4 @@
-define("vremark-plugin-g2", ["vremark-plugin-g2-libs"], function(__WEBPACK_EXTERNAL_MODULE__1371__) { return /******/ (function(modules) { // webpackBootstrap
+define("vremark-plugin-sequence", ["vremark-plugin-sequence-libs"], function(__WEBPACK_EXTERNAL_MODULE__1361__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -77,19 +77,19 @@ define("vremark-plugin-g2", ["vremark-plugin-g2-libs"], function(__WEBPACK_EXTER
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "vremark/";
+/******/ 	__webpack_require__.p = "vremark/plugins/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1369);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1359);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1369:
+/***/ 1359:
 /***/ (function(module, exports, __webpack_require__) {
 
-const component = __webpack_require__(1370);
+const component = __webpack_require__(1360);
 
 const plugin = {
     name: component.name,
@@ -101,83 +101,67 @@ module.exports = plugin;
 
 /***/ }),
 
-/***/ 1370:
+/***/ 1360:
 /***/ (function(module, exports, __webpack_require__) {
 
-const { G2 } = __webpack_require__(1371);
+const { Diagram } = __webpack_require__(1361);
 
-__webpack_require__(1372);
+__webpack_require__(1362);
 
-module.exports = {
-    name: 'vremark-plugin-g2',
+module.exports = ({
+    name: 'vremark-plugin-sequence',
     props: {
-        code: {
+        'code': {
             type: String,
-            require: true
+            required: true
+        }
+    },
+    data() {
+        return {
+            result: this.code
         }
     },
     render(h) {
-        return h('div',{
-            class: 'vremark-plugin-g2'
-        })
+        return h('div', {
+            'class': ['vremark-plugin-sequence']
+        });
     },
     methods:{
         compile() {
             var self = this;
-            var code = self.code;
-
             try {
-                var container = self.$el;
-                var func = new Function(
-                    'alert','prompt',
-                    'window','parent','document',
-                    'G2',
-                    'container',
-                    code);
-
-                self.chart = func.apply({}, [
-                    function () {}, function () {},
-                    {}, {}, {},
-                    G2,
-                    container
-                ]);
-
-            }
-            catch (e) {
+                var diagram = Diagram.parse(self.code);
+                var options = {theme: 'simple'};
+                diagram.drawSVG(self.$el, options);
+            } catch (e) {
                 console.error(e);
             }
         }
     },
-    mounted () {
+    mounted() {
         var self = this;
         self.compile();
-        // require.ensure([], function(){
-        //     var G2 = require('@antv/g2');
-        //     G2.track(false);
-        //     self.compile(G2);
-        // }, 'vremark-plugin-g2-libs');
     },
-    destroyed() {
+    destroyed(){
         var self = this;
-        self.chart && self.chart.destroy();
+        // self.diagram && self.diagram.clean();
     }
-};
-
+});
 
 /***/ }),
 
-/***/ 1371:
+/***/ 1361:
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__1371__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__1361__;
 
 /***/ }),
 
-/***/ 1372:
+/***/ 1362:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1373);
+var content = __webpack_require__(1363);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -199,7 +183,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1373:
+/***/ 1363:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -207,7 +191,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".vremark-plugin-sequence {\n  text-align: center;\n  margin-bottom: 1.1em; }\n  .vremark-plugin-sequence text {\n    font-family: \"Helvetica Neue\",Arial,\"Hiragino Sans GB\",\"STHeiti\",\"Microsoft YaHei\",\"WenQuanYi Micro Hei\",SimSun,Song,sans-serif; }\n  .vremark-plugin-sequence [stroke=\"#000000\"] {\n    stroke: #2c3f51; }\n  .vremark-plugin-sequence text[stroke=\"#000000\"] {\n    stroke: none; }\n  .vremark-plugin-sequence [fill=\"#000\"],\n  .vremark-plugin-sequence [fill=\"#000000\"],\n  .vremark-plugin-sequence [fill=\"black\"] {\n    fill: #2c3f51; }\n", ""]);
 
 // exports
 
@@ -554,9 +538,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.
