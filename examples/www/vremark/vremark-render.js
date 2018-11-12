@@ -134,14 +134,14 @@ Parser.prototype.parseNodes = function(nodes, parent) {
     for(var i=0;i<nodes.length;i++){
         var node = nodes[i];
         // node.index = i;
-        // node.parent = parent;
+        node.parent = parent;
         var tempNode = this.parseNode(node);
         tempNode && vnodes.push(tempNode);
     }
     return vnodes;
 };
 
-Parser.prototype.parseNode = function(node, parent) {
+Parser.prototype.parseNode = function(node) {
     if(!node) return null;
     var children = this.parseNodes(node.children, node);
     var h = this.h;
@@ -182,9 +182,9 @@ module.exports = {
     text: function(h, node) {
         return node.value;
     },
-    component: function(h, node, data) {
-        return h(node.component, data);
-    },
+    // component: function(h, node, data) {
+    //     return h(node.tagName, data);
+    // },
     raw: function(h, node, data) {
         data = {
             domProps: {

@@ -3,9 +3,38 @@ require('./loading.css');
 
 const store = require('./store');
 const VMarkDown = require('vmarkdown');
+Vue.use(VMarkDown);
 
 const preview = new VMarkDownPreview({
     scrollContainer: '#preview'
+});
+
+const vmarkdown = new VMarkDown({
+    config: {
+        root: {
+            tagName: 'main',
+            className: 'markdown-body'
+        }
+    }
+});
+
+requirejs([
+    'vremark-plugin-math',
+    'vremark-plugin-flowchart',
+    'vremark-plugin-mermaid',
+    'vremark-plugin-sequence',
+    'vremark-plugin-g2',
+    'vremark-plugin-chart',
+    'vremark-plugin-highlight'
+
+], function () {
+    Array.prototype.slice.call(arguments).forEach(function (plugin) {
+        vmarkdown.registerPlugin(plugin);
+    });
+
+    setTimeout(function () {
+        app.refresh();
+    }, 2000);
 });
 
 const app = new Vue({
@@ -24,37 +53,33 @@ const app = new Vue({
     methods: {
         async refresh(value) {
             const self = this;
-            console.time('refresh');
-            const vdom = await self.vmarkdown.process(value, true);
-            console.timeEnd('refresh');
-            self.vdom = vdom;
+            // console.time('refresh');
+            // const vdom = await self.vmarkdown.process(value, true);
+            // console.timeEnd('refresh');
+            // self.vdom = vdom;
+            self.setValue(value || self.md);
         },
         async setValue(md) {
             const self = this;
+            self.md = md;
             const vdom = await self.vmarkdown.process(md);
             self.vdom = vdom;
             self.$forceUpdate();
         }
     },
-    async mounted(){
-
+    beforeMount(){
         const self = this;
-
         const h = self.$createElement;
-
-        const vmarkdown = new VMarkDown({
-            h: h,
-            // pluginManager: pluginManager,
-            rootClassName: 'markdown-body',
-            rootTagName: 'main',
-            hashid: true
-        });
-
+        vmarkdown.h = h;
         self.vmarkdown = vmarkdown;
 
         vmarkdown.$on('refresh', function (value) {
             self.refresh(value);
         });
+    },
+    async mounted(){
+
+        const self = this;
 
         store.$on('change', function (value) {
             self.setValue(value);
@@ -72,33 +97,6 @@ const app = new Vue({
             // console.log('firstVisibleLineChange================', firstVisibleLine);
             // console.log(node);
             preview.scrollTo(node, firstVisibleLine);
-        });
-
-
-
-
-        requirejs([
-            'vremark-plugin-math',
-            'vremark-plugin-flowchart',
-            'vremark-plugin-mermaid',
-            'vremark-plugin-sequence',
-            'vremark-plugin-g2',
-            'vremark-plugin-chart',
-            'vremark-plugin-highlight'
-
-        ], function () {
-            Array.prototype.slice.call(arguments).forEach(function (plugin) {
-                // vmarkdown.plugins[plugin.name] = plugin;
-
-                Vue.component(plugin.component.name, plugin.component);
-                vmarkdown.plugins[plugin.name] = {
-                    component: plugin.component.name
-                };
-            });
-
-            // setTimeout(function () {
-            //     app.update(md);
-            // }, 5000);
         });
 
     }
