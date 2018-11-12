@@ -39,9 +39,6 @@ requirejs([
 
 const app = new Vue({
     el: '#app',
-    // data: {
-    //     vdom: null
-    // },
     render(h) {
         return this.vdom || h('div', {
             'class': ['loading-container'],
@@ -53,10 +50,6 @@ const app = new Vue({
     methods: {
         async refresh(value) {
             const self = this;
-            // console.time('refresh');
-            // const vdom = await self.vmarkdown.process(value, true);
-            // console.timeEnd('refresh');
-            // self.vdom = vdom;
             self.setValue(value || self.md);
         },
         async setValue(md) {
@@ -72,7 +65,6 @@ const app = new Vue({
         const h = self.$createElement;
         vmarkdown.h = h;
         self.vmarkdown = vmarkdown;
-
         vmarkdown.$on('refresh', function (value) {
             self.refresh(value);
         });
@@ -89,14 +81,14 @@ const app = new Vue({
             const node = vmarkdown.findNode(cursor);
             // console.log('cursorChange================', cursor);
             // console.log(node);
-            preview.activeTo(node, cursor);
+            preview.activeTo(self, node, cursor);
         });
 
         store.$on('firstVisibleLineChange', function (firstVisibleLine) {
             const node = vmarkdown.findNodeFromLine(firstVisibleLine);
             // console.log('firstVisibleLineChange================', firstVisibleLine);
             // console.log(node);
-            preview.scrollTo(node, firstVisibleLine);
+            preview.scrollTo(self, node, firstVisibleLine);
         });
 
     }
