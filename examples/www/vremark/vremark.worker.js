@@ -8284,6 +8284,14 @@ function getValues(node) {
             values.push(node.label);
             break;
         }
+        case 'math': {
+            values.push(node.value);
+            break;
+        }
+        case 'inlineMath': {
+            values.push(node.value);
+            break;
+        }
         default: {
             // node.value && values.push(node.value);
             // values.push(createPostionValue(node));
@@ -9958,9 +9966,10 @@ module.exports = function inlinePlugin(opts) {
 
             return eat(match[0])({
                 type: isDouble?'math':'inlineMath',
-                value: trimmedContent,
+                value: '$' + trimmedContent + '$',
                 math: trimmedContent,
                 /*
+                value: trimmedContent,
                 type: 'inlineMath',
                 data: {
                     hName: 'span',
