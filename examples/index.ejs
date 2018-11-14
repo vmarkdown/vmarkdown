@@ -49,10 +49,7 @@
             background-color: #999;
         }
 
-        #preview {
-            padding: 40px;
-            border-left: 1px solid rgba(0, 0, 0, 0.2);
-        }
+
     </style>
 
     <style>
@@ -83,6 +80,16 @@
 
             height: 100%;
             overflow-y: auto;
+            border-left: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        #preview {
+
+        }
+
+        #preview .preview-wrap{
+            padding: 40px 40px 100vh 40px;
+
         }
     </style>
 
@@ -109,7 +116,11 @@
 </script>
 
 <div class="panel" id="editor"></div>
-<div class="panel" id="preview"><div id="app"></div></div>
+<div class="panel" id="preview">
+    <div class="preview-wrap">
+        <div id="app"></div>
+    </div>
+</div>
 
 </body>
 </html>

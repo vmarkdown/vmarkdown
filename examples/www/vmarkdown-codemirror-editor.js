@@ -200,9 +200,12 @@ __webpack_require__(7);
 __webpack_require__(9);
 __webpack_require__(10);
 
+__webpack_require__(11);
+__webpack_require__(12);
+
 
 // import Editor from './base/editor';
-const Editor = __webpack_require__(11);
+const Editor = __webpack_require__(13);
 
 // var deepClone = function (obj) {
 //     var _tmp,result;
@@ -226,7 +229,8 @@ class CodeMirrorEditor extends Editor {
                 // maxHighlightLength: Infinity,
                 lineWrapping: true,
                 styleActiveLine: true,
-                scrollbarStyle: "native", //overlay
+                // scrollbarStyle: "native", //overlay simple
+                scrollbarStyle: "native",
 
                 dragDrop: true,
                 selectionsMayTouch: false,
@@ -391,7 +395,7 @@ class CodeMirrorEditor extends Editor {
 
     setValue(value) {
         const self = this;
-        const newValue = value + '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n';
+        const newValue = value; // + '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n';
         self.editor.setValue(newValue);
     }
 
@@ -413,7 +417,8 @@ class CodeMirrorEditor extends Editor {
     }
 
     getScrollTop() {
-
+        const self = this;
+        return self.editor.display.scroller.scrollTop;
     }
 
     getFirstVisibleCoverageRatio(firstVisibleLine, position) {
@@ -534,6 +539,12 @@ class CodeMirrorEditor extends Editor {
         const self = this;
         return self.editor.doc.getLine(line - 1);
     }
+
+
+    openSma() {
+
+    }
+
 }
 
 module.exports = CodeMirrorEditor;
@@ -547,7 +558,9 @@ module.exports = CodeMirrorEditor;
 /* 8 */,
 /* 9 */,
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports) {
 
 // import Emitter from './emitter';

@@ -34,7 +34,7 @@ requirejs([
 
     setTimeout(function () {
         app.refresh();
-    }, 2000);
+    }, 0);
 });
 
 const app = new Vue({
@@ -84,8 +84,14 @@ const app = new Vue({
             preview.activeTo(self, node, cursor);
         });
 
-        store.$on('firstVisibleLineChange', function (firstVisibleLine) {
+        store.$on('firstVisibleLineChange', function (firstVisibleLine, scrollTop) {
+            if(scrollTop === 0){
+                preview.goTop();
+                return;
+            }
+
             const node = vmarkdown.findNodeFromLine(firstVisibleLine);
+            // console.log(scrollTop);
             // console.log('firstVisibleLineChange================', firstVisibleLine);
             // console.log(node);
             preview.scrollTo(self, node, firstVisibleLine);

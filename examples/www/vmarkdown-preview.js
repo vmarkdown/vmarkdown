@@ -220,6 +220,13 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
         self.$scrollContainer.scrollTo(target, options);
     }
 
+    goTop(){
+        const self = this;
+        self.$scrollContainer.scrollTo({
+            top: 0
+        });
+    }
+
     scrollTo(vm, node, firstVisibleLine) {
         if(!node) return;
 

@@ -11,6 +11,23 @@
 .CodeMirror .CodeMirror-lines {
   padding-top: 24px; }
 
+.CodeMirror .CodeMirror-simplescroll-vertical {
+  width: 10px; }
+
+.CodeMirror .CodeMirror-overlayscroll-vertical {
+  width: 10px; }
+  .CodeMirror .CodeMirror-overlayscroll-vertical:hover, .CodeMirror .CodeMirror-overlayscroll-vertical:focus, .CodeMirror .CodeMirror-overlayscroll-vertical:active {
+    width: 64px; }
+    .CodeMirror .CodeMirror-overlayscroll-vertical:hover > div, .CodeMirror .CodeMirror-overlayscroll-vertical:focus > div, .CodeMirror .CodeMirror-overlayscroll-vertical:active > div {
+      border-radius: 0;
+      min-height: 100px !important;
+      background: rgba(187, 187, 187, 0.5); }
+
+.CodeMirror .CodeMirror-overlayscroll-horizontal div,
+.CodeMirror .CodeMirror-overlayscroll-vertical div {
+  border-radius: 10px;
+  background: rgba(187, 187, 187, 0.5); }
+
 .CodeMirror.cm-s-vmarkdown {
   font-family: "Menlo","Helvetica Neue",Arial,"Hiragino Sans GB","STHeiti","Microsoft YaHei","WenQuanYi Micro Hei",SimSun,Song,sans-serif;
   font-size: 14px;

@@ -6,6 +6,29 @@ const workerParse = require('vremark-parse');
 
 function h(tagName, data, value) { return value }
 
+function getMaxLine(root) {
+    // (self.mdast && self.mdast.children.length>0) ? self.mdast.children.slice(-1)[0].position.end.line ;
+    if(!root || root.children.length === 0){
+        return 0;
+    }
+    // return root.children.slice(-1)[0].position.end.line;
+
+    var maxLine = 0;
+
+    var len = root.children.length;
+    var index = len - 1;
+    while (index >=0) {
+        var node = root.children[index];
+        if(node.position){
+            maxLine = node.position.end.line;
+            break;
+        }
+        index--;
+    }
+
+    return maxLine;
+}
+
 class VMarkDown {
 
     constructor(options) {
@@ -30,6 +53,7 @@ class VMarkDown {
                 }
             }
         };
+        self.maxLine = 0;
     }
 
     registerPlugin(plugin) {
@@ -50,6 +74,7 @@ class VMarkDown {
         const {mdast, hast} = await VMarkDown.parse(markdown, options);
         self.mdast = mdast;
         self.hast = hast;
+        self.maxLine = getMaxLine(hast);
 
         const vdom = VMarkDown.render(hast, {
             h: self.h,
@@ -85,6 +110,7 @@ class VMarkDown {
 
     findNodeFromLine(line) {
         const self = this;
+        line = (line > self.maxLine)?self.maxLine:line;
         const node = NodeUtil.findNodeFromLine(self.hast, line);
         return node;
     }

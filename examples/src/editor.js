@@ -10,7 +10,13 @@ editor.on('cursorChange', function (cursor) {
 
 function onScroll() {
     const firstVisibleLine = editor.getFirstVisibleLine();
-    store.$emit('firstVisibleLineChange', firstVisibleLine);
+
+    let scrollTop = -1;
+    if(firstVisibleLine === 1){
+        scrollTop = editor.getScrollTop();
+    }
+
+    store.$emit('firstVisibleLineChange', firstVisibleLine, scrollTop);
 }
 
 editor.on('scroll', _.throttle(onScroll, 300));
