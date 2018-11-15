@@ -90,10 +90,9 @@ class VMarkDown {
 
     static async parse(markdown, options) {
 
-        console.time('worker');
+        // console.time('worker');
         const {mdast, hast} = await workerParse(markdown, options);
-        console.timeEnd('worker');
-
+        // console.timeEnd('worker');
         console.log( mdast );
         console.log( hast );
         // console.log( plugins );
