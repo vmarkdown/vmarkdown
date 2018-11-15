@@ -1,4 +1,4 @@
-define("vremark-plugin-highlight", ["vremark-plugin-highlight-libs"], function(__WEBPACK_EXTERNAL_MODULE__1391__) { return /******/ (function(modules) { // webpackBootstrap
+define("vremark-plugin-highlight", ["vremark-plugin-highlight-libs"], function(__WEBPACK_EXTERNAL_MODULE__1399__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -81,20 +81,290 @@ define("vremark-plugin-highlight", ["vremark-plugin-highlight-libs"], function(_
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1379);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1387);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1379:
+/***/ 1355:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addStylesClient; });
+/* harmony import */ var _listToStyles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1356);
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+function addStylesClient (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = Object(_listToStyles__WEBPACK_IMPORTED_MODULE_0__["default"])(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = Object(_listToStyles__WEBPACK_IMPORTED_MODULE_0__["default"])(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+
+/***/ 1356:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return listToStyles; });
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+
+/***/ 1387:
 /***/ (function(module, exports, __webpack_require__) {
 
 const themes = {
-    'default':__webpack_require__(1380),
-    'github':__webpack_require__(1382),
-    'github-rouge':__webpack_require__(1384),
-    'monokai-sublime':__webpack_require__(1386),
-    'darcula':__webpack_require__(1388)
+    'default':__webpack_require__(1388),
+    'github':__webpack_require__(1390),
+    'github-rouge':__webpack_require__(1392),
+    'monokai-sublime':__webpack_require__(1394),
+    'darcula':__webpack_require__(1396)
 };
 
 let style = themes['github-rouge'];
@@ -102,7 +372,7 @@ style.use();
 
 const plugin = {
     name: 'vremark-plugin-highlight',
-    component: __webpack_require__(1390),
+    component: __webpack_require__(1398),
     setTheme(theme) {
 
         if( themes.hasOwnProperty(theme) ) {
@@ -206,186 +476,6 @@ module.exports = plugin;
 
 /***/ }),
 
-/***/ 1380:
-/***/ (function(module, exports, __webpack_require__) {
-
-var refs = 0;
-var dispose;
-var content = __webpack_require__(1381);
-var options = {"hmr":true};
-options.insertInto = undefined;
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) exports.locals = content.locals;
-
-exports.use = exports.ref = function() {
-	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
-	}
-
-	return exports;
-};
-
-exports.unuse = exports.unref = function() {
-  if(refs > 0 && !(--refs)) {
-	   dispose();
-		 dispose = null;
-  }
-};
-if(false) { var lastRefs; }
-
-/***/ }),
-
-/***/ 1381:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #F0F0F0; }\n\n/*\n\nOriginal highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  background: #F0F0F0; }\n\n/* Base color: saturation 0; */\n.hljs,\n.hljs-subst {\n  color: #444; }\n\n.hljs-comment {\n  color: #888888; }\n\n.hljs-keyword,\n.hljs-attribute,\n.hljs-selector-tag,\n.hljs-meta-keyword,\n.hljs-doctag,\n.hljs-name {\n  font-weight: bold; }\n\n/* User color: hue: 0 */\n.hljs-type,\n.hljs-string,\n.hljs-number,\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-quote,\n.hljs-template-tag,\n.hljs-deletion {\n  color: #880000; }\n\n.hljs-title,\n.hljs-section {\n  color: #880000;\n  font-weight: bold; }\n\n.hljs-regexp,\n.hljs-symbol,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-link,\n.hljs-selector-attr,\n.hljs-selector-pseudo {\n  color: #BC6060; }\n\n/* Language color: hue: 90; */\n.hljs-literal {\n  color: #78A960; }\n\n.hljs-built_in,\n.hljs-bullet,\n.hljs-code,\n.hljs-addition {\n  color: #397300; }\n\n/* Meta color: hue: 200 */\n.hljs-meta {\n  color: #1f7199; }\n\n.hljs-meta-string {\n  color: #4d99bf; }\n\n/* Misc effects */\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-strong {\n  font-weight: bold; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 1382:
-/***/ (function(module, exports, __webpack_require__) {
-
-var refs = 0;
-var dispose;
-var content = __webpack_require__(1383);
-var options = {"hmr":true};
-options.insertInto = undefined;
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) exports.locals = content.locals;
-
-exports.use = exports.ref = function() {
-	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
-	}
-
-	return exports;
-};
-
-exports.unuse = exports.unref = function() {
-  if(refs > 0 && !(--refs)) {
-	   dispose();
-		 dispose = null;
-  }
-};
-if(false) { var lastRefs; }
-
-/***/ }),
-
-/***/ 1383:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #f8f8f8; }\n\n/*\n\ngithub.com style (c) Vasily Polovnyov <vast@whiteants.net>\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #333;\n  background: #f8f8f8; }\n\n.hljs-comment,\n.hljs-quote {\n  color: #998;\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-subst {\n  color: #333;\n  font-weight: bold; }\n\n.hljs-number,\n.hljs-literal,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-tag .hljs-attr {\n  color: #008080; }\n\n.hljs-string,\n.hljs-doctag {\n  color: #d14; }\n\n.hljs-title,\n.hljs-section,\n.hljs-selector-id {\n  color: #900;\n  font-weight: bold; }\n\n.hljs-subst {\n  font-weight: normal; }\n\n.hljs-type,\n.hljs-class .hljs-title {\n  color: #458;\n  font-weight: bold; }\n\n.hljs-tag,\n.hljs-name,\n.hljs-attribute {\n  color: #000080;\n  font-weight: normal; }\n\n.hljs-regexp,\n.hljs-link {\n  color: #009926; }\n\n.hljs-symbol,\n.hljs-bullet {\n  color: #990073; }\n\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3; }\n\n.hljs-meta {\n  color: #999;\n  font-weight: bold; }\n\n.hljs-deletion {\n  background: #fdd; }\n\n.hljs-addition {\n  background: #dfd; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-strong {\n  font-weight: bold; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 1384:
-/***/ (function(module, exports, __webpack_require__) {
-
-var refs = 0;
-var dispose;
-var content = __webpack_require__(1385);
-var options = {"hmr":true};
-options.insertInto = undefined;
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) exports.locals = content.locals;
-
-exports.use = exports.ref = function() {
-	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
-	}
-
-	return exports;
-};
-
-exports.unuse = exports.unref = function() {
-  if(refs > 0 && !(--refs)) {
-	   dispose();
-		 dispose = null;
-  }
-};
-if(false) { var lastRefs; }
-
-/***/ }),
-
-/***/ 1385:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "pre.vremark-plugin-highlight {\n  background-color: #f6f8fa;\n  border-radius: 3px;\n  line-height: 1.45;\n  overflow: auto;\n  padding: 16px; }\n\n/*\n\ngithub.com style (c) Vasily Polovnyov <vast@whiteants.net>\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #333;\n  background: #f8f8f8; }\n\n.hljs-comment,\n.hljs-quote {\n  color: #998;\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-subst {\n  color: #333; }\n\n.hljs-number,\n.hljs-literal,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-tag .hljs-attr {\n  color: #008080; }\n\n.hljs-string,\n.hljs-doctag {\n  color: #d14; }\n\n.hljs-title,\n.hljs-section,\n.hljs-selector-id {\n  color: #900; }\n\n.hljs-subst {\n  font-weight: normal; }\n\n.hljs-type,\n.hljs-class .hljs-title {\n  color: #458;\n  font-weight: bold; }\n\n.hljs-tag,\n.hljs-name,\n.hljs-attribute {\n  color: #000080;\n  font-weight: normal; }\n\n.hljs-regexp,\n.hljs-link {\n  color: #009926; }\n\n.hljs-symbol,\n.hljs-bullet {\n  color: #990073; }\n\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3; }\n\n.hljs-meta {\n  color: #999;\n  font-weight: bold; }\n\n.hljs-deletion {\n  background: #fdd; }\n\n.hljs-addition {\n  background: #dfd; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-strong {\n  font-weight: bold; }\n\n.hljs .hljs-keyword {\n  color: #d73a49; }\n\n.hljs .hljs-title {\n  color: #6f42c1; }\n\n.hljs .hljs-built_in, .hljs .hljs-builtin-name {\n  color: #005cc5; }\n\n.hljs .hljs-literal, .hljs .hljs-variable, .hljs .hljs-template-variable, .hljs .hljs-tag .hljs-attr {\n  color: #005cc5; }\n\n.hljs .hljs-comment {\n  color: #6a737d;\n  font-style: normal; }\n\n.hljs .hljs-attr {\n  color: #d73a49; }\n\n.hljs .hljs-literal, .hljs .hljs-variable, .hljs .hljs-template-variable, .hljs .hljs-tag .hljs-attr {\n  color: #005cc5; }\n\n.hljs .hljs-number {\n  color: #24292e; }\n\n.hljs .hljs-section, .hljs .hljs-selector-id {\n  color: #6f42c1; }\n\n.hljs .hljs-name {\n  color: #22863a; }\n\n.hljs .hljs-attr {\n  color: #032f62; }\n\n.hljs .hljs-string {\n  color: #032f62; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 1386:
-/***/ (function(module, exports, __webpack_require__) {
-
-var refs = 0;
-var dispose;
-var content = __webpack_require__(1387);
-var options = {"hmr":true};
-options.insertInto = undefined;
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) exports.locals = content.locals;
-
-exports.use = exports.ref = function() {
-	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
-	}
-
-	return exports;
-};
-
-exports.unuse = exports.unref = function() {
-  if(refs > 0 && !(--refs)) {
-	   dispose();
-		 dispose = null;
-  }
-};
-if(false) { var lastRefs; }
-
-/***/ }),
-
-/***/ 1387:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #23241f; }\n\npre.vremark-plugin-highlight .vremark-hljs-line-number {\n  color: #606366; }\n\n/*\n\nMonokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  background: #23241f; }\n\n.hljs,\n.hljs-tag,\n.hljs-subst {\n  color: #f8f8f2; }\n\n.hljs-strong,\n.hljs-emphasis {\n  color: #a8a8a2; }\n\n.hljs-bullet,\n.hljs-quote,\n.hljs-number,\n.hljs-regexp,\n.hljs-literal,\n.hljs-link {\n  color: #ae81ff; }\n\n.hljs-code,\n.hljs-title,\n.hljs-section,\n.hljs-selector-class {\n  color: #a6e22e; }\n\n.hljs-strong {\n  font-weight: bold; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-name,\n.hljs-attr {\n  color: #f92672; }\n\n.hljs-symbol,\n.hljs-attribute {\n  color: #66d9ef; }\n\n.hljs-params,\n.hljs-class .hljs-title {\n  color: #f8f8f2; }\n\n.hljs-string,\n.hljs-type,\n.hljs-built_in,\n.hljs-builtin-name,\n.hljs-selector-id,\n.hljs-selector-attr,\n.hljs-selector-pseudo,\n.hljs-addition,\n.hljs-variable,\n.hljs-template-variable {\n  color: #e6db74; }\n\n.hljs-comment,\n.hljs-deletion,\n.hljs-meta {\n  color: #75715e; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ 1388:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -424,7 +514,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #2b2b2b; }\n\npre.vremark-plugin-highlight .vremark-hljs-line-number {\n  color: #606366; }\n\n/*\n\nDarcula color scheme from the JetBrains family of IDEs\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  background: #2b2b2b; }\n\n.hljs {\n  color: #bababa; }\n\n.hljs-strong,\n.hljs-emphasis {\n  color: #a8a8a2; }\n\n.hljs-bullet,\n.hljs-quote,\n.hljs-link,\n.hljs-number,\n.hljs-regexp,\n.hljs-literal {\n  color: #6896ba; }\n\n.hljs-code,\n.hljs-selector-class {\n  color: #a6e22e; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-section,\n.hljs-attribute,\n.hljs-name,\n.hljs-variable {\n  color: #cb7832; }\n\n.hljs-params {\n  color: #b9b9b9; }\n\n.hljs-string {\n  color: #6a8759; }\n\n.hljs-subst,\n.hljs-type,\n.hljs-built_in,\n.hljs-builtin-name,\n.hljs-symbol,\n.hljs-selector-id,\n.hljs-selector-attr,\n.hljs-selector-pseudo,\n.hljs-template-tag,\n.hljs-template-variable,\n.hljs-addition {\n  color: #e0c46c; }\n\n.hljs-comment,\n.hljs-deletion,\n.hljs-meta {\n  color: #7f7f7f; }\n", ""]);
+exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #F0F0F0; }\n\n/*\n\nOriginal highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  background: #F0F0F0; }\n\n/* Base color: saturation 0; */\n.hljs,\n.hljs-subst {\n  color: #444; }\n\n.hljs-comment {\n  color: #888888; }\n\n.hljs-keyword,\n.hljs-attribute,\n.hljs-selector-tag,\n.hljs-meta-keyword,\n.hljs-doctag,\n.hljs-name {\n  font-weight: bold; }\n\n/* User color: hue: 0 */\n.hljs-type,\n.hljs-string,\n.hljs-number,\n.hljs-selector-id,\n.hljs-selector-class,\n.hljs-quote,\n.hljs-template-tag,\n.hljs-deletion {\n  color: #880000; }\n\n.hljs-title,\n.hljs-section {\n  color: #880000;\n  font-weight: bold; }\n\n.hljs-regexp,\n.hljs-symbol,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-link,\n.hljs-selector-attr,\n.hljs-selector-pseudo {\n  color: #BC6060; }\n\n/* Language color: hue: 90; */\n.hljs-literal {\n  color: #78A960; }\n\n.hljs-built_in,\n.hljs-bullet,\n.hljs-code,\n.hljs-addition {\n  color: #397300; }\n\n/* Meta color: hue: 200 */\n.hljs-meta {\n  color: #1f7199; }\n\n.hljs-meta-string {\n  color: #4d99bf; }\n\n/* Misc effects */\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-strong {\n  font-weight: bold; }\n", ""]);
 
 // exports
 
@@ -434,9 +524,189 @@ exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #2b2b2b; 
 /***/ 1390:
 /***/ (function(module, exports, __webpack_require__) {
 
-const { hljs } = __webpack_require__(1391);
+var refs = 0;
+var dispose;
+var content = __webpack_require__(1391);
+var options = {"hmr":true};
+options.insertInto = undefined;
 
-__webpack_require__(1392);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) exports.locals = content.locals;
+
+exports.use = exports.ref = function() {
+	if(!(refs++)) {
+		dispose = __webpack_require__(65)(content, options);
+	}
+
+	return exports;
+};
+
+exports.unuse = exports.unref = function() {
+  if(refs > 0 && !(--refs)) {
+	   dispose();
+		 dispose = null;
+  }
+};
+if(false) { var lastRefs; }
+
+/***/ }),
+
+/***/ 1391:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #f8f8f8; }\n\n/*\n\ngithub.com style (c) Vasily Polovnyov <vast@whiteants.net>\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #333;\n  background: #f8f8f8; }\n\n.hljs-comment,\n.hljs-quote {\n  color: #998;\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-subst {\n  color: #333;\n  font-weight: bold; }\n\n.hljs-number,\n.hljs-literal,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-tag .hljs-attr {\n  color: #008080; }\n\n.hljs-string,\n.hljs-doctag {\n  color: #d14; }\n\n.hljs-title,\n.hljs-section,\n.hljs-selector-id {\n  color: #900;\n  font-weight: bold; }\n\n.hljs-subst {\n  font-weight: normal; }\n\n.hljs-type,\n.hljs-class .hljs-title {\n  color: #458;\n  font-weight: bold; }\n\n.hljs-tag,\n.hljs-name,\n.hljs-attribute {\n  color: #000080;\n  font-weight: normal; }\n\n.hljs-regexp,\n.hljs-link {\n  color: #009926; }\n\n.hljs-symbol,\n.hljs-bullet {\n  color: #990073; }\n\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3; }\n\n.hljs-meta {\n  color: #999;\n  font-weight: bold; }\n\n.hljs-deletion {\n  background: #fdd; }\n\n.hljs-addition {\n  background: #dfd; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-strong {\n  font-weight: bold; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 1392:
+/***/ (function(module, exports, __webpack_require__) {
+
+var refs = 0;
+var dispose;
+var content = __webpack_require__(1393);
+var options = {"hmr":true};
+options.insertInto = undefined;
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) exports.locals = content.locals;
+
+exports.use = exports.ref = function() {
+	if(!(refs++)) {
+		dispose = __webpack_require__(65)(content, options);
+	}
+
+	return exports;
+};
+
+exports.unuse = exports.unref = function() {
+  if(refs > 0 && !(--refs)) {
+	   dispose();
+		 dispose = null;
+  }
+};
+if(false) { var lastRefs; }
+
+/***/ }),
+
+/***/ 1393:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "pre.vremark-plugin-highlight {\n  background-color: #f6f8fa;\n  border-radius: 3px;\n  line-height: 1.45;\n  overflow: auto;\n  padding: 16px; }\n\n/*\n\ngithub.com style (c) Vasily Polovnyov <vast@whiteants.net>\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  color: #333;\n  background: #f8f8f8; }\n\n.hljs-comment,\n.hljs-quote {\n  color: #998;\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-subst {\n  color: #333; }\n\n.hljs-number,\n.hljs-literal,\n.hljs-variable,\n.hljs-template-variable,\n.hljs-tag .hljs-attr {\n  color: #008080; }\n\n.hljs-string,\n.hljs-doctag {\n  color: #d14; }\n\n.hljs-title,\n.hljs-section,\n.hljs-selector-id {\n  color: #900; }\n\n.hljs-subst {\n  font-weight: normal; }\n\n.hljs-type,\n.hljs-class .hljs-title {\n  color: #458;\n  font-weight: bold; }\n\n.hljs-tag,\n.hljs-name,\n.hljs-attribute {\n  color: #000080;\n  font-weight: normal; }\n\n.hljs-regexp,\n.hljs-link {\n  color: #009926; }\n\n.hljs-symbol,\n.hljs-bullet {\n  color: #990073; }\n\n.hljs-built_in,\n.hljs-builtin-name {\n  color: #0086b3; }\n\n.hljs-meta {\n  color: #999;\n  font-weight: bold; }\n\n.hljs-deletion {\n  background: #fdd; }\n\n.hljs-addition {\n  background: #dfd; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-strong {\n  font-weight: bold; }\n\n.hljs .hljs-keyword {\n  color: #d73a49; }\n\n.hljs .hljs-title {\n  color: #6f42c1; }\n\n.hljs .hljs-built_in, .hljs .hljs-builtin-name {\n  color: #005cc5; }\n\n.hljs .hljs-literal, .hljs .hljs-variable, .hljs .hljs-template-variable, .hljs .hljs-tag .hljs-attr {\n  color: #005cc5; }\n\n.hljs .hljs-comment {\n  color: #6a737d;\n  font-style: normal; }\n\n.hljs .hljs-attr {\n  color: #d73a49; }\n\n.hljs .hljs-literal, .hljs .hljs-variable, .hljs .hljs-template-variable, .hljs .hljs-tag .hljs-attr {\n  color: #005cc5; }\n\n.hljs .hljs-number {\n  color: #24292e; }\n\n.hljs .hljs-section, .hljs .hljs-selector-id {\n  color: #6f42c1; }\n\n.hljs .hljs-name {\n  color: #22863a; }\n\n.hljs .hljs-attr {\n  color: #032f62; }\n\n.hljs .hljs-string {\n  color: #032f62; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 1394:
+/***/ (function(module, exports, __webpack_require__) {
+
+var refs = 0;
+var dispose;
+var content = __webpack_require__(1395);
+var options = {"hmr":true};
+options.insertInto = undefined;
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) exports.locals = content.locals;
+
+exports.use = exports.ref = function() {
+	if(!(refs++)) {
+		dispose = __webpack_require__(65)(content, options);
+	}
+
+	return exports;
+};
+
+exports.unuse = exports.unref = function() {
+  if(refs > 0 && !(--refs)) {
+	   dispose();
+		 dispose = null;
+  }
+};
+if(false) { var lastRefs; }
+
+/***/ }),
+
+/***/ 1395:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #23241f; }\n\npre.vremark-plugin-highlight .vremark-hljs-line-number {\n  color: #606366; }\n\n/*\n\nMonokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  background: #23241f; }\n\n.hljs,\n.hljs-tag,\n.hljs-subst {\n  color: #f8f8f2; }\n\n.hljs-strong,\n.hljs-emphasis {\n  color: #a8a8a2; }\n\n.hljs-bullet,\n.hljs-quote,\n.hljs-number,\n.hljs-regexp,\n.hljs-literal,\n.hljs-link {\n  color: #ae81ff; }\n\n.hljs-code,\n.hljs-title,\n.hljs-section,\n.hljs-selector-class {\n  color: #a6e22e; }\n\n.hljs-strong {\n  font-weight: bold; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-name,\n.hljs-attr {\n  color: #f92672; }\n\n.hljs-symbol,\n.hljs-attribute {\n  color: #66d9ef; }\n\n.hljs-params,\n.hljs-class .hljs-title {\n  color: #f8f8f2; }\n\n.hljs-string,\n.hljs-type,\n.hljs-built_in,\n.hljs-builtin-name,\n.hljs-selector-id,\n.hljs-selector-attr,\n.hljs-selector-pseudo,\n.hljs-addition,\n.hljs-variable,\n.hljs-template-variable {\n  color: #e6db74; }\n\n.hljs-comment,\n.hljs-deletion,\n.hljs-meta {\n  color: #75715e; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 1396:
+/***/ (function(module, exports, __webpack_require__) {
+
+var refs = 0;
+var dispose;
+var content = __webpack_require__(1397);
+var options = {"hmr":true};
+options.insertInto = undefined;
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) exports.locals = content.locals;
+
+exports.use = exports.ref = function() {
+	if(!(refs++)) {
+		dispose = __webpack_require__(65)(content, options);
+	}
+
+	return exports;
+};
+
+exports.unuse = exports.unref = function() {
+  if(refs > 0 && !(--refs)) {
+	   dispose();
+		 dispose = null;
+  }
+};
+if(false) { var lastRefs; }
+
+/***/ }),
+
+/***/ 1397:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #2b2b2b; }\n\npre.vremark-plugin-highlight .vremark-hljs-line-number {\n  color: #606366; }\n\n/*\n\nDarcula color scheme from the JetBrains family of IDEs\n\n*/\n.hljs {\n  display: block;\n  overflow-x: auto;\n  padding: 0.5em;\n  background: #2b2b2b; }\n\n.hljs {\n  color: #bababa; }\n\n.hljs-strong,\n.hljs-emphasis {\n  color: #a8a8a2; }\n\n.hljs-bullet,\n.hljs-quote,\n.hljs-link,\n.hljs-number,\n.hljs-regexp,\n.hljs-literal {\n  color: #6896ba; }\n\n.hljs-code,\n.hljs-selector-class {\n  color: #a6e22e; }\n\n.hljs-emphasis {\n  font-style: italic; }\n\n.hljs-keyword,\n.hljs-selector-tag,\n.hljs-section,\n.hljs-attribute,\n.hljs-name,\n.hljs-variable {\n  color: #cb7832; }\n\n.hljs-params {\n  color: #b9b9b9; }\n\n.hljs-string {\n  color: #6a8759; }\n\n.hljs-subst,\n.hljs-type,\n.hljs-built_in,\n.hljs-builtin-name,\n.hljs-symbol,\n.hljs-selector-id,\n.hljs-selector-attr,\n.hljs-selector-pseudo,\n.hljs-template-tag,\n.hljs-template-variable,\n.hljs-addition {\n  color: #e0c46c; }\n\n.hljs-comment,\n.hljs-deletion,\n.hljs-meta {\n  color: #7f7f7f; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 1398:
+/***/ (function(module, exports, __webpack_require__) {
+
+const { hljs } = __webpack_require__(1399);
+
+__webpack_require__(1400);
 
 var BREAK_LINE_REGEXP = /\r\n|\r|\n/g;
 
@@ -634,18 +904,35 @@ module.exports = {
 
 /***/ }),
 
-/***/ 1391:
+/***/ 1399:
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__1391__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__1399__;
 
 /***/ }),
 
-/***/ 1392:
+/***/ 1400:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(1401);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(1355).default
+var update = add("933c37c8", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
+/***/ 1401:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1393);
+var content = __webpack_require__(1402);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -667,7 +954,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1393:
+/***/ 1402:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);

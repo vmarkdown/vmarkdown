@@ -214,6 +214,20 @@ const Editor = __webpack_require__(13);
 //     return result;
 // }
 
+function trimTrailingLines(value) {
+    var val = value;
+    var index = val.length - 1;
+    while (index >= 0) {
+        var v = val.charAt(index);
+        if(v !== '\n' && v !== ' '){
+            break
+        }
+        --index;
+    }
+
+    return val.slice(0, index + 1)
+}
+
 class CodeMirrorEditor extends Editor {
 
     constructor(el, options) {
@@ -390,13 +404,14 @@ class CodeMirrorEditor extends Editor {
 
     getValue() {
         const self = this;
-        return self.editor.getValue();
+        const value = trimTrailingLines(self.editor.getValue());
+        return value;
     }
 
     setValue(value) {
         const self = this;
-        const newValue = value; // + '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n';
-        self.editor.setValue(newValue);
+        // const newValue = value + '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n';
+        self.editor.setValue(value);
     }
 
     scrollTo(scrollTop) {

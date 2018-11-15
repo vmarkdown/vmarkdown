@@ -25,7 +25,8 @@ requirejs([
     'vremark-plugin-sequence',
     'vremark-plugin-g2',
     'vremark-plugin-chart',
-    'vremark-plugin-highlight'
+    'vremark-plugin-highlight',
+    'vremark-plugin-resume'
 
 ], function () {
     Array.prototype.slice.call(arguments).forEach(function (plugin) {

@@ -9,7 +9,8 @@
   background: #bcd; }
 
 .CodeMirror .CodeMirror-lines {
-  padding-top: 24px; }
+  padding-top: 24px;
+  padding-bottom: 100vh; }
 
 .CodeMirror .CodeMirror-simplescroll-vertical {
   width: 10px; }
