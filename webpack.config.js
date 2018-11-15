@@ -2,7 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const base = require('./config/webpack.config.base');
 const production = (process.env.NODE_ENV === 'production');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
     mode: 'none',
@@ -55,7 +55,8 @@ module.exports = [
             vmarkdown: 'vmarkdown'
         },
         output: {
-            library: "VMarkDown"
+            library: "VMarkDown",
+            publicPath: 'vmarkdown/',
         },
         externals: {
             // 'katex': 'katex',

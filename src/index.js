@@ -2,7 +2,7 @@ const NodeUtil = require("./util/node");
 const Event = require('./util/event');
 const render = require('vremark-render');
 
-const workerParse = require('vremark-parse');
+const workerParse = require('./vmarkdown-worker');
 
 function h(tagName, data, value) { return value }
 

@@ -7,9 +7,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vremark-parse': path.resolve(__dirname, '../examples/www/vremark', production?'vremark-worker.min.js':'vremark-worker.js'),
-            'vremark-render': path.resolve(__dirname, '../examples/www/vremark', production?'vremark-render.min.js':'vremark-render.js'),
-            // 'vremark-plugin-manager': path.resolve(__dirname, '../examples/www/vremark', 'vremark-plugin-manager.js'),
+            'vremark-parse': path.resolve(__dirname, '../examples/www/vremark', 'vremark-parse.js'),
+            'vremark-render': path.resolve(__dirname, '../examples/www/vremark', 'vremark-render.js'),
 
             'vmarkdown': path.resolve(__dirname, '../src', 'index.js')
         }
@@ -35,7 +34,7 @@ module.exports = {
                 test: /\.worker\.js$/,
                 use: {
                     loader: 'worker-loader',
-                    options: { name: production?'[name].[hash].min.js':'[name].js' }
+                    options: { name: production?'[name].[contenthash].min.js':'[name].js' }
                 }
             }
         ]
