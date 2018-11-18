@@ -1,4 +1,4 @@
-define("vremark-plugin-g2", ["vremark-plugin-g2-libs"], function(__WEBPACK_EXTERNAL_MODULE__1377__) { return /******/ (function(modules) { // webpackBootstrap
+define("vremark-plugin-g2", ["vremark-plugin-g2-libs"], function(__WEBPACK_EXTERNAL_MODULE__1405__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -81,18 +81,18 @@ define("vremark-plugin-g2", ["vremark-plugin-g2-libs"], function(__WEBPACK_EXTER
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1375);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1403);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1355:
+/***/ 1383:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addStylesClient; });
-/* harmony import */ var _listToStyles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1356);
+/* harmony import */ var _listToStyles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1384);
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
@@ -319,7 +319,7 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 
-/***/ 1356:
+/***/ 1384:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -356,10 +356,10 @@ function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 1375:
+/***/ 1403:
 /***/ (function(module, exports, __webpack_require__) {
 
-const component = __webpack_require__(1376);
+const component = __webpack_require__(1404);
 
 const plugin = {
     name: component.name,
@@ -371,12 +371,12 @@ module.exports = plugin;
 
 /***/ }),
 
-/***/ 1376:
+/***/ 1404:
 /***/ (function(module, exports, __webpack_require__) {
 
-const { G2 } = __webpack_require__(1377);
+const { G2 } = __webpack_require__(1405);
 
-__webpack_require__(1378);
+__webpack_require__(1406);
 
 module.exports = {
     name: 'vremark-plugin-g2',
@@ -436,35 +436,35 @@ module.exports = {
 
 /***/ }),
 
-/***/ 1377:
+/***/ 1405:
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__1377__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__1405__;
 
 /***/ }),
 
-/***/ 1378:
+/***/ 1406:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(1379);
+var content = __webpack_require__(1407);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(1355).default
+var add = __webpack_require__(1383).default
 var update = add("006b37df", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
 /***/ }),
 
-/***/ 1379:
+/***/ 1407:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1380);
+var content = __webpack_require__(1408);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -478,7 +478,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(65)(content, options);
+var update = __webpack_require__(93)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -486,10 +486,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1380:
+/***/ 1408:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(32)(false);
 // imports
 
 
@@ -501,7 +501,7 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 4:
+/***/ 32:
 /***/ (function(module, exports) {
 
 /*
@@ -584,7 +584,7 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 65:
+/***/ 93:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -653,7 +653,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(66);
+var	fixUrls = __webpack_require__(94);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -841,9 +841,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.
@@ -989,7 +987,7 @@ function updateLink (link, options, obj) {
 
 /***/ }),
 
-/***/ 66:
+/***/ 94:
 /***/ (function(module, exports) {
 
 

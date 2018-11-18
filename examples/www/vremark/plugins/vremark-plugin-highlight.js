@@ -1,4 +1,4 @@
-define("vremark-plugin-highlight", ["vremark-plugin-highlight-libs"], function(__WEBPACK_EXTERNAL_MODULE__1399__) { return /******/ (function(modules) { // webpackBootstrap
+define("vremark-plugin-highlight", ["vremark-plugin-highlight-libs"], function(__WEBPACK_EXTERNAL_MODULE__1427__) { return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -81,18 +81,18 @@ define("vremark-plugin-highlight", ["vremark-plugin-highlight-libs"], function(_
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1387);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1415);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1355:
+/***/ 1383:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addStylesClient; });
-/* harmony import */ var _listToStyles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1356);
+/* harmony import */ var _listToStyles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1384);
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
@@ -319,7 +319,7 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 
-/***/ 1356:
+/***/ 1384:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -356,15 +356,15 @@ function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 1387:
+/***/ 1415:
 /***/ (function(module, exports, __webpack_require__) {
 
 const themes = {
-    'default':__webpack_require__(1388),
-    'github':__webpack_require__(1390),
-    'github-rouge':__webpack_require__(1392),
-    'monokai-sublime':__webpack_require__(1394),
-    'darcula':__webpack_require__(1396)
+    'default':__webpack_require__(1416),
+    'github':__webpack_require__(1418),
+    'github-rouge':__webpack_require__(1420),
+    'monokai-sublime':__webpack_require__(1422),
+    'darcula':__webpack_require__(1424)
 };
 
 let style = themes['github-rouge'];
@@ -372,7 +372,7 @@ style.use();
 
 const plugin = {
     name: 'vremark-plugin-highlight',
-    component: __webpack_require__(1398),
+    component: __webpack_require__(1426),
     setTheme(theme) {
 
         if( themes.hasOwnProperty(theme) ) {
@@ -476,12 +476,12 @@ module.exports = plugin;
 
 /***/ }),
 
-/***/ 1388:
+/***/ 1416:
 /***/ (function(module, exports, __webpack_require__) {
 
 var refs = 0;
 var dispose;
-var content = __webpack_require__(1389);
+var content = __webpack_require__(1417);
 var options = {"hmr":true};
 options.insertInto = undefined;
 
@@ -490,7 +490,7 @@ if(content.locals) exports.locals = content.locals;
 
 exports.use = exports.ref = function() {
 	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
+		dispose = __webpack_require__(93)(content, options);
 	}
 
 	return exports;
@@ -506,10 +506,10 @@ if(false) { var lastRefs; }
 
 /***/ }),
 
-/***/ 1389:
+/***/ 1417:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(32)(false);
 // imports
 
 
@@ -521,12 +521,12 @@ exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #F0F0F0; 
 
 /***/ }),
 
-/***/ 1390:
+/***/ 1418:
 /***/ (function(module, exports, __webpack_require__) {
 
 var refs = 0;
 var dispose;
-var content = __webpack_require__(1391);
+var content = __webpack_require__(1419);
 var options = {"hmr":true};
 options.insertInto = undefined;
 
@@ -535,7 +535,7 @@ if(content.locals) exports.locals = content.locals;
 
 exports.use = exports.ref = function() {
 	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
+		dispose = __webpack_require__(93)(content, options);
 	}
 
 	return exports;
@@ -551,10 +551,10 @@ if(false) { var lastRefs; }
 
 /***/ }),
 
-/***/ 1391:
+/***/ 1419:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(32)(false);
 // imports
 
 
@@ -566,12 +566,12 @@ exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #f8f8f8; 
 
 /***/ }),
 
-/***/ 1392:
+/***/ 1420:
 /***/ (function(module, exports, __webpack_require__) {
 
 var refs = 0;
 var dispose;
-var content = __webpack_require__(1393);
+var content = __webpack_require__(1421);
 var options = {"hmr":true};
 options.insertInto = undefined;
 
@@ -580,7 +580,7 @@ if(content.locals) exports.locals = content.locals;
 
 exports.use = exports.ref = function() {
 	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
+		dispose = __webpack_require__(93)(content, options);
 	}
 
 	return exports;
@@ -596,10 +596,10 @@ if(false) { var lastRefs; }
 
 /***/ }),
 
-/***/ 1393:
+/***/ 1421:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(32)(false);
 // imports
 
 
@@ -611,12 +611,12 @@ exports.push([module.i, "pre.vremark-plugin-highlight {\n  background-color: #f6
 
 /***/ }),
 
-/***/ 1394:
+/***/ 1422:
 /***/ (function(module, exports, __webpack_require__) {
 
 var refs = 0;
 var dispose;
-var content = __webpack_require__(1395);
+var content = __webpack_require__(1423);
 var options = {"hmr":true};
 options.insertInto = undefined;
 
@@ -625,7 +625,7 @@ if(content.locals) exports.locals = content.locals;
 
 exports.use = exports.ref = function() {
 	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
+		dispose = __webpack_require__(93)(content, options);
 	}
 
 	return exports;
@@ -641,10 +641,10 @@ if(false) { var lastRefs; }
 
 /***/ }),
 
-/***/ 1395:
+/***/ 1423:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(32)(false);
 // imports
 
 
@@ -656,12 +656,12 @@ exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #23241f; 
 
 /***/ }),
 
-/***/ 1396:
+/***/ 1424:
 /***/ (function(module, exports, __webpack_require__) {
 
 var refs = 0;
 var dispose;
-var content = __webpack_require__(1397);
+var content = __webpack_require__(1425);
 var options = {"hmr":true};
 options.insertInto = undefined;
 
@@ -670,7 +670,7 @@ if(content.locals) exports.locals = content.locals;
 
 exports.use = exports.ref = function() {
 	if(!(refs++)) {
-		dispose = __webpack_require__(65)(content, options);
+		dispose = __webpack_require__(93)(content, options);
 	}
 
 	return exports;
@@ -686,10 +686,10 @@ if(false) { var lastRefs; }
 
 /***/ }),
 
-/***/ 1397:
+/***/ 1425:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(32)(false);
 // imports
 
 
@@ -701,12 +701,12 @@ exports.push([module.i, "pre.vremark-plugin-highlight {\n  background: #2b2b2b; 
 
 /***/ }),
 
-/***/ 1398:
+/***/ 1426:
 /***/ (function(module, exports, __webpack_require__) {
 
-const { hljs } = __webpack_require__(1399);
+const { hljs } = __webpack_require__(1427);
 
-__webpack_require__(1400);
+__webpack_require__(1428);
 
 var BREAK_LINE_REGEXP = /\r\n|\r|\n/g;
 
@@ -904,35 +904,35 @@ module.exports = {
 
 /***/ }),
 
-/***/ 1399:
+/***/ 1427:
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE__1399__;
+module.exports = __WEBPACK_EXTERNAL_MODULE__1427__;
 
 /***/ }),
 
-/***/ 1400:
+/***/ 1428:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(1401);
+var content = __webpack_require__(1429);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(1355).default
+var add = __webpack_require__(1383).default
 var update = add("933c37c8", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
 /***/ }),
 
-/***/ 1401:
+/***/ 1429:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(1402);
+var content = __webpack_require__(1430);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -946,7 +946,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(65)(content, options);
+var update = __webpack_require__(93)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -954,10 +954,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ 1402:
+/***/ 1430:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(false);
+exports = module.exports = __webpack_require__(32)(false);
 // imports
 
 
@@ -969,7 +969,7 @@ exports.push([module.i, "pre.vremark-plugin-highlight {\n  margin-bottom: 16px; 
 
 /***/ }),
 
-/***/ 4:
+/***/ 32:
 /***/ (function(module, exports) {
 
 /*
@@ -1052,7 +1052,7 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 65:
+/***/ 93:
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1121,7 +1121,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(66);
+var	fixUrls = __webpack_require__(94);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1309,9 +1309,7 @@ function addStyle (obj, options) {
 
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
+	    result = options.transform(obj.css);
 
 	    if (result) {
 	    	// If transform returns a value, use that instead of the original css.
@@ -1457,7 +1455,7 @@ function updateLink (link, options, obj) {
 
 /***/ }),
 
-/***/ 66:
+/***/ 94:
 /***/ (function(module, exports) {
 
 

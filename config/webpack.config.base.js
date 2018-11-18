@@ -10,7 +10,9 @@ module.exports = {
             'vremark-parse': path.resolve(__dirname, '../examples/www/vremark', 'vremark-parse.js'),
             'vremark-render': path.resolve(__dirname, '../examples/www/vremark', 'vremark-render.js'),
 
-            'vmarkdown': path.resolve(__dirname, '../src', 'index.js')
+            'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
+            'vmarkdown-parse': path.resolve(__dirname, '../src', 'vmarkdown-parse.js'),
+            'vmarkdown-render': path.resolve(__dirname, '../src', 'vmarkdown-render.js')
         }
     },
     module: {

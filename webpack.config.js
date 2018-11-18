@@ -55,7 +55,7 @@ module.exports = [
             vmarkdown: 'vmarkdown'
         },
         output: {
-            library: "VMarkDown",
+            library: "VMarkdown",
             publicPath: 'vmarkdown/',
         },
         externals: {
