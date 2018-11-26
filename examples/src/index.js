@@ -1,3 +1,5 @@
+require('./editor');
+
 // const md = require('../md/test.md');
 //
 // const editor = require('./editor');
@@ -9,9 +11,8 @@
 // }, 0);
 require('github-markdown-css');
 
-const md = require('../md/test.md');
 
-import VMarkdownParse from '../../src/vmarkdown-parse';
+
 import VMarkdownRender from '../../src/vmarkdown-render';
 
 /*
@@ -38,7 +39,7 @@ import VMarkdownRender from '../../src/vmarkdown-render';
 
 
 })();
-*/
+
 
 
 function loadPlugins() {
@@ -76,48 +77,44 @@ function loadPlugins() {
 
 
 }
+*/
 
 (async ()=>{
 
 
-    const plugins = await loadPlugins();
+    // const plugins = await loadPlugins();
+    //
+    // plugins.forEach(function (plugin) {
+    //     Vue.component(plugin.name, plugin.component);
+    // });
 
-    plugins.forEach(function (plugin) {
-        Vue.component(plugin.name, plugin.component);
-    });
 
-    const parser = new VMarkdownParse({
-        config: {
-            root: {
-                tagName: 'main',
-                className: 'markdown-body'
-            }
-        },
-        plugins: (function () {
-            const o = {};
-            plugins.map((x)=>x.name).forEach(function (name) {
-                o[name] = {
-                    component: name
-                };
-            });
-            return o;
-        })()
-    });
 
-    const hast = await parser.process(md);
 
-    console.log(parser.mdast);
 
-    const renderer = new VMarkdownRender({
-    });
+
 
     const app = new Vue({
         el: '#app',
         render(h) {
-            const vdom = renderer.process(hast, {h});
-            console.log(vdom);
-            return vdom;
+            // const vdom = renderer.process(vast, {h});
+            // console.log(vdom);
+            return this.vdom || h('div', {} , 'loading');
+        },
+        async mounted() {
+
+
+
+            // const renderer = new VMarkdownRender({
+            //     h: this.$createElement
+            // });
+            //
+            // this.vdom = await renderer.process(vast);
+            //
+            // this.$forceUpdate();
+
         }
+
     });
 
 

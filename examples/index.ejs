@@ -13,10 +13,10 @@
     <!-- common end -->
 
     <!-- editor start -->
-    <!--<link rel="stylesheet" href="vmarkdown-codemirror-editor-vendors.css">-->
-    <!--<link rel="stylesheet" href="vmarkdown-codemirror-editor.css">-->
-    <!--<script src="vmarkdown-codemirror-editor-vendors.js"></script>-->
-    <!--<script src="vmarkdown-codemirror-editor.js"></script>-->
+    <link rel="stylesheet" href="vmarkdown-codemirror-editor-vendors.css">
+    <link rel="stylesheet" href="vmarkdown-codemirror-editor.css">
+    <script type="text/javascript" src="vmarkdown-codemirror-editor-vendors.js"></script>
+    <script type="text/javascript" src="vmarkdown-codemirror-editor.js"></script>
     <!-- editor end -->
 
     <!-- preview start -->
@@ -93,27 +93,27 @@
         }
     </style>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js"></script>-->
 
 </head>
 <body>
 
-<script>
-    (function () {
+<!--<script>-->
+    <!--(function () {-->
 
-        try {
-            window.__plugins__ =  JSON.parse(`<%= plugins %>`);
-        }
-        catch (e) {
-            console.error(e);
-        }
+        <!--try {-->
+            <!--window.__plugins__ =  JSON.parse(`<%= plugins %>`);-->
+        <!--}-->
+        <!--catch (e) {-->
+            <!--console.error(e);-->
+        <!--}-->
 
-        requirejs.config({
-            paths: window.__plugins__ || {}
-        });
+        <!--requirejs.config({-->
+            <!--paths: window.__plugins__ || {}-->
+        <!--});-->
 
-    })();
-</script>
+    <!--})();-->
+<!--</script>-->
 
 <div class="panel" id="editor"></div>
 <div class="panel" id="preview">

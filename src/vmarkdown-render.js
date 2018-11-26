@@ -7,8 +7,8 @@ export default class VMarkdown {
         self.options = Object.assign({}, options);
     }
 
-    process(hast, options = {}) {
+    async process(hast, options = {}) {
         const self = this;
-        return render(hast, Object.assign({}, self.options, options));
+        return await render(hast, Object.assign({}, self.options, options));
     }
 }

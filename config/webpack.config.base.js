@@ -7,8 +7,11 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vremark-parse': path.resolve(__dirname, '../examples/www/vremark', 'vremark-parse.js'),
-            'vremark-render': path.resolve(__dirname, '../examples/www/vremark', 'vremark-render.js'),
+            // 'vremark-parse': path.resolve(__dirname, '../examples/www/vremark', 'vremark-parse.js'),
+            // 'vremark-render': path.resolve(__dirname, '../examples/www/vremark', 'vremark-render.js'),
+
+            'vremark-parse': path.resolve(__dirname, '../src/libs/vremark', 'vremark-parse.js'),
+            'vremark-render': path.resolve(__dirname, '../src/libs/vremark', 'vremark-render.js'),
 
             'vmarkdown': path.resolve(__dirname, '../src', 'index.js'),
             'vmarkdown-parse': path.resolve(__dirname, '../src', 'vmarkdown-parse.js'),

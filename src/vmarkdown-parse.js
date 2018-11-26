@@ -15,10 +15,7 @@ export default class VMarkdown {
 
     async process(markdown = '', options = {}) {
         const self = this;
-        const {mdast, hast} = await VMarkdown.parse(markdown, Object.assign({}, self.options, options));
-        self.mdast = mdast;
-        self.hast = hast;
-        return hast;
+        return await VMarkdown.parse(markdown, Object.assign({}, self.options, options));
     }
 
     findNode(position, _options = {}) {
