@@ -26,7 +26,8 @@ const editor = new CodeMirrorEditor(document.getElementById('editor'), {
 });
 
 editor.on('cursorChange', function (cursor) {
-    store.$emit('cursorChange', cursor);
+    const node = parser.findNode(cursor);
+    store.$emit('cursorChange', node, cursor);
 });
 
 function onScroll() {
@@ -37,7 +38,19 @@ function onScroll() {
         scrollTop = editor.getScrollTop();
     }
 
-    store.$emit('firstVisibleLineChange', firstVisibleLine, scrollTop);
+    const node = parser.findNode({
+        line: firstVisibleLine,
+        column: 1
+    }, {
+        boundary: true,
+        next: true
+    });
+
+    store.$emit('firstVisibleLineChange', node, firstVisibleLine, scrollTop);
+
+
+    // store.$emit('firstVisibleLineChange', firstVisibleLine, scrollTop);
+
 }
 
 editor.on('scroll', _.throttle(onScroll, 300));
@@ -51,7 +64,7 @@ async function onChange() {
 
     console.log(vast);
 
-
+    store.$emit('change', vast);
 }
 
 

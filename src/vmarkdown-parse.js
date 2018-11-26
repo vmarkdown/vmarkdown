@@ -5,8 +5,7 @@ export default class VMarkdown {
     constructor(options) {
         const self = this;
         self.options = Object.assign({}, options);
-        self.mdast = null;
-        self.hast = null;
+        self.vast = null;
     }
 
     static async parse(markdown, options) {
@@ -15,7 +14,8 @@ export default class VMarkdown {
 
     async process(markdown = '', options = {}) {
         const self = this;
-        return await VMarkdown.parse(markdown, Object.assign({}, self.options, options));
+        self.vast = await VMarkdown.parse(markdown, Object.assign({}, self.options, options));
+        return self.vast;
     }
 
     findNode(position, _options = {}) {
@@ -29,9 +29,9 @@ export default class VMarkdown {
         // const node = NodeUtil.findNode(self.hast, position);
         // return node;
 
-        if(!self.hast) return null;
+        if(!self.vast) return null;
 
-        const root = self.hast;
+        const root = self.vast;
 
         // if( position.line < root.position.start.line
         //     && position.line > root.position.end.line ){
@@ -84,6 +84,5 @@ export default class VMarkdown {
 
 
     }
-
 
 }

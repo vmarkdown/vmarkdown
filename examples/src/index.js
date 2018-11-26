@@ -1,4 +1,5 @@
 require('./editor');
+require('./preview');
 
 // const md = require('../md/test.md');
 //
@@ -9,11 +10,9 @@ require('./editor');
 // setTimeout(function () {
 //     editor.setValue(md);
 // }, 0);
-require('github-markdown-css');
 
 
 
-import VMarkdownRender from '../../src/vmarkdown-render';
 
 /*
 (async ()=>{
@@ -79,48 +78,7 @@ function loadPlugins() {
 }
 */
 
-(async ()=>{
 
-
-    // const plugins = await loadPlugins();
-    //
-    // plugins.forEach(function (plugin) {
-    //     Vue.component(plugin.name, plugin.component);
-    // });
-
-
-
-
-
-
-
-    const app = new Vue({
-        el: '#app',
-        render(h) {
-            // const vdom = renderer.process(vast, {h});
-            // console.log(vdom);
-            return this.vdom || h('div', {} , 'loading');
-        },
-        async mounted() {
-
-
-
-            // const renderer = new VMarkdownRender({
-            //     h: this.$createElement
-            // });
-            //
-            // this.vdom = await renderer.process(vast);
-            //
-            // this.$forceUpdate();
-
-        }
-
-    });
-
-
-
-
-})();
 
 
 
