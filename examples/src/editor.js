@@ -1,20 +1,11 @@
 import VMarkdownParse from '../../src/vmarkdown-parse';
-const parser = new VMarkdownParse({
+const vmarkdown = new VMarkdownParse({
     config: {
         root: {
             tagName: 'main',
             className: 'markdown-body'
         }
-    },
-    // plugins: (function () {
-    //     const o = {};
-    //     plugins.map((x)=>x.name).forEach(function (name) {
-    //         o[name] = {
-    //             component: name
-    //         };
-    //     });
-    //     return o;
-    // })()
+    }
 });
 
 
@@ -26,7 +17,7 @@ const editor = new CodeMirrorEditor(document.getElementById('editor'), {
 });
 
 editor.on('cursorChange', function (cursor) {
-    const node = parser.findNode(cursor);
+    const node = vmarkdown.findNode(cursor);
     store.$emit('cursorChange', node, cursor);
 });
 
@@ -38,7 +29,7 @@ function onScroll() {
         scrollTop = editor.getScrollTop();
     }
 
-    const node = parser.findNode({
+    const node = vmarkdown.findNode({
         line: firstVisibleLine,
         column: 1
     }, {
@@ -60,7 +51,7 @@ async function onChange() {
 
     const value = editor.getValue();
 
-    const vast = await parser.process(value);
+    const vast = await vmarkdown.process(value);
 
     console.log(vast);
 

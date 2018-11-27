@@ -22,7 +22,8 @@ export default class VMarkdown {
 
         const options = Object.assign({}, {
             boundary: false,
-            next: false
+            next: false,
+            depth: 1,
         }, _options);
 
         const self = this;
