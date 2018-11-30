@@ -17,7 +17,12 @@ const editor = new CodeMirrorEditor(document.getElementById('editor'), {
 });
 
 editor.on('cursorChange', function (cursor) {
-    const node = vmarkdown.findNode(cursor);
+    const node = vmarkdown.findNode(cursor, {
+        depth: 2
+    });
+
+    console.log(node);
+
     store.$emit('cursorChange', node, cursor);
 });
 
