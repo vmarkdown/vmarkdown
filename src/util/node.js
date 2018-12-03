@@ -53,6 +53,10 @@ function findNode(root, position, options = {}) {
 
         const node = children[i];
 
+        if(!node.position || node.type === 'text' ) {
+            continue;
+        }
+
         if(
 
             (options.boundary && (i === children.length - 1) && (position.line > node.position.end.line))
@@ -74,9 +78,12 @@ function findNode(root, position, options = {}) {
             // return depthNode?depthNode:node;
 
 
-            const depthNode = findNode(node, position, options);
+            // const depthNode = findNode(node, position, options);
+            // return depthNode?depthNode:node;
 
-            return depthNode?depthNode:node;
+
+
+            return node;
 
         }
 

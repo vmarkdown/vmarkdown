@@ -30,7 +30,7 @@ const config = {
             filename: 'index.html',
             template: 'examples/index.ejs',
             templateParameters: {
-                plugins: JSON.stringify(require('./www/vremark/plugins.json'))
+                // plugins: JSON.stringify(require('./www/vremark/plugins.json'))
             }
         })
     ],

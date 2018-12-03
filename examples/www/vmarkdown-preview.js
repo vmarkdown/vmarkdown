@@ -288,12 +288,13 @@ class VMarkDownPreview extends _base_preview__WEBPACK_IMPORTED_MODULE_0__["defau
 
         const position = node.position;
         if(
-            (
-                node.tagName === 'code' ||
-                (node.data && node.data.props && node.data.props.code)
-            )
+            // (
+            //     node.tagName === 'code' ||
+            //     (node.data && node.data.props && node.data.props.code)
+            // )
 
-            && position && position.start.line < position.end.line) {
+            // &&
+        position && position.start.line < position.end.line) {
             const firstVisibleLine = cursor.line;
             const startLine = position.start.line;
             const endLine = position.end.line;

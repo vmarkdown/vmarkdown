@@ -23,6 +23,8 @@ editor.on('cursorChange', function (cursor) {
 
     console.log(node);
 
+    // debugger
+
     store.$emit('cursorChange', node, cursor);
 });
 
@@ -41,6 +43,8 @@ function onScroll() {
         boundary: true,
         next: true
     });
+
+    console.log(node);
 
     store.$emit('firstVisibleLineChange', node, firstVisibleLine, scrollTop);
 

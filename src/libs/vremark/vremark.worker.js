@@ -184,7 +184,7 @@ module.exports = registerPromiseWorker
 /***/ (function(module, exports, __webpack_require__) {
 
 const markdown = __webpack_require__(3);
-const stringify = __webpack_require__(222);
+const stringify = __webpack_require__(221);
 const unified = __webpack_require__(198);
 const processor = unified().use(markdown).use(stringify).freeze();
 
@@ -226,20 +226,7 @@ const remark2rehype = __webpack_require__(102);
 
 
 const math = __webpack_require__(141);
-// const math = require('@paperist/remark-math');
-// const vmath = require('../packages/vremark-math');
-// const katex = require('../packages/vremark-katex');
-// const flowchart = require('../packages/vremark-flowchart');
-// const sequence = require('../packages/vremark-sequence');
-// const mermaid = require('../packages/vremark-mermaid');
-// const g2 = require('../packages/vremark-g2');
-// const chart = require('../packages/vremark-chart');
-// const resume = require('../packages/vremark-resume');
-// const highlight = require('../packages/vremark-highlight');
 
-// const plugins = require('../packages/vremark-plugins');
-
-// const raw = require('../packages/rehype-raw');
 const raw = __webpack_require__(144);
 const clean = __webpack_require__(213);
 const sanitize = __webpack_require__(214);
@@ -250,15 +237,15 @@ const hash = __webpack_require__(219);
 
 // exports.settings = {bullet: '*', fences: true};
 
-var merge = __webpack_require__(221).default;
-var gh = __webpack_require__(217);
-var schema = merge(gh, {
-    "clobberPrefix": "",
-    tagNames: ['input', 'span', 'svg', 'rect'],
-    attributes: {
-        '*': ['className', 'style']
-    }
-});
+// var merge = require('deepmerge').default;
+// var gh = require('../packages/hast-util-sanitize/lib/github');
+// var schema = merge(gh, {
+//     "clobberPrefix": "",
+//     tagNames: ['input', 'span', 'svg', 'rect'],
+//     attributes: {
+//         '*': ['className', 'style']
+//     }
+// });
 
 
 
@@ -321,7 +308,8 @@ exports.plugins = [
 
     // function () {
     //     return function (root, file) {
-    //         file.mdast = root;
+    //         debugger
+    //         // file.mdast = root;
     //     }
     // },
 
@@ -344,8 +332,9 @@ exports.plugins = [
 
     // function () {
     //     return function (root, file) {
-    //         console.log('hast1============');
-    //         console.log(root);
+    //         debugger
+    //         // console.log('hast1============');
+    //         // console.log(root);
     //     }
     // },
 
@@ -353,7 +342,7 @@ exports.plugins = [
     // clean,
 
 
-    [sanitize, schema],
+    // [sanitize, schema],
 
     // function () {
     //     return function (root, file) {
@@ -363,7 +352,7 @@ exports.plugins = [
     //     }
     // },
 
-    hash,
+    // hash,
 
     data,
 
@@ -9059,7 +9048,7 @@ function code(h, node) {
     /* old end */
 
     /* new start */
-    return h(node, 'pre', [h(node, 'code', props, [u('text', value)])])
+    return h(node, 'pre', [h(node, 'code', props, [u('text', {position: node.position}, value)])])
     /* new end */
 }
 
@@ -22652,7 +22641,7 @@ function one(node, map) {
     return hash;
 }
 
-module.exports = function hashid(options = {}) {
+module.exports = function plugin(options = {}) {
     return function transformer(root) {
         console.time('hash');
         one(root, {});
@@ -22707,103 +22696,6 @@ module.exports = {
 
 /***/ }),
 /* 221 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var isMergeableObject = function isMergeableObject(value) {
-	return isNonNullObject(value)
-		&& !isSpecial(value)
-};
-
-function isNonNullObject(value) {
-	return !!value && typeof value === 'object'
-}
-
-function isSpecial(value) {
-	var stringValue = Object.prototype.toString.call(value);
-
-	return stringValue === '[object RegExp]'
-		|| stringValue === '[object Date]'
-		|| isReactElement(value)
-}
-
-// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
-var canUseSymbol = typeof Symbol === 'function' && Symbol.for;
-var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for('react.element') : 0xeac7;
-
-function isReactElement(value) {
-	return value.$$typeof === REACT_ELEMENT_TYPE
-}
-
-function emptyTarget(val) {
-	return Array.isArray(val) ? [] : {}
-}
-
-function cloneUnlessOtherwiseSpecified(value, options) {
-	return (options.clone !== false && options.isMergeableObject(value))
-		? deepmerge(emptyTarget(value), value, options)
-		: value
-}
-
-function defaultArrayMerge(target, source, options) {
-	return target.concat(source).map(function(element) {
-		return cloneUnlessOtherwiseSpecified(element, options)
-	})
-}
-
-function mergeObject(target, source, options) {
-	var destination = {};
-	if (options.isMergeableObject(target)) {
-		Object.keys(target).forEach(function(key) {
-			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
-		});
-	}
-	Object.keys(source).forEach(function(key) {
-		if (!options.isMergeableObject(source[key]) || !target[key]) {
-			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-		} else {
-			destination[key] = deepmerge(target[key], source[key], options);
-		}
-	});
-	return destination
-}
-
-function deepmerge(target, source, options) {
-	options = options || {};
-	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
-	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
-
-	var sourceIsArray = Array.isArray(source);
-	var targetIsArray = Array.isArray(target);
-	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
-
-	if (!sourceAndTargetTypesMatch) {
-		return cloneUnlessOtherwiseSpecified(source, options)
-	} else if (sourceIsArray) {
-		return options.arrayMerge(target, source, options)
-	} else {
-		return mergeObject(target, source, options)
-	}
-}
-
-deepmerge.all = function deepmergeAll(array, options) {
-	if (!Array.isArray(array)) {
-		throw new Error('first argument should be an array')
-	}
-
-	return array.reduce(function(prev, next) {
-		return deepmerge(prev, next, options)
-	}, {})
-};
-
-var deepmerge_1 = deepmerge;
-
-/* harmony default export */ __webpack_exports__["default"] = (deepmerge_1);
-
-
-/***/ }),
-/* 222 */
 /***/ (function(module, exports) {
 
 module.exports = function stringify() {
