@@ -52,30 +52,20 @@ const config = {
 module.exports = [
     merge(base, config, {
         entry:{
-            vmarkdown: 'vmarkdown'
+            'vmarkdown-parse': path.resolve(__dirname, './src', 'vmarkdown-parse.js')
         },
         output: {
-            library: "VMarkdown",
+            library: "VMarkdownParse",
             publicPath: 'vmarkdown/',
+        }
+    }),
+    merge(base, config, {
+        entry:{
+            'vmarkdown-render': path.resolve(__dirname, './src', 'vmarkdown-render.js')
         },
-        externals: {
-            // 'katex': 'katex',
-            // 'lowlight': 'lowlight',
-            // 'flowchart.js': 'flowchart.js',
-            // 'underscore': 'underscore',
-            // 'mermaid': 'mermaid',
-            // '@antv/g2': '@antv/g2'
-
-
-
-            // 'flowchart.js': 'flowchart',
-            // 'Raphael': 'Raphael',
-            // 'raphael': 'Raphael',
-            // // 'highlight.js': 'highlight.js',
-            // 'highlight.js': 'hljs',
-
-            // 'mermaid': 'mermaid',
-            // 'underscore': 'underscore'
+        output: {
+            library: "VMarkdownRender",
+            publicPath: 'vmarkdown/',
         }
     })
 ];

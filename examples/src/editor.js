@@ -8,8 +8,6 @@ const vmarkdown = new VMarkdownParse({
     }
 });
 
-
-
 const store = require('./store');
 
 const editor = new CodeMirrorEditor(document.getElementById('editor'), {
@@ -17,24 +15,48 @@ const editor = new CodeMirrorEditor(document.getElementById('editor'), {
 });
 
 editor.on('cursorChange', function (cursor) {
+
     const node = vmarkdown.findNode(cursor, {
         depth: 2
     });
 
-    console.log(node);
+    let coverageRatio = 0;
+    if(node) {
+        const position = node.position;
+        if( position && position.start.line < position.end.line) {
+            const firstVisibleLine = cursor.line;
+            const startLine = position.start.line;
+            const endLine = position.end.line;
+            const currentLine = firstVisibleLine<startLine?startLine:firstVisibleLine;
+            const allLine = endLine - startLine + 1;
+            coverageRatio = (currentLine-startLine)/allLine;
+        }
 
-    // debugger
+    }
 
-    store.$emit('cursorChange', node, cursor);
+    store.$emit('cursorChange', {
+        node,
+        coverageRatio,
+        cursor: cursor
+    });
+
+
+
+    // const node = vmarkdown.findNode(cursor, {
+    //     depth: 2
+    // });
+    //
+    // console.log(node);
+    //
+    // // debugger
+    //
+    // store.$emit('cursorChange', node, cursor);
 });
 
 function onScroll() {
-    const firstVisibleLine = editor.getFirstVisibleLine();
 
-    let scrollTop = -1;
-    if(firstVisibleLine === 1){
-        scrollTop = editor.getScrollTop();
-    }
+    const firstVisibleLine = editor.getFirstVisibleLine();
+    // store.$emit('vmarkdown/scrollTo', firstVisibleLine);
 
     const node = vmarkdown.findNode({
         line: firstVisibleLine,
@@ -44,16 +66,49 @@ function onScroll() {
         next: true
     });
 
-    console.log(node);
+    let coverageRatio = 0;
+    if(node) {
+        const position = node.position;
+        const startLine = position.start.line;
+        const endLine = position.end.line;
+        const currentLine = firstVisibleLine<startLine?startLine:firstVisibleLine;
+        const allLine = endLine - startLine + 1;
+        coverageRatio = (currentLine-startLine)/allLine;
+    }
 
-    store.$emit('firstVisibleLineChange', node, firstVisibleLine, scrollTop);
+    store.$emit('scrollTo', {
+        firstVisibleLine: firstVisibleLine,
+        node: node,
+        coverageRatio: coverageRatio
+    });
 
 
+
+
+
+    // const firstVisibleLine = editor.getFirstVisibleLine();
+    //
+    // let scrollTop = -1;
+    // if(firstVisibleLine === 1){
+    //     scrollTop = editor.getScrollTop();
+    // }
+    //
+    // const node = vmarkdown.findNode({
+    //     line: firstVisibleLine,
+    //     column: 1
+    // }, {
+    //     boundary: true,
+    //     next: true
+    // });
+    //
+    // console.log(node);
+
+    // store.$emit('firstVisibleLineChange', node, firstVisibleLine, scrollTop);
     // store.$emit('firstVisibleLineChange', firstVisibleLine, scrollTop);
 
 }
 
-editor.on('scroll', _.throttle(onScroll, 300));
+editor.on('scroll', _.throttle(onScroll, 100));
 
 async function onChange() {
     // store.$emit('change', editor.getValue());
