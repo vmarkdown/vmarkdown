@@ -7,7 +7,8 @@
 .vmarkdown-preview {
   padding-bottom: 100vh; }
   .vmarkdown-preview .vmarkdown-preview-active {
-    animation: vmarkdown-preview-active 2s; }
+    animation: vmarkdown-preview-active 2s;
+    animation-timing-function: ease-in; }
 
 .markdown-body {
   box-sizing: border-box;

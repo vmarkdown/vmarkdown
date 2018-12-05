@@ -8792,8 +8792,7 @@ function generateFootnotes(h) {
         }
         position.end = def.position.end;
 
-        listItems[index].data.hData.hash = createHash(listItems[index]);
-
+        // listItems[index].data.hData.hash = createHash(listItems[index]);
         /* new end */
 
     }
@@ -8806,7 +8805,7 @@ function generateFootnotes(h) {
         /* new start */
         {
             position: position,
-            data:{
+            /*data:{
                 hData:{
                     hash: (function () {
                         return (listItems.length === 0) ? 0 :listItems.map(function (node) {
@@ -8816,8 +8815,7 @@ function generateFootnotes(h) {
                         });
                     })()
                 }
-            }
-
+            }*/
         },
         /* new end */
 
@@ -22449,6 +22447,11 @@ module.exports = {"strip":["script"],"clobberPrefix":"user-content-","clobber":[
 const visit = __webpack_require__(29);
 const xtend = __webpack_require__(7);
 
+let uniqueIndex = 0;
+function createUnique(prefix) {
+    return (prefix || '') + '_' + uniqueIndex++;
+}
+
 function data(node, index, parent, options) {
 
     // if(!node.properties && !node.data) {
@@ -22495,6 +22498,9 @@ function data(node, index, parent, options) {
         if(node.tagName !== "br" && node.tagName !== "hr") {
             node.data.key = node.hash;
         }
+    }
+    else{
+        node.data.ref = createUnique(node.type);
     }
 
     if (Object.keys(properties).length > 0){

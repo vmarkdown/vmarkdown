@@ -2,18 +2,41 @@ require('github-markdown-css');
 
 const store = require('./store');
 
-const preview = new VMarkDownPreview({
+// const settings = {
+//     flowchart: {
+//
+//     }
+// };
+
+import Vue from 'vue';
+import VMarkdown from '../../src/vmarkdown-render';
+
+
+function register(component) {
+    Vue.component(component.name, component);
+}
+
+
+const Preview = Vue.extend(VMarkDownPreview);
+const preview = new Preview({
     el: '#app',
     scrollContainer: '#preview'
 });
 
+const vmarkdown = new VMarkdown({
+    h: preview.$createElement,
+    plugins: require('../../src/libs/vremark/vremark-plugins.js'),
+    register: register
+});
 
-store.$on('change', function (vast) {
-    preview.setValue(vast);
+store.$on('change', async function (vast) {
+    const vdom = await vmarkdown.process(vast);
+    preview.setValue(vdom);
 });
 
 store.$on('scrollTo', function (options) {
     console.log(options);
+
     preview.scrollTo(options);
 });
 store.$on('cursorChange', function (options) {
