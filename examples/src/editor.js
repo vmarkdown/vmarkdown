@@ -1,5 +1,5 @@
-import VMarkdownParse from '../../src/vmarkdown-parse';
-const vmarkdown = new VMarkdownParse({
+import VMarkdown from '../../src/vmarkdown-parse';
+const vmarkdown = new VMarkdown({
     config: {
         root: {
             tagName: 'main',
@@ -20,19 +20,24 @@ editor.on('cursorChange', function (cursor) {
         depth: 2
     });
 
-    let coverageRatio = 0;
-    if(node) {
-        const position = node.position;
-        if( position && position.start.line < position.end.line) {
-            const firstVisibleLine = cursor.line;
-            const startLine = position.start.line;
-            const endLine = position.end.line;
-            const currentLine = firstVisibleLine<startLine?startLine:firstVisibleLine;
-            const allLine = endLine - startLine + 1;
-            coverageRatio = (currentLine-startLine)/allLine;
-        }
-
+    if(!node) {
+        return;
     }
+    // let coverageRatio = 0;
+    // if(node) {
+    //     const position = node.position;
+    //     if( position && position.start.line < position.end.line) {
+    //         const firstVisibleLine = cursor.line;
+    //         const startLine = position.start.line;
+    //         const endLine = position.end.line;
+    //         const currentLine = firstVisibleLine<startLine?startLine:firstVisibleLine;
+    //         const allLine = endLine - startLine + 1;
+    //         coverageRatio = (currentLine-startLine)/allLine;
+    //     }
+    //
+    // }
+
+    let coverageRatio = VMarkdown.calCoverageRatio(node.position, cursor.line);
 
     store.$emit('cursorChange', {
         node,
@@ -66,15 +71,21 @@ function onScroll() {
         next: true
     });
 
-    let coverageRatio = 0;
-    if(node) {
-        const position = node.position;
-        const startLine = position.start.line;
-        const endLine = position.end.line;
-        const currentLine = firstVisibleLine<startLine?startLine:firstVisibleLine;
-        const allLine = endLine - startLine + 1;
-        coverageRatio = (currentLine-startLine)/allLine;
+    if(!node) {
+        return;
     }
+
+    let coverageRatio = VMarkdown.calCoverageRatio(node.position, firstVisibleLine);
+
+    // let coverageRatio = 0;
+    // if(node) {
+    //     const position = node.position;
+    //     const startLine = position.start.line;
+    //     const endLine = position.end.line;
+    //     const currentLine = firstVisibleLine<startLine?startLine:firstVisibleLine;
+    //     const allLine = endLine - startLine + 1;
+    //     coverageRatio = (currentLine-startLine)/allLine;
+    // }
 
     store.$emit('scrollTo', {
         firstVisibleLine: firstVisibleLine,

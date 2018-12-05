@@ -28,4 +28,15 @@ export default class VMarkdown {
         }, options));
     }
 
+    static calCoverageRatio(position, firstVisibleLine) {
+        let coverageRatio = 0;
+        if( position && position.start.line < position.end.line) {
+            const startLine = position.start.line;
+            const endLine = position.end.line;
+            const currentLine = firstVisibleLine<startLine?startLine:firstVisibleLine;
+            const allLine = endLine - startLine + 1;
+            coverageRatio = (currentLine-startLine)/allLine;
+        }
+        return coverageRatio;
+    }
 }

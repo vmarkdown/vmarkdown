@@ -193,7 +193,7 @@ $.scrollTo && $.extend($.scrollTo.defaults, {
 
 
 const ACTIVE_CLASS = 'vmarkdown-preview-active';
-const ACTIVE_CLASS_DURATION = 1000;
+const ACTIVE_CLASS_DURATION = 2000;
 
 function _scrollTo(scrollContainer, target, options) {
     if(!target) return;
@@ -304,23 +304,22 @@ function _scrollTo(scrollContainer, target, options) {
         }
     },
     render(h) {
-        return this.vdom || h('div', {
-            style:{
-                'text-align':'center',
-                'max-width': '150px',
-                'margin': '100px auto'
-            },
-            domProps:{
-                innerHTML: __webpack_require__(13)
-            }
-        }, 'loading...');
-        // return this.vdom || h('div', {}, ['loading...', this.value]);
-    },
-    mounted() {
-        // const self = this;
-        // self.$watch('firstVisibleNode', function (node) {
-        //     self.scrollTo(node);
-        // });
+
+        return h('div', {
+            class: ['vmarkdown-preview']
+        }, [
+            this.vdom || h('div', {
+                style:{
+                    'text-align':'center',
+                    'max-width': '150px',
+                    'margin': '100px auto'
+                },
+                domProps:{
+                    innerHTML: __webpack_require__(13)
+                }
+            })
+        ]);
+
     }
 }));
 

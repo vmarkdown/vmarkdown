@@ -1,7 +1,13 @@
+@keyframes vmarkdown-preview-active {
+  0% {
+    background-color: #e8f2ff; }
+  100% {
+    background-color: rgba(232, 242, 255, 0); } }
+
 .vmarkdown-preview {
   padding-bottom: 100vh; }
   .vmarkdown-preview .vmarkdown-preview-active {
-    background-color: #e8f2ff !important; }
+    animation: vmarkdown-preview-active 2s; }
 
 .markdown-body {
   box-sizing: border-box;
