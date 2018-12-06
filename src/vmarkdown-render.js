@@ -4,7 +4,12 @@ export default class VMarkdown {
 
     constructor(options) {
         const self = this;
-        self.options = Object.assign({}, options);
+        self.options = Object.assign({
+            plugins: {
+                settings: {},
+                plugins: []
+            }
+        }, options);
         // self.plugins = self.options.plugins || {
         //     settings: {},
         //     plugins: []
