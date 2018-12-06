@@ -11,7 +11,7 @@ const config = {
         filename: production?'[name].[contenthash].min.js':'[name].js',
         libraryTarget: "umd",
         library: "[name]",
-        // libraryExport: 'default'
+        libraryExport: 'default'
     },
     resolve: {
         alias: {}
